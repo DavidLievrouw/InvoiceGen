@@ -1,10 +1,12 @@
 # InvoiceGen pet project
 
 ### General
-Product | InvoiceGen
-Version | v0.1
-Repository owner | David Lievrouw
-Release Date | TBA
+| Key | Value | 
+| --------- | --------- | 
+| Product | InvoiceGen | 
+| Version | v0.1 | 
+| Repository owner | David Lievrouw | 
+| Release Date | TBA | 
 
 ### System requirements
 * Windows7 or higher
@@ -13,7 +15,7 @@ Release Date | TBA
 * .NET 4.6 runtime
 
 ### Prerequisites
-* Browser with PDF support
+* Browser with PDF support (or Acrobat Reader for IE)
 * 2007 Office System Driver: Data Connectivity Components: http://www.microsoft.com/en-us/download/details.aspx?id=23734
 * DropBox client software (for backup functionality)
 
