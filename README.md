@@ -1,11 +1,10 @@
 # InvoiceGen pet project
 
 ### General
-| Key | Value | 
+| Spec | Value | 
 | --------- | --------- | 
 | Product | InvoiceGen | 
 | Version | v0.1 | 
-| Repository owner | David Lievrouw | 
 | Release Date | TBA | 
 
 ### System requirements
