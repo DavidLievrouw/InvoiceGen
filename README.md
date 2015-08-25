@@ -1,26 +1,24 @@
-# InvoiceGen
+# InvoiceGen pet project
 
-## General
-Product|InvoiceGen
-Version|v0.1
-Repository owner|David Lievrouw
-Release Date|TBA
+### General
+Product | InvoiceGen
+Version | v0.1
+Repository owner | David Lievrouw
+Release Date | TBA
 
-## System requirements
+### System requirements
 * Windows7 or higher
-* IIS7
-* Active internet connection (for backups)
+* IIS7 or higher
+* Active internet connection (for dropbox backups)
 * .NET 4.6 runtime
-* 3GB free disk space
-* 1GB RAM
 
-# Prerequisites
+### Prerequisites
 * Browser with PDF support
 * 2007 Office System Driver: Data Connectivity Components: http://www.microsoft.com/en-us/download/details.aspx?id=23734
-* DropBox client software
+* DropBox client software (for backup functionality)
 
-## Developer notes
-* Build in x86 configuration, to be able to access the data source.
+### Developer notes
+* TBA
 
-## Installation instructions
+### Installation instructions
 * TBA
