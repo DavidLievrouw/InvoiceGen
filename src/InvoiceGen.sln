@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceGen", "InvoiceGen\InvoiceGen.csproj", "{FF236851-4B37-41AD-9FEF-C9A7E69FB0A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InvoiceGen.Tests", "InvoiceGen.Tests\InvoiceGen.Tests.csproj", "{8789CBF1-C62C-4F91-A9A1-58A093CA85AD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FF236851-4B37-41AD-9FEF-C9A7E69FB0A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FF236851-4B37-41AD-9FEF-C9A7E69FB0A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FF236851-4B37-41AD-9FEF-C9A7E69FB0A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FF236851-4B37-41AD-9FEF-C9A7E69FB0A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8789CBF1-C62C-4F91-A9A1-58A093CA85AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8789CBF1-C62C-4F91-A9A1-58A093CA85AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8789CBF1-C62C-4F91-A9A1-58A093CA85AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8789CBF1-C62C-4F91-A9A1-58A093CA85AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
