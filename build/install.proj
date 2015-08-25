@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Install" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Target Name="Install">
+    <MSBuild Projects="$(MSBuildProjectDirectory)\install_webapp.proj;"
+			 StopOnFirstFailure="true"
+			 Targets="CleanInstall"
+			 BuildInParallel="false"/>
+  </Target>
+</Project>

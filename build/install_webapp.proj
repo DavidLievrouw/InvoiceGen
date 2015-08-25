@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="CleanInstall" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RootPath>$(MSBuildProjectDirectory)\..</RootPath>
+    <BuildDirectory>$(RootPath)\build</BuildDirectory>
+    <TargetDirectory>$(BuildDirectory)\target</TargetDirectory>
+    <DeploymentDirectory>$(TargetDirectory)\WebApp</DeploymentDirectory>
+    <PackagesPath>$(MSBuildProjectDirectory)\packages</PackagesPath>
+    <ExtensionTasksPath>$(PackagesPath)\MSBuild.Extension.Pack.1.6.0\build\net40</ExtensionTasksPath>
+    <CommunityTasksPath>$(PackagesPath)\MSBuildTasks.1.4.0.88\tools</CommunityTasksPath>
+    <InvoiceGenAppPoolName>InvoiceGenPool</InvoiceGenAppPoolName>
+  </PropertyGroup>
+  <Import Project="$(ExtensionTasksPath)\MSBuild.Extension.Pack.targets"/>
+  <Import Project="$(CommunityTasksPath)\MSBuild.Community.Tasks.Targets"/>
+  
+  <ItemGroup>
+    <InvoiceGenIisApplication Include="/InvoiceGen">
+      <PhysicalPath>$(DeploymentDirectory)</PhysicalPath>
+      <AppPool>$(InvoiceGenAppPoolName)</AppPool>
+    </InvoiceGenIisApplication>
+  </ItemGroup>
+
+  <Target Name="CleanInstall" DependsOnTargets="Uninstall;Install" />
+  
+  <Target Name="Uninstall">
+    <CallTarget ContinueOnError="false" Targets="UninstallOnIis"/>
+  </Target>
+  <Target Name="UninstallOnIis">
+    <MSBuild.ExtensionPack.Web.Iis7AppPool Name="$(InvoiceGenAppPoolName)" TaskAction="CheckExists">
+      <Output PropertyName="InvoiceGenAppPoolExists" TaskParameter="Exists"/>
+    </MSBuild.ExtensionPack.Web.Iis7AppPool>
+    <MSBuild.ExtensionPack.Web.Iis7AppPool Condition="$(InvoiceGenAppPoolExists) == 'True'" Name="$(InvoiceGenAppPoolName)" TaskAction="Delete"/>
+    <MSBuild.ExtensionPack.Web.Iis7Application Applications="@(InvoiceGenIisApplication)" TaskAction="CheckExists" Website="Default Web Site">
+      <Output PropertyName="InvoiceGenIisApplicationExists" TaskParameter="Exists"/>
+    </MSBuild.ExtensionPack.Web.Iis7Application>
+    <MSBuild.ExtensionPack.Web.Iis7Application Applications="@(InvoiceGenIisApplication)" Condition="$(InvoiceGenIisApplicationExists) == 'True'" TaskAction="Delete" Website="Default Web Site"/>
+  </Target>
+
+  <Target Name="Install">
+    <CallTarget ContinueOnError="false" Targets="InstallOnIis"/>
+  </Target>
+  <Target Name="InstallOnIis">
+    <MSBuild.ExtensionPack.Web.Iis7AppPool Enable32BitAppOnWin64="True" IdentityType="NetworkService" IdleTimeout="1440" ManagedRuntimeVersion="v4.0" Name="$(InvoiceGenAppPoolName)" PeriodicRestartTime="10080" TaskAction="Create"/>
+    <MSBuild.ExtensionPack.Web.Iis7Website Applications="@(InvoiceGenIisApplication)" Name="Default Web Site" TaskAction="AddApplication"/>
+  </Target>
+</Project>

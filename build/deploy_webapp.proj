@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Deploy" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <RootPath>$(MSBuildProjectDirectory)\..</RootPath>
+    <BuildDirectory>$(RootPath)\build</BuildDirectory>
+    <TargetDirectory>$(BuildDirectory)\target</TargetDirectory>
+	<SourceDirectory>$(RootPath)\src</SourceDirectory>
+	<Configuration Condition="'$(Configuration)'==''">Release</Configuration>
+	<WebAppBuildDirectory>$(SourceDirectory)\InvoiceGen\obj\$(Configuration)\Package\PackageTmp</WebAppBuildDirectory>
+	<WebAppTargetDirectory>$(TargetDirectory)\WebApp</WebAppTargetDirectory>
+  </PropertyGroup>
+  
+  <Target Name="Deploy">
+    <MakeDir Directories="$(WebAppTargetDirectory)" />
+  	<CreateItem Include="
+	              $(WebAppBuildDirectory)\**\*"
+				Exclude="
+				  $(WebAppBuildDirectory)\bin\roslyn\**\*">
+      <Output ItemName="WebAppFiles" TaskParameter="Include"/>
+    </CreateItem>
+    <Copy DestinationFolder="$(WebAppTargetDirectory)\%(RecursiveDir)" SourceFiles="@(WebAppFiles)" />
+  </Target>
+</Project>

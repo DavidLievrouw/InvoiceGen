@@ -11,44 +11,15 @@ namespace DavidLievrouw.InvoiceGen.Configuration {
   public class CustomJsonSerializerTests {
     CustomJsonSerializer _sut;
 
-    [TestCase("application/json")]
-    [TestCase("application/JSON")]
-    [TestCase("application/json-prop")]
-    [TestCase("application/JSON-prop")]
-    [TestCase("text/json")]
-    [TestCase("text/JSON")]
-    [TestCase("application/vndTEST+json")]
-    [TestCase("application/vndTEST+JSON")]
-    [TestCase("application/json;otherdata")]
-    [TestCase("application/json; charset=utf-8")]
-    public void CanSerializeJsonContentType(string contentType) {
-      Assert.That(_sut.CanSerialize(contentType), Is.True);
+    [SetUp]
+    public void SetUp() {
+      _sut = new CustomJsonSerializer();
     }
 
     [TestCase("image/png")]
     [TestCase("text/html")]
     public void CannotSerializeNonJsonContentType(string contentType) {
       Assert.That(_sut.CanSerialize(contentType), Is.False);
-    }
-
-    class Data {
-      public string Message { get; set; }
-      public int Number { get; set; }
-      public bool AssertionSucceeded { get; set; }
-    }
-
-    class DataWithPrivateSetters {
-      public DataWithPrivateSetters(string privateSetter) {
-        PrivateSetter = privateSetter;
-      }
-
-      public string PublicSetter { get; set; }
-      public string PrivateSetter { get; }
-    }
-
-    [SetUp]
-    public void SetUp() {
-      _sut = new CustomJsonSerializer();
     }
 
     [Test]
@@ -72,6 +43,20 @@ namespace DavidLievrouw.InvoiceGen.Configuration {
         Assert.DoesNotThrow(() => _sut.Serialize(contentType, originalData, memStream));
         Assert.That(memStream.Position, Is.GreaterThan(0));
       }
+    }
+
+    [TestCase("application/json")]
+    [TestCase("application/JSON")]
+    [TestCase("application/json-prop")]
+    [TestCase("application/JSON-prop")]
+    [TestCase("text/json")]
+    [TestCase("text/JSON")]
+    [TestCase("application/vndTEST+json")]
+    [TestCase("application/vndTEST+JSON")]
+    [TestCase("application/json;otherdata")]
+    [TestCase("application/json; charset=utf-8")]
+    public void CanSerializeJsonContentType(string contentType) {
+      Assert.That(_sut.CanSerialize(contentType), Is.True);
     }
 
     [Test]
@@ -148,6 +133,21 @@ namespace DavidLievrouw.InvoiceGen.Configuration {
 
       Assert.That(deserializedData.PublicSetter, Is.EqualTo(originalData.PublicSetter));
       Assert.That(deserializedData.PrivateSetter, Is.EqualTo(originalData.PrivateSetter));
+    }
+
+    class Data {
+      public string Message { get; set; }
+      public int Number { get; set; }
+      public bool AssertionSucceeded { get; set; }
+    }
+
+    class DataWithPrivateSetters {
+      public DataWithPrivateSetters(string privateSetter) {
+        PrivateSetter = privateSetter;
+      }
+
+      public string PublicSetter { get; set; }
+      public string PrivateSetter { get; private set; }
     }
   }
 }
