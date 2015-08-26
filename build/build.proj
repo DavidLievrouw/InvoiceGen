@@ -15,6 +15,14 @@
     <BuildConfiguration>Release</BuildConfiguration>
   </PropertyGroup>
   
+  <Target Name="SetVisualStudioVersion">
+    <PropertyGroup>
+	  <VisualStudioVersion Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v12.0')">12.0</VisualStudioVersion>
+	  <VisualStudioVersion Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v14.0')">14.0</VisualStudioVersion>
+	</PropertyGroup>
+	<Message Text="Using Visual Studio version '$(VisualStudioVersion)'." />
+  </Target>
+  
   <Target Name="InitVersion">
     <ReadLinesFromFile File="$(RootPath)\version.txt">
       <Output TaskParameter="Lines" PropertyName="ProductVersionPrefix" />
@@ -25,7 +33,7 @@
     </PropertyGroup>
   </Target>
 
-  <Target Name="Build" DependsOnTargets="InitVersion">
+  <Target Name="Build" DependsOnTargets="SetVisualStudioVersion;InitVersion">
     <Time>
       <Output TaskParameter="Year" PropertyName="Year" />
     </Time>
@@ -45,7 +53,7 @@
 				  AssemblyDelaySign="false" />
 	
     <MSBuild Projects="$(MSBuildProjectDirectory)\build_webapp.proj;"
-             Properties="Configuration=$(BuildConfiguration);ProductVersion=$(ProductVersion);"
+             Properties="Configuration=$(BuildConfiguration);ProductVersion=$(ProductVersion);VisualStudioVersion=$(VisualStudioVersion);"
 			 StopOnFirstFailure="true"
 			 Targets="Build"
 			 BuildInParallel="false"/>

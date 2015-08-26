@@ -2,16 +2,29 @@
 <Project DefaultTargets="Deploy" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <RootPath>$(MSBuildProjectDirectory)\..</RootPath>
+	<PackagesPath>$(MSBuildProjectDirectory)\packages</PackagesPath>
+    <ExtensionTasksPath>$(PackagesPath)\MSBuild.Extension.Pack.1.6.0\build\net40</ExtensionTasksPath>
     <BuildDirectory>$(RootPath)\build</BuildDirectory>
     <TargetDirectory>$(BuildDirectory)\target</TargetDirectory>
 	<SourceDirectory>$(RootPath)\src</SourceDirectory>
 	<Configuration Condition="'$(Configuration)'==''">Release</Configuration>
 	<WebAppBuildDirectory>$(SourceDirectory)\InvoiceGen\obj\$(Configuration)\Package\PackageTmp</WebAppBuildDirectory>
 	<WebAppTargetDirectory>$(TargetDirectory)\WebApp</WebAppTargetDirectory>
+	<WebConfigPath>$(WebAppTargetDirectory)\Web.config</WebConfigPath>
   </PropertyGroup>
+  <Import Project="$(ExtensionTasksPath)\MSBuild.Extension.Pack.targets"/>
+
+  <Target Name="UpdateWebConfig">
+  	<MSBuild.ExtensionPack.Xml.XmlFile
+	  TaskAction="UpdateAttribute" 
+      File="$(WebConfigPath)" 
+      XPath="/configuration/system.web/compilation"
+      Key="debug" Value="false" />
+  </Target>
   
   <Target Name="Deploy">
     <MakeDir Directories="$(WebAppTargetDirectory)" />
+	
   	<CreateItem Include="
 	              $(WebAppBuildDirectory)\**\*"
 				Exclude="
@@ -19,5 +32,7 @@
       <Output ItemName="WebAppFiles" TaskParameter="Include"/>
     </CreateItem>
     <Copy DestinationFolder="$(WebAppTargetDirectory)\%(RecursiveDir)" SourceFiles="@(WebAppFiles)" />
+	
+	<CallTarget Targets="UpdateWebConfig"/>
   </Target>
 </Project>

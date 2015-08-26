@@ -19,6 +19,7 @@
   </Target>
   
   <Target Name="Build" DependsOnTargets="Clean">
+  <Message Text="$(VisualStudioVersion)" />
     <MSBuild Projects="$(SourceDirectory)\InvoiceGen\InvoiceGen.csproj"
 	         Targets="Package"
 			 StopOnFirstFailure="true"
