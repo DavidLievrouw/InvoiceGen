@@ -6,7 +6,7 @@
     <PackagesDirectory>$(MSBuildProjectDirectory)\packages</PackagesDirectory>
 	<MSBuildCommunityTasksPath>$(PackagesDirectory)\MSBuildTasks.1.4.0.88\tools</MSBuildCommunityTasksPath>
 	<Configuration Condition="'$(Configuration)'==''">Release</Configuration>
-	<ProductVersion>1.0.0</ProductVersion>
+	<ProductVersion Condition="'$(ProductVersion)'==''">1.0.0</ProductVersion>
 	<WebAppBuildDirectory>$(SourceDirectory)\InvoiceGen\obj\$(Configuration)\Package\PackageTmp</WebAppBuildDirectory>
 	<VisualStudioVersion Condition="'$(VisualStudioVersion)'==''">14.0</VisualStudioVersion>
   </PropertyGroup>
@@ -19,7 +19,6 @@
   </Target>
   
   <Target Name="Build" DependsOnTargets="Clean">
-  <Message Text="$(VisualStudioVersion)" />
     <MSBuild Projects="$(SourceDirectory)\InvoiceGen\InvoiceGen.csproj"
 	         Targets="Package"
 			 StopOnFirstFailure="true"
