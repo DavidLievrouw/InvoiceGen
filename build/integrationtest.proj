@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="UnitTest" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="IntegrationTest" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <RootPath>$(MSBuildProjectDirectory)\..</RootPath>
     <SourceDirectory>$(RootPath)\src</SourceDirectory>
+    <BuildDirectory>$(RootPath)\build</BuildDirectory>
+	<ResultsOutputPath>$(BuildDirectory)\log</ResultsOutputPath>
+    <PackagesPath>$(BuildDirectory)\packages</PackagesPath>
 	<Configuration Condition="'$(Configuration)'==''">Release</Configuration>
-    <ResultsOutputPath>$(MSBuildProjectDirectory)\log</ResultsOutputPath>
-    <PackagesPath>$(MSBuildProjectDirectory)\packages</PackagesPath>
     <MSBuildCommunityTasksPath>$(PackagesPath)\MSBuildTasks.1.4.0.88\tools</MSBuildCommunityTasksPath>
 	<NUnitPath>$(PackagesPath)\NUnit.Runners.2.6.4\tools</NUnitPath>
+	<VisualStudioVersion Condition="'$(VisualStudioVersion)'==''">14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets"/>
   
@@ -21,7 +23,7 @@
   
   <Target Name="Build" DependsOnTargets="SetVisualStudioVersion">
     <MSBuild 
-      Projects="$(SourceDirectory)\InvoiceGen.Tests\InvoiceGen.Tests.csproj;"
+      Projects="$(SourceDirectory)\InvoiceGen.IntegrationTests\InvoiceGen.IntegrationTests.csproj;"
 	  Targets="Build"
       Properties="Configuration=$(Configuration);VisualStudioVersion=$(VisualStudioVersion)"
       StopOnFirstFailure="true"
@@ -29,9 +31,9 @@
       BuildInParallel="false" />
   </Target>
   
-  <Target Name="UnitTestNET" DependsOnTargets="Build">
+  <Target Name="IntegrationTestNET" DependsOnTargets="Build">
     <CreateItem Include="
-	              $(SourceDirectory)\InvoiceGen.Tests\bin\$(Configuration)\DLInvoiceGen.Tests.dll;">
+	              $(SourceDirectory)\InvoiceGen.IntegrationTests\bin\$(Configuration)\DLInvoiceGen.IntegrationTests.dll;">
       <Output TaskParameter="Include" ItemName="NUnitTestAssemblies" />
     </CreateItem>
     
@@ -40,9 +42,9 @@
       ToolPath="$(NUnitPath)"
       Framework="net-4.5"
       ContinueOnError="true"
-      OutputXmlFile="$(ResultsOutputPath)\nunit-unittests.xml" />
-    <Message Text="##teamcity[importData type='nunit' path='$(ResultsOutputPath)\nunit-unittests.xml']"/>
+      OutputXmlFile="$(ResultsOutputPath)\nunit-integrationtests.xml" />
+    <Message Text="##teamcity[importData type='nunit' path='$(ResultsOutputPath)\nunit-integrationtests.xml']"/>
   </Target>
-  
-  <Target Name="UnitTest" DependsOnTargets="UnitTestNET" />
+
+  <Target Name="IntegrationTest" DependsOnTargets="IntegrationTestNET" />
 </Project>

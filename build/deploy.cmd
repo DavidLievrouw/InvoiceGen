@@ -2,5 +2,5 @@ cls
 echo off
 SET DIR=%~dp0%
 IF NOT EXIST "%DIR%log" MKDIR "%DIR%log"
-"%WINDIR%\Microsoft.Net\Framework\v4.0.30319\msbuild.exe" /m /v:n "%DIR%invoicegen.proj" /target:Deploy /logger:FileLogger,Microsoft.Build.Engine;LogFile=%DIR%log/deploy.log
+"%WINDIR%\Microsoft.Net\Framework\v4.0.30319\msbuild.exe" /m /v:n "%DIR%DavidLievrouw.InvoiceGen.proj" /target:Deploy /logger:FileLogger,Microsoft.Build.Engine;LogFile=%DIR%log/deploy.log
 pause

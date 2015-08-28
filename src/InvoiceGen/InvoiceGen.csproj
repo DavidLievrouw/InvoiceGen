@@ -126,6 +126,12 @@
   <ItemGroup>
     <Content Include="Web.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\InvoiceGen.Data\InvoiceGen.Data.csproj">
+      <Project>{4d55d92e-b5c8-4fc4-8ef1-fc89a6aab758}</Project>
+      <Name>InvoiceGen.Data</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
