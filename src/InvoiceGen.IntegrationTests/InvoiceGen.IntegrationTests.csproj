@@ -88,6 +88,7 @@
     </Compile>
     <Compile Include="DatabaseConfiguration.cs" />
     <Compile Include="DatabaseConfigurationReader.cs" />
+    <Compile Include="DatabasePrepper.cs" />
     <Compile Include="Data\DapperTests.cs" />
     <Compile Include="IntegrationTestBase.cs" />
   </ItemGroup>

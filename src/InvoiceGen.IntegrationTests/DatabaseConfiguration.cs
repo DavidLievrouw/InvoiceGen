@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Configuration;
+using System.Data.OleDb;
+using System.IO;
 
 namespace DavidLievrouw.InvoiceGen {
   public class DatabaseConfiguration {
@@ -9,5 +11,12 @@ namespace DavidLievrouw.InvoiceGen {
     }
 
     public ConnectionStringSettings ConnectionStringSettings { get; }
+
+    public FileInfo DatabaseFile {
+      get {
+        var builder = new OleDbConnectionStringBuilder(ConnectionStringSettings.ConnectionString);
+        return new FileInfo(builder.DataSource);
+      }
+    }
   }
 }
