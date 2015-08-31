@@ -48,7 +48,7 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Dapper\DbConnectionFactory.cs" />
+    <Compile Include="Dapper\DbConnectionFactoryByConnectionString.cs" />
     <Compile Include="Dapper\IDbConnectionFactory.cs" />
     <Compile Include="Dapper\IQueryExecutor.cs" />
     <Compile Include="Dapper\QueryExecutor.cs" />
