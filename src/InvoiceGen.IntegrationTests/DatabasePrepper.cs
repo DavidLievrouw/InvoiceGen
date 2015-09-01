@@ -8,7 +8,7 @@ namespace DavidLievrouw.InvoiceGen {
     readonly DatabaseConfiguration _dbConfig;
 
     public DatabasePrepper(DatabaseConfiguration dbConfig) {
-      if (dbConfig == null) throw new ArgumentNullException(nameof(dbConfig));
+      if (dbConfig == null) throw new ArgumentNullException("dbConfig");
       _dbConfig = dbConfig;
     }
 
@@ -16,7 +16,11 @@ namespace DavidLievrouw.InvoiceGen {
       var uniqueId = Guid.NewGuid();
       var builder = new OleDbConnectionStringBuilder(_dbConfig.ConnectionStringSettings.ConnectionString);
       var originalDbFile = new FileInfo(builder.DataSource);
-      var newFileFullName = Path.Combine(originalDbFile.Directory.FullName, $"{Path.GetFileNameWithoutExtension(originalDbFile.FullName)}_{uniqueId}{Path.GetExtension(originalDbFile.FullName)}");
+      var newFileFullName = Path.Combine(originalDbFile.Directory.FullName,
+                                         string.Format("{0}_{1}{2}", 
+                                          Path.GetFileNameWithoutExtension(originalDbFile.FullName), 
+                                          uniqueId,
+                                          Path.GetExtension(originalDbFile.FullName)));
 
       originalDbFile.CopyTo(newFileFullName);
 

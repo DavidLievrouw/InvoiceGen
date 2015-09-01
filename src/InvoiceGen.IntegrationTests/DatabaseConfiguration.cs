@@ -6,11 +6,11 @@ using System.IO;
 namespace DavidLievrouw.InvoiceGen {
   public class DatabaseConfiguration {
     public DatabaseConfiguration(ConnectionStringSettings connectionStringSettings) {
-      if (connectionStringSettings == null) throw new ArgumentNullException(nameof(connectionStringSettings));
+      if (connectionStringSettings == null) throw new ArgumentNullException("connectionStringSettings");
       ConnectionStringSettings = connectionStringSettings;
     }
 
-    public ConnectionStringSettings ConnectionStringSettings { get; }
+    public ConnectionStringSettings ConnectionStringSettings { get; private set; }
 
     public FileInfo DatabaseFile {
       get {
