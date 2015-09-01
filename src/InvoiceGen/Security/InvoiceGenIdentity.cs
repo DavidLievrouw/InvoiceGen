@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using InvoiceGen.Domain;
+using DavidLievrouw.InvoiceGen.Domain;
 using Nancy.Security;
 
 namespace DavidLievrouw.InvoiceGen.Security {

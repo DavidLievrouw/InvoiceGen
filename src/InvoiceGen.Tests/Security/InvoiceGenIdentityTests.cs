@@ -1,4 +1,4 @@
-﻿using InvoiceGen.Domain;
+﻿using DavidLievrouw.InvoiceGen.Domain;
 using NUnit.Framework;
 
 namespace DavidLievrouw.InvoiceGen.Security {

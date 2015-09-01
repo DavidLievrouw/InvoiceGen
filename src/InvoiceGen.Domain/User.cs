@@ -1,4 +1,4 @@
-﻿namespace InvoiceGen.Domain {
+﻿namespace DavidLievrouw.InvoiceGen.Domain {
   public class User {
     public Login Login { get; set; }
     public string GivenName { get; set; }

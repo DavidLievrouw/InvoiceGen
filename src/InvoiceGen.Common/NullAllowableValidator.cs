@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 
-namespace InvoiceGen.Common {
+namespace DavidLievrouw.InvoiceGen.Common {
   public abstract class NullAllowableValidator<T> : AbstractValidator<T> {
     public bool IsNullAllowed { get; set; }
     

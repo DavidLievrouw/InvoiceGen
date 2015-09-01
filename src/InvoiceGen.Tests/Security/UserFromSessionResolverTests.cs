@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web;
-using InvoiceGen.Domain;
+using DavidLievrouw.InvoiceGen.Domain;
+using FakeItEasy;
 using Nancy;
 using NUnit.Framework;
 
@@ -11,6 +12,7 @@ namespace DavidLievrouw.InvoiceGen.Security {
     const string RequestEnvironmentKey = "OWIN_REQUEST_ENVIRONMENT";
     NancyContext _nancyContext;
     IDictionary<string, object> _owinEnvironment;
+    ISessionResolver _sessionResolver;
     UserFromSessionResolver _sut;
 
     [SetUp]
@@ -19,7 +21,13 @@ namespace DavidLievrouw.InvoiceGen.Security {
       _owinEnvironment = new Dictionary<string, object>();
       _nancyContext.Items.Add(RequestEnvironmentKey, _owinEnvironment);
 
-      _sut = new UserFromSessionResolver();
+      _sessionResolver = _sessionResolver.Fake();
+      _sut = new UserFromSessionResolver(_sessionResolver);
+    }
+
+    [Test]
+    public void ConstructorTests() {
+      Assert.That(_sut.NoDependenciesAreOptional());
     }
 
     [Test]
@@ -28,53 +36,58 @@ namespace DavidLievrouw.InvoiceGen.Security {
     }
 
     [Test]
-    public void GivenContextContainsNoOwinEnvironment_ReturnsNull() {
-      _nancyContext.Items.Clear();
+    public void GivenContextWithoutSession_ReturnsNull() {
+      ConfigureSessionResolver_ToReturn(null);
 
       var actual = _sut.ResolveUser(_nancyContext);
       Assert.That(actual, Is.Null);
     }
 
     [Test]
-    public void GivenContextContainsNoHttpContext_ReturnsNull() {
+    public void GivenContextWithSessionWithoutUser_ReturnsNull() {
+      var session = new FakeSession();
+      ConfigureSessionResolver_ToReturn(session);
       var actual = _sut.ResolveUser(_nancyContext);
       Assert.That(actual, Is.Null);
     }
 
     [Test]
-    public void GivenHttpContextContainsNoSession_ReturnsNull() {
-      var httpContext = new HttpContextBuilder()
-        .New()
-        .Build();
-      _owinEnvironment.Add(typeof(HttpContextBase).FullName, httpContext);
-
+    public void GivenContextWithSessionWithNullUser_ReturnsNull() {
+      var session = new FakeSession {["user"] = null};
+      ConfigureSessionResolver_ToReturn(session);
       var actual = _sut.ResolveUser(_nancyContext);
       Assert.That(actual, Is.Null);
     }
 
     [Test]
-    public void GivenSessionNoUser_ReturnsNull() {
-      var httpContext = new HttpContextBuilder()
-        .New()
-        .WithUser(null)
-        .Build();
-      _owinEnvironment.Add(typeof(HttpContextBase).FullName, httpContext);
-
-      var actual = _sut.ResolveUser(_nancyContext);
-      Assert.That(actual, Is.Null);
-    }
-
-    [Test]
-    public void GivenSessionWithUser_ReturnsUser() {
+    public void GivenContextWithSessionWithUser_ReturnsUser() {
       var user = new User();
-      var httpContext = new HttpContextBuilder()
-        .New()
-        .WithUser(user)
-        .Build();
-      _owinEnvironment.Add(typeof(HttpContextBase).FullName, httpContext);
-
+      var session = new FakeSession {["user"] = user};
+      ConfigureSessionResolver_ToReturn(session);
       var actual = _sut.ResolveUser(_nancyContext);
       Assert.That(actual, Is.EqualTo(user));
+    }
+
+    void ConfigureSessionResolver_ToReturn(HttpSessionStateBase session) {
+      A.CallTo(() => _sessionResolver.ResolveSession(A<NancyContext>._))
+       .Returns(session);
+    }
+
+    class FakeSession : HttpSessionStateBase {
+      readonly Dictionary<string, object> _items;
+
+      public FakeSession() {
+        _items = new Dictionary<string, object>(StringComparer.InvariantCultureIgnoreCase);
+      }
+
+      public override object this[string name] {
+        get {
+          return _items.ContainsKey(name)
+            ? _items[name]
+            : null;
+        }
+        set { _items[name] = value; }
+      }
     }
   }
 }

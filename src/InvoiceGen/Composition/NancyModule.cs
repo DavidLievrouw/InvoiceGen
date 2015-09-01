@@ -3,9 +3,9 @@ using Autofac;
 using Autofac.Core;
 using DavidLievrouw.InvoiceGen.Api.Handlers;
 using DavidLievrouw.InvoiceGen.App;
+using DavidLievrouw.InvoiceGen.Common;
 using DavidLievrouw.Utils;
 using FluentValidation;
-using InvoiceGen.Common;
 
 namespace DavidLievrouw.InvoiceGen.Composition {
   public class NancyModule : Module {
