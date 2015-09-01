@@ -2,8 +2,12 @@
 using System.IO;
 using System.Web.Configuration;
 using Autofac;
+using DavidLievrouw.InvoiceGen.Api.Handlers;
+using DavidLievrouw.InvoiceGen.Api.Models;
 using DavidLievrouw.InvoiceGen.Configuration;
 using DavidLievrouw.InvoiceGen.Security;
+using DavidLievrouw.Utils;
+using InvoiceGen.Domain;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -39,6 +43,17 @@ namespace DavidLievrouw.InvoiceGen.Composition {
       Assert.DoesNotThrow(() => actualResult = _sut.Resolve(serviceType));
       Assert.That(actualResult, Is.Not.Null);
       Assert.That(actualResult, Is.InstanceOf(instanceType));
+    }
+
+    [TestCase(typeof(ICommandHandler<LoginRequest>), typeof(ValidationAwareCommandHandler<LoginRequest>))]
+    [TestCase(typeof(IQueryHandler<GetCurrentUserRequest, User>), typeof(ValidationAwareQueryHandler<GetCurrentUserRequest, User>))]
+    [TestCase(typeof(INancyCommandHandler<LoginRequest>), typeof(NancyCommandHandler<LoginRequest>))]
+    [TestCase(typeof(INancyQueryHandler<GetCurrentUserRequest, User>), typeof(NancyQueryHandler<GetCurrentUserRequest, User>))]
+    public void RegistersDecoratorsCorrectly(Type requestedType, Type expectedType) {
+      object actualResult = null;
+      Assert.DoesNotThrow(() => actualResult = _sut.Resolve(requestedType));
+      Assert.That(actualResult, Is.Not.Null);
+      Assert.That(actualResult, Is.InstanceOf(expectedType));
     }
   }
 }
