@@ -1,4 +1,4 @@
-using InvoiceGen.Domain;
+using DavidLievrouw.InvoiceGen.Domain;
 using Nancy;
 
 namespace DavidLievrouw.InvoiceGen.Security {

@@ -1,5 +1,4 @@
-﻿using InvoiceGen.Common;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace DavidLievrouw.InvoiceGen.Common {
   [TestFixture]

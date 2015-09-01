@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Web;
 using System.Web.SessionState;
-using InvoiceGen.Domain;
+using DavidLievrouw.InvoiceGen.Domain;
 
 namespace DavidLievrouw.InvoiceGen.Security {
   public class HttpContextBuilder {
@@ -16,7 +16,7 @@ namespace DavidLievrouw.InvoiceGen.Security {
       return this;
     }
 
-    public HttpContextBuilder WithUser(User user) {
+    public HttpContextBuilder WithSession() {
       var sessionContainer = new HttpSessionStateContainer("id",
                                                            new SessionStateItemCollection(),
                                                            new HttpStaticObjectsCollection(),
@@ -26,16 +26,17 @@ namespace DavidLievrouw.InvoiceGen.Security {
                                                            SessionStateMode.InProc,
                                                            false);
 
-      _instance.Items["AspSession"] = typeof(HttpSessionState).GetConstructor(
-        BindingFlags.NonPublic | BindingFlags.Instance,
-        null,
-        CallingConventions.Standard,
-        new[] {typeof(HttpSessionStateContainer)},
-        null)
+      _instance.Items["AspSession"] = typeof(HttpSessionState).GetConstructor(BindingFlags.NonPublic | BindingFlags.Instance,
+                                                                              null,
+                                                                              CallingConventions.Standard,
+                                                                              new[] {typeof(HttpSessionStateContainer)},
+                                                                              null)
                                                               .Invoke(new object[] {sessionContainer});
+      return this;
+    }
 
+    public HttpContextBuilder WithUser(User user) {
       ((HttpSessionState) _instance.Items["AspSession"])["user"] = user;
-
       return this;
     }
 

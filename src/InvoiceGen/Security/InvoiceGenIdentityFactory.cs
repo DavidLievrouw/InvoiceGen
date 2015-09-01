@@ -1,4 +1,4 @@
-﻿using InvoiceGen.Domain;
+﻿using DavidLievrouw.InvoiceGen.Domain;
 
 namespace DavidLievrouw.InvoiceGen.Security {
   public class InvoiceGenIdentityFactory : IInvoiceGenIdentityFactory {

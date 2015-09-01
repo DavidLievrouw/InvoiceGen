@@ -1,8 +1,10 @@
 ﻿using System;
+using System.IO;
 using DavidLievrouw.InvoiceGen.Api.Handlers;
 using DavidLievrouw.InvoiceGen.Api.Models;
-using InvoiceGen.Domain;
+using DavidLievrouw.InvoiceGen.Domain;
 using Nancy;
+using Nancy.ModelBinding;
 using Nancy.Security;
 
 namespace DavidLievrouw.InvoiceGen.Api {
@@ -21,7 +23,15 @@ namespace DavidLievrouw.InvoiceGen.Api {
                                                        });
       };
 
-      Post["api/user/login", true] = async (parameters, cancellationToken) => await loginCommandHandler.Handle(this);
+      Post["api/user/login", true] = async (parameters, cancellationToken) => await loginCommandHandler.Handle(this,
+                                                                                                               () => {
+                                                                                                                 var loginRequest = this.Bind<LoginRequest>();
+                                                                                                                 return new LoginRequest {
+                                                                                                                   NancyContext = Context,
+                                                                                                                   Login = loginRequest?.Login,
+                                                                                                                   Password = loginRequest?.Password
+                                                                                                                 };
+                                                                                                               });
     }
   }
 }

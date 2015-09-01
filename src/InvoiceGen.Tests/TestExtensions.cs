@@ -24,11 +24,11 @@ namespace DavidLievrouw.InvoiceGen {
       return HasSamePropertyValuesAs(first, second, ignoreCollectionOrder, null);
     }
 
-    public static bool HasSamePropertyValuesAs<T>(this T first, T second, IEnumerable<string> membersToIgnore) {
+    public static bool HasSamePropertyValuesAs<T>(this T first, T second, params string[] membersToIgnore) {
       return HasSamePropertyValuesAs(first, second, false, membersToIgnore);
     }
 
-    public static bool HasSamePropertyValuesAs<T>(this T first, T second, bool ignoreCollectionOrder, IEnumerable<string> membersToIgnore) {
+    public static bool HasSamePropertyValuesAs<T>(this T first, T second, bool ignoreCollectionOrder, params string[] membersToIgnore) {
       var compareLogic = new CompareLogic {
         Config = new ComparisonConfig {
           IgnoreObjectTypes = true, // allows anonymous types to be compared
@@ -46,7 +46,7 @@ namespace DavidLievrouw.InvoiceGen {
       return IsSameCollectionAs(first, second, null);
     }
 
-    public static bool IsSameCollectionAs<T>(this IEnumerable<T> first, IEnumerable<T> second, IEnumerable<string> membersToIgnore) {
+    public static bool IsSameCollectionAs<T>(this IEnumerable<T> first, IEnumerable<T> second, params string[] membersToIgnore) {
       if (first == null && second == null) return true;
       if (first == null || second == null) return false;
 

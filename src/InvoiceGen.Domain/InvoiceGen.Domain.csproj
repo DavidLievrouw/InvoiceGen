@@ -7,8 +7,8 @@
     <ProjectGuid>{8CCAEB96-4DE5-44E4-B5A1-71AB8D11C443}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>InvoiceGen.Domain</RootNamespace>
-    <AssemblyName>InvoiceGen.Domain</AssemblyName>
+    <RootNamespace>DavidLievrouw.InvoiceGen.Domain</RootNamespace>
+    <AssemblyName>DLInvoiceGen.Domain</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

@@ -5,9 +5,9 @@ using Autofac;
 using DavidLievrouw.InvoiceGen.Api.Handlers;
 using DavidLievrouw.InvoiceGen.Api.Models;
 using DavidLievrouw.InvoiceGen.Configuration;
+using DavidLievrouw.InvoiceGen.Domain;
 using DavidLievrouw.InvoiceGen.Security;
 using DavidLievrouw.Utils;
-using InvoiceGen.Domain;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
