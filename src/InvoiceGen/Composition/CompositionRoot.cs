@@ -18,6 +18,7 @@ namespace DavidLievrouw.InvoiceGen.Composition {
              .SingleInstance();
 
       builder.RegisterModule<SecurityModule>();
+      builder.RegisterModule<NancyModule>();
 
       return builder.Build();
     }
