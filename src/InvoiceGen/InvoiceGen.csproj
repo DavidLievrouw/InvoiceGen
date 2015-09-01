@@ -110,9 +110,16 @@
     <Compile Include="App\AppModule.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Composition\CompositionRoot.cs" />
+    <Compile Include="Composition\SecurityModule.cs" />
     <Compile Include="Configuration\CamelCaseAndSupportForPrivateSettersContractResolver.cs" />
     <Compile Include="Configuration\CustomJsonSerializer.cs" />
     <Compile Include="Configuration\ICustomJsonSerializer.cs" />
+    <Compile Include="OwinExtensions.cs" />
+    <Compile Include="Security\IInvoiceGenIdentityFactory.cs" />
+    <Compile Include="Security\InvoiceGenIdentity.cs" />
+    <Compile Include="Security\InvoiceGenIdentityFactory.cs" />
+    <Compile Include="Security\IUserFromSessionResolver.cs" />
+    <Compile Include="Security\UserFromSessionResolver.cs" />
     <Compile Include="Startup.cs" />
     <Content Include="App\Login\login.html" />
     <None Include="packages.config" />
@@ -130,11 +137,20 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\InvoiceGen.Common\InvoiceGen.Common.csproj">
+      <Project>{8223d04c-a3a5-4282-8bb0-f1a264d60d27}</Project>
+      <Name>InvoiceGen.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InvoiceGen.Data\InvoiceGen.Data.csproj">
       <Project>{4d55d92e-b5c8-4fc4-8ef1-fc89a6aab758}</Project>
       <Name>InvoiceGen.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\InvoiceGen.Domain\InvoiceGen.Domain.csproj">
+      <Project>{8ccaeb96-4de5-44e4-b5a1-71ab8d11c443}</Project>
+      <Name>InvoiceGen.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

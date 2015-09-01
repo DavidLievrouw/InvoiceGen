@@ -17,6 +17,8 @@ namespace DavidLievrouw.InvoiceGen.Composition {
              .AsImplementedInterfaces()
              .SingleInstance();
 
+      builder.RegisterModule<SecurityModule>();
+
       return builder.Build();
     }
   }
