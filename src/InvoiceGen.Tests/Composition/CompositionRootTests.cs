@@ -3,6 +3,7 @@ using System.IO;
 using System.Web.Configuration;
 using Autofac;
 using DavidLievrouw.InvoiceGen.Configuration;
+using DavidLievrouw.InvoiceGen.Security;
 using Newtonsoft.Json;
 using NUnit.Framework;
 
@@ -22,9 +23,18 @@ namespace DavidLievrouw.InvoiceGen.Composition {
       _sut = CompositionRoot.Compose(configuration);
     }
 
+    [TestCase(typeof(IUserFromSessionResolver))]
+    [TestCase(typeof(IInvoiceGenIdentityFactory))]
+    public void ShouldBeRegistered(Type serviceType) {
+      object actualResult = null;
+      Assert.DoesNotThrow(() => actualResult = _sut.Resolve(serviceType));
+      Assert.That(actualResult, Is.Not.Null);
+      Assert.That(actualResult, Is.InstanceOf(serviceType));
+    }
+
     [TestCase(typeof(JsonSerializer), typeof(CustomJsonSerializer))]
     [TestCase(typeof(ICustomJsonSerializer), typeof(CustomJsonSerializer))]
-    public void ShouldBeRegistered(Type serviceType, Type instanceType) {
+    public void ShouldBeRegisteredCorrectly(Type serviceType, Type instanceType) {
       object actualResult = null;
       Assert.DoesNotThrow(() => actualResult = _sut.Resolve(serviceType));
       Assert.That(actualResult, Is.Not.Null);

@@ -55,6 +55,10 @@
       <HintPath>..\packages\CompareNETObjects.3.02.0.0\lib\net451\KellermanSoftware.Compare-NET-Objects.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Owin, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.3.0.1\lib\net45\Microsoft.Owin.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Nancy, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Nancy.1.2.0\lib\net40\Nancy.dll</HintPath>
       <Private>True</Private>
@@ -69,6 +73,10 @@
     </Reference>
     <Reference Include="nunit.framework, Version=2.6.4.14350, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.2.6.4\lib\nunit.framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
@@ -92,12 +100,24 @@
     <Compile Include="Configuration\InvoiceGenRootPathProvider.cs" />
     <Compile Include="CustomBootstrapper.cs" />
     <Compile Include="Configuration\CustomJsonSerializerTests.cs" />
+    <Compile Include="Security\HttpContextBuilder.cs" />
+    <Compile Include="Security\InvoiceGenIdentityFactoryTests.cs" />
+    <Compile Include="Security\InvoiceGenIdentityTests.cs" />
+    <Compile Include="Security\UserFromSessionResolverTests.cs" />
     <Compile Include="TestExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\InvoiceGen.Common\InvoiceGen.Common.csproj">
+      <Project>{8223d04c-a3a5-4282-8bb0-f1a264d60d27}</Project>
+      <Name>InvoiceGen.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InvoiceGen.Data\InvoiceGen.Data.csproj">
       <Project>{4d55d92e-b5c8-4fc4-8ef1-fc89a6aab758}</Project>
       <Name>InvoiceGen.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InvoiceGen.Domain\InvoiceGen.Domain.csproj">
+      <Project>{8ccaeb96-4de5-44e4-b5a1-71ab8d11c443}</Project>
+      <Name>InvoiceGen.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\InvoiceGen\InvoiceGen.csproj">
       <Project>{ff236851-4b37-41ad-9fef-c9a7e69fb0a6}</Project>

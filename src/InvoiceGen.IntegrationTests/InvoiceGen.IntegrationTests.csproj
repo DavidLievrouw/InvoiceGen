@@ -93,9 +93,17 @@
     <Compile Include="IntegrationTestBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\InvoiceGen.Common\InvoiceGen.Common.csproj">
+      <Project>{8223d04c-a3a5-4282-8bb0-f1a264d60d27}</Project>
+      <Name>InvoiceGen.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\InvoiceGen.Data\InvoiceGen.Data.csproj">
       <Project>{4d55d92e-b5c8-4fc4-8ef1-fc89a6aab758}</Project>
       <Name>InvoiceGen.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InvoiceGen.Domain\InvoiceGen.Domain.csproj">
+      <Project>{8ccaeb96-4de5-44e4-b5a1-71ab8d11c443}</Project>
+      <Name>InvoiceGen.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\InvoiceGen\InvoiceGen.csproj">
       <Project>{ff236851-4b37-41ad-9fef-c9a7e69fb0a6}</Project>

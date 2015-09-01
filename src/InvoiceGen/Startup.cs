@@ -13,6 +13,7 @@ namespace DavidLievrouw.InvoiceGen {
       var container = CompositionRoot.Compose();
 
       app
+        .RequireAspNetSession()
         .UseNancy(
           options => {
             options.Bootstrapper = new Bootstrapper(container);

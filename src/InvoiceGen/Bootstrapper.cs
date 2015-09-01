@@ -1,5 +1,6 @@
 ﻿using System;
 using Autofac;
+using DavidLievrouw.InvoiceGen.Security;
 using Nancy;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.Autofac;
@@ -18,8 +19,16 @@ namespace DavidLievrouw.InvoiceGen {
     }
 
     protected override void ApplicationStartup(ILifetimeScope container, IPipelines pipelines) {
-      base.ApplicationStartup(container, pipelines);
       StaticConfiguration.DisableErrorTraces = false;
+      
+      pipelines.BeforeRequest.AddItemToEndOfPipeline(ctx => {
+        var userResolver = container.Resolve<IUserFromSessionResolver>();
+        var identityFactory = container.Resolve<IInvoiceGenIdentityFactory>();
+        ctx.CurrentUser = identityFactory.Create(userResolver.ResolveUser(ctx));
+        return null;
+      });
+
+      base.ApplicationStartup(container, pipelines);
     }
   }
 }

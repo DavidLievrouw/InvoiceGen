@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4D55D92E-B5C8-4FC4-8EF1-FC89A6AAB758}</ProjectGuid>
+    <ProjectGuid>{8CCAEB96-4DE5-44E4-B5A1-71AB8D11C443}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DavidLievrouw.InvoiceGen.Data</RootNamespace>
-    <AssemblyName>DLInvoiceGen.Data</AssemblyName>
+    <RootNamespace>InvoiceGen.Domain</RootNamespace>
+    <AssemblyName>InvoiceGen.Domain</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -31,35 +31,31 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Dapper, Version=1.40.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dapper.1.42\lib\net45\Dapper.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Dapper\DbConnectionFactoryByConnectionString.cs" />
-    <Compile Include="Dapper\IDbConnectionFactory.cs" />
-    <Compile Include="Dapper\IQueryExecutor.cs" />
-    <Compile Include="Dapper\QueryExecutor.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <Compile Include="Login.cs" />
+    <Compile Include="Password.cs" />
+    <Compile Include="User.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\InvoiceGen.Common\InvoiceGen.Common.csproj">
       <Project>{8223d04c-a3a5-4282-8bb0-f1a264d60d27}</Project>
       <Name>InvoiceGen.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\InvoiceGen.Data\InvoiceGen.Data.csproj">
+      <Project>{4d55d92e-b5c8-4fc4-8ef1-fc89a6aab758}</Project>
+      <Name>InvoiceGen.Data</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
