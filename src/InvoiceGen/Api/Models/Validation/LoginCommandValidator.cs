@@ -2,8 +2,8 @@
 using FluentValidation;
 
 namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
-  public class LoginRequestValidator : NullAllowableValidator<LoginRequest>, ILoginRequestValidator {
-    public LoginRequestValidator() {
+  public class LoginCommandValidator : NullAllowableValidator<LoginCommand>, ILoginCommandValidator {
+    public LoginCommandValidator() {
       RuleFor(req => req.Login)
         .NotNull()
         .WithMessage("A valid login should be specified.");

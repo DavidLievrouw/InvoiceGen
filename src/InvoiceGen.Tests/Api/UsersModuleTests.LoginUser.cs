@@ -25,7 +25,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
 
       [Test]
       public void ParsesRequestCorrectly() {
-        var expectedRequest = new LoginRequest {
+        var expectedCommand = new LoginCommand {
           Login = "JDoe",
           Password = "ThePassword"
         };
@@ -33,7 +33,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
         Post();
 
         A.CallTo(() => _loginCommandHandler
-                   .Handle(A<LoginRequest>.That.Matches(req => req.HasSamePropertyValuesAs(expectedRequest, "NancyContext"))))
+                   .Handle(A<LoginCommand>.That.Matches(req => req.HasSamePropertyValuesAs(expectedCommand, "NancyContext"))))
          .MustHaveHappened(Repeated.Exactly.Once);
       }
 
@@ -43,13 +43,13 @@ namespace DavidLievrouw.InvoiceGen.Api {
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         A.CallTo(() => _loginCommandHandler
-                   .Handle(A<LoginRequest>._))
+                   .Handle(A<LoginCommand>._))
          .MustNotHaveHappened();
       }
 
       [Test]
       public void GivenMissingBodyInRequest_CallsInnerHandlerWithEmptyRequest() {
-        var expectedRequest = new LoginRequest {
+        var expectedCommand = new LoginCommand {
           Login = null,
           Password = null
         };
@@ -58,7 +58,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         A.CallTo(() => _loginCommandHandler
-                   .Handle(A<LoginRequest>.That.Matches(req => req.HasSamePropertyValuesAs(expectedRequest, "NancyContext"))))
+                   .Handle(A<LoginCommand>.That.Matches(req => req.HasSamePropertyValuesAs(expectedCommand, "NancyContext"))))
          .MustHaveHappened(Repeated.Exactly.Once);
       }
 
@@ -72,7 +72,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
 
       [Test]
       public void WithValidJson_ShouldDelegateControlToInnerHandler() {
-        var expectedRequest = new LoginRequest {
+        var expectedCommand = new LoginCommand {
           Login = "JDoe",
           Password = "ThePassword"
         };
@@ -81,7 +81,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         A.CallTo(() => _loginCommandHandler
-                   .Handle(A<LoginRequest>.That.Matches(req => req.HasSamePropertyValuesAs(expectedRequest, "NancyContext"))))
+                   .Handle(A<LoginCommand>.That.Matches(req => req.HasSamePropertyValuesAs(expectedCommand, "NancyContext"))))
          .MustHaveHappened(Repeated.Exactly.Once);
         Assert.That(_loginNancyCommandHandler.GetCallCount(), Is.EqualTo(1));
       }
