@@ -6,16 +6,16 @@ using DavidLievrouw.Utils;
 
 namespace DavidLievrouw.InvoiceGen.Api.Handlers {
   public class LogoutCommandHandler : ICommandHandler<LogoutCommand> {
-    readonly ISessionResolver _sessionResolver;
+    readonly ISessionFromContextResolver _sessionFromContextResolver;
 
-    public LogoutCommandHandler(ISessionResolver sessionResolver) {
-      if (sessionResolver == null) throw new ArgumentNullException("sessionResolver");
-      _sessionResolver = sessionResolver;
+    public LogoutCommandHandler(ISessionFromContextResolver sessionFromContextResolver) {
+      if (sessionFromContextResolver == null) throw new ArgumentNullException("sessionFromContextResolver");
+      _sessionFromContextResolver = sessionFromContextResolver;
     }
 
     public Task Handle(LogoutCommand command) {
       // Abandon session
-      var session = _sessionResolver.ResolveSession(command.NancyContext);
+      var session = _sessionFromContextResolver.ResolveSession(command.NancyContext);
       if (session != null) {
         session["user"] = null;
         session.Abandon();

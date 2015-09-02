@@ -29,6 +29,7 @@ namespace DavidLievrouw.InvoiceGen.Composition {
 
     [TestCase(typeof(IUserFromSessionResolver))]
     [TestCase(typeof(IInvoiceGenIdentityFactory))]
+    [TestCase(typeof(INancyIdentityFromSessionAssigner))]
     public void ShouldBeRegistered(Type serviceType) {
       object actualResult = null;
       Assert.DoesNotThrow(() => actualResult = _sut.Resolve(serviceType));

@@ -4,6 +4,7 @@ using Autofac.Core;
 using DavidLievrouw.InvoiceGen.Api.Handlers;
 using DavidLievrouw.InvoiceGen.App;
 using DavidLievrouw.InvoiceGen.Common;
+using DavidLievrouw.InvoiceGen.Security;
 using DavidLievrouw.Utils;
 using FluentValidation;
 
@@ -13,17 +14,17 @@ namespace DavidLievrouw.InvoiceGen.Composition {
       base.Load(builder);
 
       var nancyAssembly = typeof(AppModule).Assembly;
-      
+
       // Register validators
       builder.RegisterAssemblyTypes(nancyAssembly)
-        .AsClosedTypesOf(typeof(IValidator<>))
-        .SingleInstance();
+             .AsClosedTypesOf(typeof(IValidator<>))
+             .SingleInstance();
 
       // register all command handlers
       builder.RegisterAssemblyTypes(nancyAssembly)
              .Where(t => t.IsClosedTypeOf(typeof(ICommandHandler<>)))
              .As(t => new KeyedService("commandHandler", t.GetInterfaces().Single(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICommandHandler<>))));
-      builder.RegisterGenericDecorator(typeof(ValidationAwareCommandHandler<>), typeof(ICommandHandler<>), fromKey: "commandHandler");
+      builder.RegisterGenericDecorator(typeof(ValidationAwareCommandHandler<>), typeof(ICommandHandler<>), "commandHandler");
 
       // wrap all command handlers in INancyCommandHandler
       nancyAssembly.GetTypes()
@@ -42,7 +43,7 @@ namespace DavidLievrouw.InvoiceGen.Composition {
       builder.RegisterAssemblyTypes(nancyAssembly)
              .Where(t => t.IsClosedTypeOf(typeof(IQueryHandler<,>)))
              .As(t => new KeyedService("queryHandler", t.GetInterfaces().Single(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IQueryHandler<,>))));
-      builder.RegisterGenericDecorator(typeof(ValidationAwareQueryHandler<,>), typeof(IQueryHandler<,>), fromKey: "queryHandler");
+      builder.RegisterGenericDecorator(typeof(ValidationAwareQueryHandler<,>), typeof(IQueryHandler<,>), "queryHandler");
 
       // wrap all query handlers in INancyQueryHandler
       nancyAssembly.GetTypes()
@@ -62,6 +63,11 @@ namespace DavidLievrouw.InvoiceGen.Composition {
                      builder.RegisterType(typeof(NancyQueryHandler<,>).MakeGenericType(genArg1, genArg2))
                             .AsImplementedInterfaces();
                    });
+
+      // Register other stuff
+      builder.RegisterType<NancyIdentityFromSessionAssigner>()
+             .AsImplementedInterfaces()
+             .SingleInstance();
     }
   }
 }

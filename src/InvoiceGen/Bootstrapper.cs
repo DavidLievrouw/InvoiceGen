@@ -20,11 +20,10 @@ namespace DavidLievrouw.InvoiceGen {
 
     protected override void ApplicationStartup(ILifetimeScope container, IPipelines pipelines) {
       StaticConfiguration.DisableErrorTraces = false;
-      
+
       pipelines.BeforeRequest.AddItemToEndOfPipeline(ctx => {
-        var userResolver = container.Resolve<IUserFromSessionResolver>();
-        var identityFactory = container.Resolve<IInvoiceGenIdentityFactory>();
-        ctx.CurrentUser = identityFactory.Create(userResolver.ResolveUser(ctx));
+        var identityAssigner = container.Resolve<INancyIdentityFromSessionAssigner>();
+        identityAssigner.AssignNancyIdentity(ctx);
         return null;
       });
 

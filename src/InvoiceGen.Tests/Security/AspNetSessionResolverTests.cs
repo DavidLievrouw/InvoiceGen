@@ -6,11 +6,11 @@ using NUnit.Framework;
 
 namespace DavidLievrouw.InvoiceGen.Security {
   [TestFixture]
-  public class SessionResolverTests {
+  public class AspNetSessionResolverTests {
     const string RequestEnvironmentKey = "OWIN_REQUEST_ENVIRONMENT";
     NancyContext _nancyContext;
     IDictionary<string, object> _owinEnvironment;
-    SessionResolver _sut;
+    AspNetSessionFromContextResolver _sut;
 
     [SetUp]
     public void SetUp() {
@@ -18,7 +18,7 @@ namespace DavidLievrouw.InvoiceGen.Security {
       _owinEnvironment = new Dictionary<string, object>();
       _nancyContext.Items.Add(RequestEnvironmentKey, _owinEnvironment);
 
-      _sut = new SessionResolver();
+      _sut = new AspNetSessionFromContextResolver();
     }
 
     [Test]
@@ -61,6 +61,7 @@ namespace DavidLievrouw.InvoiceGen.Security {
 
       var actual = _sut.ResolveSession(_nancyContext);
       Assert.That(actual, Is.Not.Null);
+      Assert.That(actual, Is.InstanceOf<AspNetSession>());
     }
   }
 }
