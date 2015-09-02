@@ -11,9 +11,11 @@ namespace DavidLievrouw.InvoiceGen.Api {
   public partial class UsersModuleTests {
     CustomBootstrapper _bootstrapper;
     IQueryHandler<GetCurrentUserRequest, User> _getCurrentUserQueryHandler;
-    ICommandHandler<LoginRequest> _loginCommandHandler;
+    ICommandHandler<LoginCommand> _loginCommandHandler;
+    ICommandHandler<LogoutCommand> _logoutCommandHandler;
     FakeNancyQueryHandler<GetCurrentUserRequest, User> _getCurrentUserNancyQueryHandler;
-    FakeNancyCommandHandler<LoginRequest> _loginNancyCommandHandler;
+    FakeNancyCommandHandler<LoginCommand> _loginNancyCommandHandler;
+    FakeNancyCommandHandler<LogoutCommand> _logoutNancyCommandHandler;
     Browser _browser;
     UsersModule _sut;
     User _authenticatedUser;
@@ -23,8 +25,10 @@ namespace DavidLievrouw.InvoiceGen.Api {
       _getCurrentUserQueryHandler = _getCurrentUserQueryHandler.Fake();
       _getCurrentUserNancyQueryHandler = new FakeNancyQueryHandler<GetCurrentUserRequest, User>(_getCurrentUserQueryHandler);
       _loginCommandHandler = _loginCommandHandler.Fake();
-      _loginNancyCommandHandler = new FakeNancyCommandHandler<LoginRequest>(_loginCommandHandler);
-      _sut = new UsersModule(_getCurrentUserNancyQueryHandler, _loginNancyCommandHandler);
+      _loginNancyCommandHandler = new FakeNancyCommandHandler<LoginCommand>(_loginCommandHandler);
+      _logoutCommandHandler = _logoutCommandHandler.Fake();
+      _logoutNancyCommandHandler = new FakeNancyCommandHandler<LogoutCommand>(_logoutCommandHandler);
+      _sut = new UsersModule(_getCurrentUserNancyQueryHandler, _loginNancyCommandHandler, _logoutNancyCommandHandler);
       _bootstrapper = new CustomBootstrapper(with => {
         with.Module(_sut);
         with.RootPathProvider(new InvoiceGenRootPathProvider());

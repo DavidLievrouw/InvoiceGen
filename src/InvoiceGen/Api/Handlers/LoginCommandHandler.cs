@@ -6,7 +6,7 @@ using DavidLievrouw.InvoiceGen.Security;
 using DavidLievrouw.Utils;
 
 namespace DavidLievrouw.InvoiceGen.Api.Handlers {
-  public class LoginCommandHandler : ICommandHandler<LoginRequest> {
+  public class LoginCommandHandler : ICommandHandler<LoginCommand> {
     readonly ISessionResolver _sessionResolver;
     readonly IInvoiceGenIdentityFactory _invoiceGenIdentityFactory;
 
@@ -17,7 +17,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
       _invoiceGenIdentityFactory = invoiceGenIdentityFactory;
     }
 
-    public Task Handle(LoginRequest command) {
+    public Task Handle(LoginCommand command) {
       // Authorise user
       var user = new User {
         GivenName = "John",

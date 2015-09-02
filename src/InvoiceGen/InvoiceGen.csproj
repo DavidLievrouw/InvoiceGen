@@ -111,21 +111,24 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Api\DynamicModelBinder.cs" />
     <Compile Include="Api\Handlers\GetCurrentUserQueryHandler.cs" />
     <Compile Include="Api\Handlers\INancyCommandHandler.cs" />
     <Compile Include="Api\Handlers\INancyQueryHandler.cs" />
     <Compile Include="Api\Handlers\LoginCommandHandler.cs" />
+    <Compile Include="Api\Handlers\LogoutCommandHandler.cs" />
     <Compile Include="Api\Handlers\NancyCommandHandler.cs" />
     <Compile Include="Api\Handlers\NancyQueryHandler.cs" />
     <Compile Include="Api\Handlers\ValidationAwareCommandHandler.cs" />
     <Compile Include="Api\Handlers\ValidationAwareQueryHandler.cs" />
-    <Compile Include="Api\Models\LoginRequest.cs" />
+    <Compile Include="Api\Models\LogoutCommand.cs" />
+    <Compile Include="Api\Models\LoginCommand.cs" />
     <Compile Include="Api\Models\GetCurrentUserRequest.cs" />
     <Compile Include="Api\Models\Validation\IGetCurrentUserRequestValidator.cs" />
-    <Compile Include="Api\Models\Validation\ILoginRequestValidator.cs" />
+    <Compile Include="Api\Models\Validation\ILogoutCommandValidator.cs" />
+    <Compile Include="Api\Models\Validation\ILoginCommandValidator.cs" />
     <Compile Include="Api\Models\Validation\GetCurrentUserRequestValidator.cs" />
-    <Compile Include="Api\Models\Validation\LoginRequestValidator.cs" />
+    <Compile Include="Api\Models\Validation\LoginCommandValidator.cs" />
+    <Compile Include="Api\Models\Validation\LogoutCommandValidator.cs" />
     <Compile Include="Api\UsersModule.cs" />
     <Compile Include="App\AppModule.cs" />
     <Compile Include="Bootstrapper.cs" />

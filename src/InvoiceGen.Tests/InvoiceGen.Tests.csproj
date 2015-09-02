@@ -126,12 +126,14 @@
     <Compile Include="Api\Handlers\ValidationAwareQueryHandlerTests.cs" />
     <Compile Include="Api\Model.cs" />
     <Compile Include="Api\Models\Validation\GetCurrentUserRequestValidatorTests.cs" />
+    <Compile Include="Api\Models\Validation\LogoutCommandValidatorTests.cs" />
+    <Compile Include="Api\UsersModuleTests.LogoutUser.cs" />
     <Compile Include="Api\UsersModuleTests.LoginUser.cs" />
     <Compile Include="Api\UsersModuleTests.GetCurrentUser.cs" />
     <Compile Include="Api\UsersModuleTests.SetUp.cs" />
     <Compile Include="App\AppModuleTests.GetLoginView.cs" />
     <Compile Include="App\AppModuleTests.Setup.cs" />
-    <Compile Include="Api\Models\Validation\LoginRequestValidatorTests.cs" />
+    <Compile Include="Api\Models\Validation\LoginCommandValidatorTests.cs" />
     <Compile Include="Common\NullAllowableValidatorTests.cs" />
     <Compile Include="Composition\CompositionRootTests.cs" />
     <Compile Include="Configuration\InvoiceGenRootPathProvider.cs" />
