@@ -63,8 +63,11 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
         UserName = userName;
       }
 
-      public string UserName { get; }
-      public IEnumerable<string> Claims => Enumerable.Empty<string>();
+      public string UserName { get; private set; }
+
+      public IEnumerable<string> Claims {
+        get { return Enumerable.Empty<string>(); }
+      }
     }
   }
 }
