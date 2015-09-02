@@ -10,7 +10,7 @@ namespace DavidLievrouw.InvoiceGen {
     readonly IContainer _container;
 
     public Bootstrapper(IContainer container) {
-      if (container == null) throw new ArgumentNullException(nameof(container));
+      if (container == null) throw new ArgumentNullException("container");
       _container = container;
     }
 

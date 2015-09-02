@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Nancy;
 
 namespace DavidLievrouw.InvoiceGen.Configuration {
@@ -9,13 +10,19 @@ namespace DavidLievrouw.InvoiceGen.Configuration {
       var directoryName = Path.GetDirectoryName(typeof(Startup).Assembly.CodeBase);
 
       if (directoryName != null) {
+        var subDirs = Path.Combine("..", "..", "..");
+        if (Isx86Process()) subDirs = Path.Combine(subDirs, "..");
         var assemblyPath = directoryName.Replace(@"file:\", string.Empty);
-        _rootPath = Path.Combine(assemblyPath, "..", "..", "..", "InvoiceGen");
+        _rootPath = Path.Combine(assemblyPath, subDirs, "InvoiceGen");
       }
     }
 
     public string GetRootPath() {
       return _rootPath;
+    }
+
+    static bool Isx86Process() {
+      return IntPtr.Size == 4;
     }
   }
 }

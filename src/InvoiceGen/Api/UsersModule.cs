@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using DavidLievrouw.InvoiceGen.Api.Handlers;
 using DavidLievrouw.InvoiceGen.Api.Models;
 using DavidLievrouw.InvoiceGen.Domain;
@@ -12,8 +11,8 @@ namespace DavidLievrouw.InvoiceGen.Api {
     public UsersModule(
       INancyQueryHandler<GetCurrentUserRequest, User> getCurrentUserQueryHandler,
       INancyCommandHandler<LoginRequest> loginCommandHandler) {
-      if (getCurrentUserQueryHandler == null) throw new ArgumentNullException(nameof(getCurrentUserQueryHandler));
-      if (loginCommandHandler == null) throw new ArgumentNullException(nameof(loginCommandHandler));
+      if (getCurrentUserQueryHandler == null) throw new ArgumentNullException("getCurrentUserQueryHandler");
+      if (loginCommandHandler == null) throw new ArgumentNullException("loginCommandHandler");
 
       Get["api/user", true] = async (parameters, cancellationToken) => {
         this.RequiresAuthentication();

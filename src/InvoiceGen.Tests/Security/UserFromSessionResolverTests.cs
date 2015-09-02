@@ -53,7 +53,8 @@ namespace DavidLievrouw.InvoiceGen.Security {
 
     [Test]
     public void GivenContextWithSessionWithNullUser_ReturnsNull() {
-      var session = new FakeSession {["user"] = null};
+      var session = new FakeSession();
+      session["user"] = null;
       ConfigureSessionResolver_ToReturn(session);
       var actual = _sut.ResolveUser(_nancyContext);
       Assert.That(actual, Is.Null);
@@ -62,7 +63,8 @@ namespace DavidLievrouw.InvoiceGen.Security {
     [Test]
     public void GivenContextWithSessionWithUser_ReturnsUser() {
       var user = new User();
-      var session = new FakeSession {["user"] = user};
+      var session = new FakeSession();
+      session["user"] = user;
       ConfigureSessionResolver_ToReturn(session);
       var actual = _sut.ResolveUser(_nancyContext);
       Assert.That(actual, Is.EqualTo(user));

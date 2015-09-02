@@ -11,8 +11,8 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
     readonly IInvoiceGenIdentityFactory _invoiceGenIdentityFactory;
 
     public LoginCommandHandler(ISessionResolver sessionResolver, IInvoiceGenIdentityFactory invoiceGenIdentityFactory) {
-      if (sessionResolver == null) throw new ArgumentNullException(nameof(sessionResolver));
-      if (invoiceGenIdentityFactory == null) throw new ArgumentNullException(nameof(invoiceGenIdentityFactory));
+      if (sessionResolver == null) throw new ArgumentNullException("sessionResolver");
+      if (invoiceGenIdentityFactory == null) throw new ArgumentNullException("invoiceGenIdentityFactory");
       _sessionResolver = sessionResolver;
       _invoiceGenIdentityFactory = invoiceGenIdentityFactory;
     }

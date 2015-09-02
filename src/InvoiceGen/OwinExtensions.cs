@@ -24,7 +24,7 @@ namespace DavidLievrouw.InvoiceGen {
     }
 
     public static HttpContextBase GetHttpContext(this NancyContext context) {
-      if (context == null) throw new ArgumentNullException(nameof(context));
+      if (context == null) throw new ArgumentNullException("context");
 
       var owinEnvironment = context.GetOwinEnvironment();
       var httpContextKey = typeof(HttpContextBase).FullName;

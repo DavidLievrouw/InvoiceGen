@@ -7,7 +7,7 @@ namespace DavidLievrouw.InvoiceGen.Security {
     readonly ISessionResolver _sessionResolver;
 
     public UserFromSessionResolver(ISessionResolver sessionResolver) {
-      if (sessionResolver == null) throw new ArgumentNullException(nameof(sessionResolver));
+      if (sessionResolver == null) throw new ArgumentNullException("sessionResolver");
       _sessionResolver = sessionResolver;
     }
 
