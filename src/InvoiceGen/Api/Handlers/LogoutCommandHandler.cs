@@ -6,23 +6,16 @@ using DavidLievrouw.Utils;
 
 namespace DavidLievrouw.InvoiceGen.Api.Handlers {
   public class LogoutCommandHandler : ICommandHandler<LogoutCommand> {
-    readonly ISessionFromContextResolver _sessionFromContextResolver;
+    readonly IAuthenticatedUserApplyerFactory _authenticatedUserApplyerFactory;
 
-    public LogoutCommandHandler(ISessionFromContextResolver sessionFromContextResolver) {
-      if (sessionFromContextResolver == null) throw new ArgumentNullException("sessionFromContextResolver");
-      _sessionFromContextResolver = sessionFromContextResolver;
+    public LogoutCommandHandler(IAuthenticatedUserApplyerFactory authenticatedUserApplyerFactory) {
+      if (authenticatedUserApplyerFactory == null) throw new ArgumentNullException(nameof(authenticatedUserApplyerFactory));
+      _authenticatedUserApplyerFactory = authenticatedUserApplyerFactory;
     }
 
     public Task Handle(LogoutCommand command) {
-      // Abandon session
-      var session = _sessionFromContextResolver.ResolveSession(command.NancyContext);
-      if (session != null) {
-        session["user"] = null;
-        session.Abandon();
-      }
-
-      // Clear user in broka identity
-      command.NancyContext.CurrentUser = null;
+      var applyer = _authenticatedUserApplyerFactory.Create(command.NancyContext);
+      applyer.ClearAuthenticatedUser();
 
       return Task.CompletedTask;
     }

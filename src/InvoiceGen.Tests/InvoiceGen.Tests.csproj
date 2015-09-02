@@ -120,6 +120,7 @@
     <Compile Include="Api\FakeNancyCommandHandler.cs" />
     <Compile Include="Api\FakeNancyQueryHandler.cs" />
     <Compile Include="Api\Handlers\GetCurrentUserQueryHandlerTests.cs" />
+    <Compile Include="Api\Handlers\LogoutCommandHandlerTests.cs" />
     <Compile Include="Api\Handlers\NancyCommandHandlerTests.cs" />
     <Compile Include="Api\Handlers\NancyQueryHandlerTests.cs" />
     <Compile Include="Api\Handlers\ValidationAwareCommandHandlerTests.cs" />
@@ -140,6 +141,8 @@
     <Compile Include="CustomBootstrapper.cs" />
     <Compile Include="Configuration\CustomJsonSerializerTests.cs" />
     <Compile Include="Security\AspNetSessionTests.cs" />
+    <Compile Include="Security\AuthenticatedUserApplyerFactoryTests.cs" />
+    <Compile Include="Security\AuthenticatedUserApplyerTests.cs" />
     <Compile Include="Security\FakeSession.cs" />
     <Compile Include="Security\HttpContextBuilder.cs" />
     <Compile Include="Security\InvoiceGenIdentityFactoryTests.cs" />

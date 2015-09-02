@@ -7,14 +7,11 @@ using DavidLievrouw.Utils;
 
 namespace DavidLievrouw.InvoiceGen.Api.Handlers {
   public class LoginCommandHandler : ICommandHandler<LoginCommand> {
-    readonly ISessionFromContextResolver _sessionFromContextResolver;
-    readonly IInvoiceGenIdentityFactory _invoiceGenIdentityFactory;
+    readonly IAuthenticatedUserApplyerFactory _authenticatedUserApplyerFactory;
 
-    public LoginCommandHandler(ISessionFromContextResolver sessionFromContextResolver, IInvoiceGenIdentityFactory invoiceGenIdentityFactory) {
-      if (sessionFromContextResolver == null) throw new ArgumentNullException("sessionFromContextResolver");
-      if (invoiceGenIdentityFactory == null) throw new ArgumentNullException("invoiceGenIdentityFactory");
-      _sessionFromContextResolver = sessionFromContextResolver;
-      _invoiceGenIdentityFactory = invoiceGenIdentityFactory;
+    public LoginCommandHandler(IAuthenticatedUserApplyerFactory authenticatedUserApplyerFactory) {
+      if (authenticatedUserApplyerFactory == null) throw new ArgumentNullException(nameof(authenticatedUserApplyerFactory));
+      _authenticatedUserApplyerFactory = authenticatedUserApplyerFactory;
     }
 
     public Task Handle(LoginCommand command) {
@@ -29,14 +26,12 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
         }
       };
 
-      // Set user in session variable
-      var session = _sessionFromContextResolver.ResolveSession(command.NancyContext);
-      if (session != null) {
-        session["user"] = user;
+      var applyer = _authenticatedUserApplyerFactory.Create(command.NancyContext);
+      if (user == null) {
+        applyer.ClearAuthenticatedUser();
+      } else {
+        applyer.ApplyAuthenticatedUser(user);
       }
-
-      // Set user in broka identity
-      command.NancyContext.CurrentUser = _invoiceGenIdentityFactory.Create(user);
 
       return Task.CompletedTask;
     }

@@ -140,6 +140,10 @@
     <Compile Include="Configuration\ICustomJsonSerializer.cs" />
     <Compile Include="OwinExtensions.cs" />
     <Compile Include="Security\AspNetSession.cs" />
+    <Compile Include="Security\AuthenticatedUserApplyer.cs" />
+    <Compile Include="Security\AuthenticatedUserApplyerFactory.cs" />
+    <Compile Include="Security\IAuthenticatedUserApplyer.cs" />
+    <Compile Include="Security\IAuthenticatedUserApplyerFactory.cs" />
     <Compile Include="Security\IInvoiceGenIdentityFactory.cs" />
     <Compile Include="Security\INancyIdentityFromSessionAssigner.cs" />
     <Compile Include="Security\InvoiceGenIdentity.cs" />
