@@ -9,15 +9,26 @@ namespace DavidLievrouw.InvoiceGen.Security {
       _items = new Dictionary<string, object>(StringComparer.InvariantCultureIgnoreCase);
     }
 
+    public void CheckAbandoned() {
+      if (IsAbandoned) throw new InvalidOperationException("The session has been abandoned.");
+    }
+
+    public bool IsAbandoned { get; set; }
+
     public object this[string name] {
       get {
         return _items.ContainsKey(name)
           ? _items[name]
           : null;
       }
-      set { _items[name] = value; }
+      set {
+        CheckAbandoned();
+        _items[name] = value;
+      }
     }
 
-    public void Abandon() {}
+    public void Abandon() {
+      IsAbandoned = true;
+    }
   }
 }
