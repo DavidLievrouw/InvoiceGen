@@ -6,7 +6,7 @@ namespace DavidLievrouw.InvoiceGen.Composition {
     protected override void Load(ContainerBuilder builder) {
       base.Load(builder);
 
-      builder.RegisterType<SessionResolver>()
+      builder.RegisterType<AspNetSessionFromContextResolver>()
              .AsImplementedInterfaces()
              .SingleInstance();
 

@@ -7,13 +7,13 @@ using DavidLievrouw.Utils;
 
 namespace DavidLievrouw.InvoiceGen.Api.Handlers {
   public class LoginCommandHandler : ICommandHandler<LoginCommand> {
-    readonly ISessionResolver _sessionResolver;
+    readonly ISessionFromContextResolver _sessionFromContextResolver;
     readonly IInvoiceGenIdentityFactory _invoiceGenIdentityFactory;
 
-    public LoginCommandHandler(ISessionResolver sessionResolver, IInvoiceGenIdentityFactory invoiceGenIdentityFactory) {
-      if (sessionResolver == null) throw new ArgumentNullException("sessionResolver");
+    public LoginCommandHandler(ISessionFromContextResolver sessionFromContextResolver, IInvoiceGenIdentityFactory invoiceGenIdentityFactory) {
+      if (sessionFromContextResolver == null) throw new ArgumentNullException("sessionFromContextResolver");
       if (invoiceGenIdentityFactory == null) throw new ArgumentNullException("invoiceGenIdentityFactory");
-      _sessionResolver = sessionResolver;
+      _sessionFromContextResolver = sessionFromContextResolver;
       _invoiceGenIdentityFactory = invoiceGenIdentityFactory;
     }
 
@@ -30,7 +30,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
       };
 
       // Set user in session variable
-      var session = _sessionResolver.ResolveSession(command.NancyContext);
+      var session = _sessionFromContextResolver.ResolveSession(command.NancyContext);
       if (session != null) {
         session["user"] = user;
       }

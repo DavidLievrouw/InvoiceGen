@@ -1,8 +1,7 @@
 using DavidLievrouw.InvoiceGen.Domain;
-using Nancy;
 
 namespace DavidLievrouw.InvoiceGen.Security {
   public interface IUserFromSessionResolver {
-    User ResolveUser(NancyContext owinContext);
+    User ResolveUser(ISession session);
   }
 }
