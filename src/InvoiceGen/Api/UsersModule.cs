@@ -27,8 +27,8 @@ namespace DavidLievrouw.InvoiceGen.Api {
                                                                                                                  var loginRequest = this.Bind<LoginRequest>();
                                                                                                                  return new LoginRequest {
                                                                                                                    NancyContext = Context,
-                                                                                                                   Login = loginRequest?.Login,
-                                                                                                                   Password = loginRequest?.Password
+                                                                                                                   Login = loginRequest == null ? null : loginRequest.Login,
+                                                                                                                   Password = loginRequest == null ? null : loginRequest.Password
                                                                                                                  };
                                                                                                                });
     }

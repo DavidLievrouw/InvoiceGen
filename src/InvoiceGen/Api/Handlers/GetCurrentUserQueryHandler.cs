@@ -8,7 +8,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
   public class GetCurrentUserQueryHandler : IQueryHandler<GetCurrentUserRequest, User> {
     public Task<User> Handle(GetCurrentUserRequest request) {
       var identity = request.NancyContext.CurrentUser as InvoiceGenIdentity;
-      return Task.FromResult(identity?.User);
+      return Task.FromResult(identity == null ? null : identity.User);
     }
   }
 }
