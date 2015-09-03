@@ -148,11 +148,15 @@
     <Compile Include="Security\INancyIdentityFromSessionAssigner.cs" />
     <Compile Include="Security\InvoiceGenIdentity.cs" />
     <Compile Include="Security\InvoiceGenIdentityFactory.cs" />
+    <Compile Include="Security\ISecurityContext.cs" />
+    <Compile Include="Security\ISecurityContextFactory.cs" />
     <Compile Include="Security\ISession.cs" />
     <Compile Include="Security\ISessionFromContextResolver.cs" />
     <Compile Include="Security\IUserFromSessionResolver.cs" />
     <Compile Include="Security\AspNetSessionFromContextResolver.cs" />
     <Compile Include="Security\NancyIdentityFromSessionAssigner.cs" />
+    <Compile Include="Security\NancySecurityContext.cs" />
+    <Compile Include="Security\NancySecurityContextFactory.cs" />
     <Compile Include="Security\UserFromSessionResolver.cs" />
     <Compile Include="Startup.cs" />
     <Content Include="App\Login\login.html" />
