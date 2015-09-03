@@ -6,7 +6,7 @@ namespace DavidLievrouw.InvoiceGen.Security {
     readonly HttpSessionStateBase _wrappedSession;
 
     public AspNetSession(HttpSessionStateBase wrappedSession) {
-      if (wrappedSession == null) throw new ArgumentNullException(nameof(wrappedSession));
+      if (wrappedSession == null) throw new ArgumentNullException("wrappedSession");
       _wrappedSession = wrappedSession;
     }
 
