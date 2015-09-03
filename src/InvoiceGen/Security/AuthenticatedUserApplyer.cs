@@ -9,16 +9,16 @@ namespace DavidLievrouw.InvoiceGen.Security {
     readonly IInvoiceGenIdentityFactory _invoiceGenIdentityFactory;
 
     public AuthenticatedUserApplyer(NancyContext nancyContext, ISessionFromContextResolver sessionFromContextResolver, IInvoiceGenIdentityFactory invoiceGenIdentityFactory) {
-      if (nancyContext == null) throw new ArgumentNullException(nameof(nancyContext));
-      if (sessionFromContextResolver == null) throw new ArgumentNullException(nameof(sessionFromContextResolver));
-      if (invoiceGenIdentityFactory == null) throw new ArgumentNullException(nameof(invoiceGenIdentityFactory));
+      if (nancyContext == null) throw new ArgumentNullException("nancyContext");
+      if (sessionFromContextResolver == null) throw new ArgumentNullException("sessionFromContextResolver");
+      if (invoiceGenIdentityFactory == null) throw new ArgumentNullException("invoiceGenIdentityFactory");
       _nancyContext = nancyContext;
       _sessionFromContextResolver = sessionFromContextResolver;
       _invoiceGenIdentityFactory = invoiceGenIdentityFactory;
     }
 
     public void ApplyAuthenticatedUser(User user) {
-      if (user == null) throw new ArgumentNullException(nameof(user));
+      if (user == null) throw new ArgumentNullException("user");
 
       var session = _sessionFromContextResolver.ResolveSession(_nancyContext);
       if (session == null) throw new InvalidOperationException("There is no current session.");

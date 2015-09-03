@@ -10,7 +10,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
     readonly IAuthenticatedUserApplyerFactory _authenticatedUserApplyerFactory;
 
     public LoginCommandHandler(IAuthenticatedUserApplyerFactory authenticatedUserApplyerFactory) {
-      if (authenticatedUserApplyerFactory == null) throw new ArgumentNullException(nameof(authenticatedUserApplyerFactory));
+      if (authenticatedUserApplyerFactory == null) throw new ArgumentNullException("authenticatedUserApplyerFactory");
       _authenticatedUserApplyerFactory = authenticatedUserApplyerFactory;
     }
 

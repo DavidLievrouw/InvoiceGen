@@ -19,30 +19,30 @@ namespace DavidLievrouw.InvoiceGen.Api {
       Get["api/user", true] = async (parameters, cancellationToken) => {
         this.RequiresAuthentication();
         return await getCurrentUserQueryHandler.Handle(this,
-                                                       () => new GetCurrentUserRequest {
-                                                         NancyContext = Context
-                                                       });
+          () => new GetCurrentUserRequest {
+            NancyContext = Context
+          });
       };
 
       Post["api/user/login", true] = async (parameters, cancellationToken) => await loginCommandHandler.Handle(this,
-                                                                                                               () => {
-                                                                                                                 var loginRequest = this.Bind<LoginCommand>();
-                                                                                                                 return new LoginCommand {
-                                                                                                                   NancyContext = Context,
-                                                                                                                   Login = loginRequest == null
-                                                                                                                     ? null
-                                                                                                                     : loginRequest.Login,
-                                                                                                                   Password = loginRequest == null
-                                                                                                                     ? null
-                                                                                                                     : loginRequest.Password
-                                                                                                                 };
-                                                                                                               });
+        () => {
+          var loginRequest = this.Bind<LoginCommand>();
+          return new LoginCommand {
+            NancyContext = Context,
+            Login = loginRequest == null
+              ? null
+              : loginRequest.Login,
+            Password = loginRequest == null
+              ? null
+              : loginRequest.Password
+          };
+        });
       Post["api/user/logout", true] = async (parameters, cancellationToken) => {
         this.RequiresAuthentication();
         return await logoutCommandHandler.Handle(this,
-                                                 () => new LogoutCommand {
-                                                   NancyContext = Context
-                                                 });
+          () => new LogoutCommand {
+            NancyContext = Context
+          });
       };
     }
   }

@@ -11,16 +11,16 @@ namespace DavidLievrouw.InvoiceGen.Security {
       ISessionFromContextResolver sessionFromContextResolver,
       IUserFromSessionResolver userFromSessionResolver,
       IInvoiceGenIdentityFactory invoiceGenIdentityFactory) {
-      if (sessionFromContextResolver == null) throw new ArgumentNullException(nameof(sessionFromContextResolver));
-      if (userFromSessionResolver == null) throw new ArgumentNullException(nameof(userFromSessionResolver));
-      if (invoiceGenIdentityFactory == null) throw new ArgumentNullException(nameof(invoiceGenIdentityFactory));
+      if (sessionFromContextResolver == null) throw new ArgumentNullException("sessionFromContextResolver");
+      if (userFromSessionResolver == null) throw new ArgumentNullException("userFromSessionResolver");
+      if (invoiceGenIdentityFactory == null) throw new ArgumentNullException("invoiceGenIdentityFactory");
       _sessionFromContextResolver = sessionFromContextResolver;
       _userFromSessionResolver = userFromSessionResolver;
       _invoiceGenIdentityFactory = invoiceGenIdentityFactory;
     }
 
     public void AssignNancyIdentity(NancyContext nancyContext) {
-      if (nancyContext == null) throw new ArgumentNullException(nameof(nancyContext));
+      if (nancyContext == null) throw new ArgumentNullException("nancyContext");
 
       var session = _sessionFromContextResolver.ResolveSession(nancyContext);
       var userFromSession = _userFromSessionResolver.ResolveUser(session);
