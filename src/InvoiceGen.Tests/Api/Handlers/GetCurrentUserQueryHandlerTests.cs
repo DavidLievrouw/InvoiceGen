@@ -1,10 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using DavidLievrouw.InvoiceGen.Api.Models;
+﻿using DavidLievrouw.InvoiceGen.Api.Models;
 using DavidLievrouw.InvoiceGen.Domain;
 using DavidLievrouw.InvoiceGen.Security;
 using Nancy;
-using Nancy.Security;
 using NUnit.Framework;
 
 namespace DavidLievrouw.InvoiceGen.Api.Handlers {
@@ -56,18 +53,6 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
 
       Assert.That(actual, Is.Not.Null);
       Assert.That(actual, Is.EqualTo(user));
-    }
-
-    public class FakeUserIdentity : IUserIdentity {
-      public FakeUserIdentity(string userName) {
-        UserName = userName;
-      }
-
-      public string UserName { get; private set; }
-
-      public IEnumerable<string> Claims {
-        get { return Enumerable.Empty<string>(); }
-      }
     }
   }
 }

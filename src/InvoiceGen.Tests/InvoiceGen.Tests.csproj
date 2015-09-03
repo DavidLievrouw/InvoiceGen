@@ -119,6 +119,7 @@
     <Compile Include="Api\CustomBootstrapper.cs" />
     <Compile Include="Api\FakeNancyCommandHandler.cs" />
     <Compile Include="Api\FakeNancyQueryHandler.cs" />
+    <Compile Include="Api\Handlers\FakeUserIdentity.cs" />
     <Compile Include="Api\Handlers\GetCurrentUserQueryHandlerTests.cs" />
     <Compile Include="Api\Handlers\LogoutCommandHandlerTests.cs" />
     <Compile Include="Api\Handlers\NancyCommandHandlerTests.cs" />
@@ -149,6 +150,8 @@
     <Compile Include="Security\InvoiceGenIdentityTests.cs" />
     <Compile Include="Security\AspNetSessionResolverTests.cs" />
     <Compile Include="Security\NancyIdentityFromSessionAssignerTests.cs" />
+    <Compile Include="Security\NancySecurityContextFactoryTests.cs" />
+    <Compile Include="Security\NancySecurityContextTests.cs" />
     <Compile Include="Security\UserFromSessionResolverTests.cs" />
     <Compile Include="TestExtensions.cs" />
   </ItemGroup>
