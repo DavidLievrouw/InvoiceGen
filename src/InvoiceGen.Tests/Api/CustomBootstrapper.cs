@@ -2,6 +2,7 @@
 using DavidLievrouw.InvoiceGen.Configuration;
 using DavidLievrouw.InvoiceGen.Domain;
 using DavidLievrouw.InvoiceGen.Security;
+using DavidLievrouw.InvoiceGen.Security.Nancy;
 using Nancy.Testing;
 
 namespace DavidLievrouw.InvoiceGen.Api {

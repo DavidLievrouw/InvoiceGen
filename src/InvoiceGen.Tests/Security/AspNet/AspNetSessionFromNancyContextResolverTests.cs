@@ -4,13 +4,13 @@ using System.Web;
 using Nancy;
 using NUnit.Framework;
 
-namespace DavidLievrouw.InvoiceGen.Security {
+namespace DavidLievrouw.InvoiceGen.Security.AspNet {
   [TestFixture]
-  public class AspNetSessionResolverTests {
+  public class AspNetSessionFromNancyContextResolverTests {
     const string RequestEnvironmentKey = "OWIN_REQUEST_ENVIRONMENT";
     NancyContext _nancyContext;
     IDictionary<string, object> _owinEnvironment;
-    AspNetSessionFromContextResolver _sut;
+    AspNetSessionFromNancyContextResolver _sut;
 
     [SetUp]
     public void SetUp() {
@@ -18,7 +18,7 @@ namespace DavidLievrouw.InvoiceGen.Security {
       _owinEnvironment = new Dictionary<string, object>();
       _nancyContext.Items.Add(RequestEnvironmentKey, _owinEnvironment);
 
-      _sut = new AspNetSessionFromContextResolver();
+      _sut = new AspNetSessionFromNancyContextResolver();
     }
 
     [Test]

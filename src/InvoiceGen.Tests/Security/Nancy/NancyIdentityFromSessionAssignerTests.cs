@@ -1,25 +1,26 @@
 ﻿using System;
 using DavidLievrouw.InvoiceGen.Domain;
+using DavidLievrouw.InvoiceGen.Security.AspNet;
 using FakeItEasy;
 using Nancy;
 using NUnit.Framework;
 
-namespace DavidLievrouw.InvoiceGen.Security {
+namespace DavidLievrouw.InvoiceGen.Security.Nancy {
   [TestFixture]
   public class NancyIdentityFromSessionAssignerTests {
-    ISessionFromContextResolver _sessionFromContextResolver;
+    IAspNetSessionFromNancyContextResolver _aspNetSessionFromNancyContextResolver;
     IUserFromSessionResolver _userFromSessionResolver;
     IInvoiceGenIdentityFactory _invoiceGenIdentityFactory;
-    NancyIdentityFromSessionAssigner _sut;
+    NancyIdentityFromContextAssigner _sut;
     NancyContext _context;
 
     [SetUp]
     public void SetUp() {
-      _sessionFromContextResolver = _sessionFromContextResolver.Fake();
+      _aspNetSessionFromNancyContextResolver = _aspNetSessionFromNancyContextResolver.Fake();
       _userFromSessionResolver = _userFromSessionResolver.Fake();
       _invoiceGenIdentityFactory = _invoiceGenIdentityFactory.Fake();
-      _sut = new NancyIdentityFromSessionAssigner(
-        _sessionFromContextResolver,
+      _sut = new NancyIdentityFromContextAssigner(
+        _aspNetSessionFromNancyContextResolver,
         _userFromSessionResolver,
         _invoiceGenIdentityFactory);
       _context = new NancyContext();
@@ -48,7 +49,7 @@ namespace DavidLievrouw.InvoiceGen.Security {
 
       Assert.That(_context.CurrentUser, Is.Not.Null);
       Assert.That(_context.CurrentUser, Is.EqualTo(identity));
-      A.CallTo(() => _sessionFromContextResolver.ResolveSession(_context))
+      A.CallTo(() => _aspNetSessionFromNancyContextResolver.ResolveSession(_context))
        .MustHaveHappened();
       A.CallTo(() => _userFromSessionResolver.ResolveUser(session))
        .MustHaveHappened();
@@ -57,7 +58,7 @@ namespace DavidLievrouw.InvoiceGen.Security {
     }
 
     void ConfigureSessionFromContextResolver_ToReturn(ISession session) {
-      A.CallTo(() => _sessionFromContextResolver.ResolveSession(A<NancyContext>._))
+      A.CallTo(() => _aspNetSessionFromNancyContextResolver.ResolveSession(A<NancyContext>._))
        .Returns(session);
     }
 

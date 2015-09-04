@@ -2,7 +2,7 @@
 using DavidLievrouw.InvoiceGen.Domain;
 using NUnit.Framework;
 
-namespace DavidLievrouw.InvoiceGen.Security {
+namespace DavidLievrouw.InvoiceGen.Security.AspNet {
   [TestFixture]
   public class AspNetSessionTests {
     [Test]

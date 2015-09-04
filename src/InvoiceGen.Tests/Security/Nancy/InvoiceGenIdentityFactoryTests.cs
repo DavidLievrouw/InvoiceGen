@@ -1,7 +1,7 @@
 ﻿using DavidLievrouw.InvoiceGen.Domain;
 using NUnit.Framework;
 
-namespace DavidLievrouw.InvoiceGen.Security {
+namespace DavidLievrouw.InvoiceGen.Security.Nancy {
   [TestFixture]
   public class InvoiceGenIdentityFactoryTests {
     InvoiceGenIdentityFactory _sut;

@@ -1,6 +1,7 @@
 ﻿using System;
 using Autofac;
 using DavidLievrouw.InvoiceGen.Security;
+using DavidLievrouw.InvoiceGen.Security.Nancy;
 using Nancy;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.Autofac;
@@ -22,7 +23,7 @@ namespace DavidLievrouw.InvoiceGen {
       StaticConfiguration.DisableErrorTraces = false;
 
       pipelines.BeforeRequest.AddItemToEndOfPipeline(ctx => {
-        var identityAssigner = container.Resolve<INancyIdentityFromSessionAssigner>();
+        var identityAssigner = container.Resolve<INancyIdentityFromContextAssigner>();
         identityAssigner.AssignNancyIdentity(ctx);
         return null;
       });

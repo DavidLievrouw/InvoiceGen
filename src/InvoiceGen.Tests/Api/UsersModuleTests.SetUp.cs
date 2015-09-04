@@ -2,6 +2,7 @@
 using DavidLievrouw.InvoiceGen.Configuration;
 using DavidLievrouw.InvoiceGen.Domain;
 using DavidLievrouw.InvoiceGen.Security;
+using DavidLievrouw.InvoiceGen.Security.Nancy;
 using DavidLievrouw.Utils;
 using FakeItEasy;
 using Nancy;
@@ -19,7 +20,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
     FakeNancyQueryHandler<GetCurrentUserRequest, User> _getCurrentUserNancyQueryHandler;
     FakeNancyCommandHandler<LoginCommand> _loginNancyCommandHandler;
     FakeNancyCommandHandler<LogoutCommand> _logoutNancyCommandHandler;
-    ISecurityContextFactory _securityContextFactory;
+    INancySecurityContextFactory _nancySecurityContextFactory;
     Browser _browser;
     UsersModule _sut;
     User _authenticatedUser;
@@ -32,8 +33,8 @@ namespace DavidLievrouw.InvoiceGen.Api {
       _loginNancyCommandHandler = new FakeNancyCommandHandler<LoginCommand>(_loginCommandHandler);
       _logoutCommandHandler = _logoutCommandHandler.Fake();
       _logoutNancyCommandHandler = new FakeNancyCommandHandler<LogoutCommand>(_logoutCommandHandler);
-      _securityContextFactory = _securityContextFactory.Fake();
-      _sut = new UsersModule(_getCurrentUserNancyQueryHandler, _loginNancyCommandHandler, _logoutNancyCommandHandler, _securityContextFactory);
+      _nancySecurityContextFactory = _nancySecurityContextFactory.Fake();
+      _sut = new UsersModule(_getCurrentUserNancyQueryHandler, _loginNancyCommandHandler, _logoutNancyCommandHandler, _nancySecurityContextFactory);
       _bootstrapper = new CustomBootstrapper(with => {
         with.Module(_sut);
         with.RootPathProvider(new InvoiceGenRootPathProvider());
@@ -56,8 +57,8 @@ namespace DavidLievrouw.InvoiceGen.Api {
       Assert.That(_sut.NoDependenciesAreOptional());
     }
 
-    public void ConfigureSecurityContextFactory_ToReturn(ISecurityContext securityContext) {
-      A.CallTo(() => _securityContextFactory.Create(A<NancyContext>._))
+    void ConfigureSecurityContextFactory_ToReturn(ISecurityContext securityContext) {
+      A.CallTo(() => _nancySecurityContextFactory.Create(A<NancyContext>._))
        .Returns(securityContext);
     }
   }
