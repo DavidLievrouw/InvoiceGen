@@ -1,4 +1,5 @@
-﻿using DavidLievrouw.InvoiceGen.Api.Handlers;
+﻿using DavidLievrouw.InvoiceGen.Security;
+using FakeItEasy;
 using NUnit.Framework;
 
 namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
@@ -29,7 +30,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
     [Test]
     public void ValidCommand_IsValid() {
       var input = new LogoutCommand {
-        SecurityContext = new FakeSecurityContext()
+        SecurityContext = A.Dummy<ISecurityContext>()
       };
       var actualResult = _sut.Validate(input);
       Assert.That(actualResult.IsValid, Is.True);

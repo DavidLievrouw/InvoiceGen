@@ -17,18 +17,18 @@ namespace DavidLievrouw.InvoiceGen.Security {
       _invoiceGenIdentityFactory = invoiceGenIdentityFactory;
     }
 
-    public User AuthenticatedUser {
-      get {
-        var identity = _nancyContext.CurrentUser as InvoiceGenIdentity;
-        return identity == null
-          ? null
-          : identity.User;
-      }
-      set { _nancyContext.CurrentUser = _invoiceGenIdentityFactory.Create(value); }
+    public void SetAuthenticatedUser(User user) {
+      var session = _sessionFromContextResolver.ResolveSession(_nancyContext);
+      if (session == null) throw new InvalidOperationException("There is no current session.");
+      session["IC_User"] = user;
+      _nancyContext.CurrentUser = _invoiceGenIdentityFactory.Create(user);
     }
 
-    public ISession Session {
-      get { return _sessionFromContextResolver.ResolveSession(_nancyContext); }
+    public User GetAuthenticatedUser() {
+      var identity = _nancyContext.CurrentUser as InvoiceGenIdentity;
+      return identity == null
+        ? null
+        : identity.User;
     }
   }
 }

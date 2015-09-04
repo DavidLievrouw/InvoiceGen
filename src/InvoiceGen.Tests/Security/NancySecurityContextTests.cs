@@ -28,65 +28,86 @@ namespace DavidLievrouw.InvoiceGen.Security {
       Assert.Throws<ArgumentNullException>(() => new NancySecurityContext(_nancyContext, _sessionFromContextResolver, null));
     }
 
-    [Test]
-    public void SetsUserInNancyContext() {
-      var user = new User();
-      var identity = new InvoiceGenIdentity(user);
-      ConfigureInvoiceGenIdentityFactory_ToReturn(user, identity);
+    public class SetAuthenticatedUser : NancySecurityContextTests {
+      [Test]
+      public void SetsUserInNancyContext() {
+        var user = new User();
+        var identity = new InvoiceGenIdentity(user);
+        ConfigureInvoiceGenIdentityFactory_ToReturn(user, identity);
 
-      _sut.AuthenticatedUser = user;
-      var actual = _nancyContext.CurrentUser;
+        _sut.SetAuthenticatedUser(user);
+        var actual = _nancyContext.CurrentUser;
 
-      Assert.That(actual, Is.Not.Null);
-      Assert.That(actual, Is.EqualTo(identity));
+        Assert.That(actual, Is.Not.Null);
+        Assert.That(actual, Is.EqualTo(identity));
+      }
+
+      [Test]
+      public void SetsUserInSession() {
+        var session = new FakeSession();
+        ConfigureSessionFromContextResolver_ToReturn(session);
+        var user = new User();
+
+        _sut.SetAuthenticatedUser(user);
+        var actual = session["IC_User"];
+
+        Assert.That(actual, Is.Not.Null);
+        Assert.That(actual, Is.EqualTo(user));
+      }
+
+      [Test]
+      public void GivenNullUser_SetsNullUserInNancyContext() {
+        ConfigureInvoiceGenIdentityFactory_ToReturn(null, null);
+
+        _sut.SetAuthenticatedUser(null);
+        var actual = _nancyContext.CurrentUser;
+
+        Assert.That(actual, Is.Null);
+      }
+
+      [Test]
+      public void GivenNullUser_SetsNullUserInSession() {
+        var session = new FakeSession();
+        ConfigureSessionFromContextResolver_ToReturn(session);
+
+        _sut.SetAuthenticatedUser(null);
+        var actual = session["IC_User"];
+
+        Assert.That(actual, Is.Null);
+      }
+
+      [Test]
+      public void WhenNoSessionExists_Throws() {
+        ConfigureSessionFromContextResolver_ToReturn(null);
+        Assert.Throws<InvalidOperationException>(() => _sut.SetAuthenticatedUser(new User()));
+      }
     }
 
-    [Test]
-    public void GivenNullUser_SetsNullUserInNancyContext() {
-      ConfigureInvoiceGenIdentityFactory_ToReturn(null, null);
+    public class GetAuthenticatedUser : NancySecurityContextTests {
+      [Test]
+      public void WhenNoIdentityIsSetInNancyContext_ReturnsNullUser() {
+        _nancyContext.CurrentUser = null;
+        var actual = _sut.GetAuthenticatedUser();
+        Assert.That(actual, Is.Null);
+      }
 
-      _sut.AuthenticatedUser = null;
-      var actual = _nancyContext.CurrentUser;
+      [Test]
+      public void WhenInvalidIdentityIsSetInNancyContext_ReturnsNullUser() {
+        _nancyContext.CurrentUser = new FakeUserIdentity("Pol");
+        var actual = _sut.GetAuthenticatedUser();
+        Assert.That(actual, Is.Null);
+      }
 
-      Assert.That(actual, Is.Null);
-    }
+      [Test]
+      public void WhenIdentityIsSetInNancyContext_ReturnsUserFromIdentity() {
+        var user = new User();
+        var identity = new InvoiceGenIdentity(user);
+        _nancyContext.CurrentUser = identity;
 
-    [Test]
-    public void WhenNoIdentityIsSetInNancyContext_ReturnsNullUser() {
-      _nancyContext.CurrentUser = null;
-      var actual = _sut.AuthenticatedUser;
-      Assert.That(actual, Is.Null);
-    }
-
-    [Test]
-    public void WhenInvalidIdentityIsSetInNancyContext_ReturnsNullUser() {
-      _nancyContext.CurrentUser = new FakeUserIdentity("Pol");
-      var actual = _sut.AuthenticatedUser;
-      Assert.That(actual, Is.Null);
-    }
-
-    [Test]
-    public void WhenIdentityIsSetInNancyContext_ReturnsUserFromIdentity() {
-      var user = new User();
-      var identity = new InvoiceGenIdentity(user);
-      _nancyContext.CurrentUser = identity;
-
-      var actual = _sut.AuthenticatedUser;
-      Assert.That(actual, Is.Not.Null);
-      Assert.That(actual, Is.EqualTo(user));
-    }
-
-    [Test]
-    public void ReturnsSessionFromResolver() {
-      var session = A.Fake<ISession>();
-      ConfigureSessionFromContextResolver_ToReturn(session);
-
-      var actual = _sut.Session;
-
-      Assert.That(actual, Is.Not.Null);
-      Assert.That(actual, Is.EqualTo(session));
-      A.CallTo(() => _sessionFromContextResolver.ResolveSession(_nancyContext))
-       .MustHaveHappened();
+        var actual = _sut.GetAuthenticatedUser();
+        Assert.That(actual, Is.Not.Null);
+        Assert.That(actual, Is.EqualTo(user));
+      }
     }
 
     void ConfigureSessionFromContextResolver_ToReturn(ISession session) {

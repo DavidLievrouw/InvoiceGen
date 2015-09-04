@@ -36,7 +36,7 @@ namespace DavidLievrouw.InvoiceGen.Security {
     }
 
     public HttpContextBuilder WithUser(User user) {
-      ((HttpSessionState) _instance.Items["AspSession"])["user"] = user;
+      ((HttpSessionState) _instance.Items["AspSession"])["IC_User"] = user;
       return this;
     }
 

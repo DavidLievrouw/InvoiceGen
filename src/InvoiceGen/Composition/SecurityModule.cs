@@ -17,10 +17,6 @@ namespace DavidLievrouw.InvoiceGen.Composition {
       builder.RegisterType<InvoiceGenIdentityFactory>()
              .AsImplementedInterfaces()
              .SingleInstance();
-
-      builder.RegisterType<AuthenticatedUserApplyerFactory>()
-             .AsImplementedInterfaces()
-             .SingleInstance();
     }
   }
 }
