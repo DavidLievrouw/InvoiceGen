@@ -1,4 +1,4 @@
-﻿using DavidLievrouw.InvoiceGen.Domain;
+﻿using DavidLievrouw.InvoiceGen.Domain.DTO;
 
 namespace DavidLievrouw.InvoiceGen.Security {
   public class UserFromSessionResolver : IUserFromSessionResolver {

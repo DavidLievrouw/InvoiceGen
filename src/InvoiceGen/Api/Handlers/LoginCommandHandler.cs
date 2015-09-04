@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using DavidLievrouw.InvoiceGen.Api.Models;
-using DavidLievrouw.InvoiceGen.Domain;
+using DavidLievrouw.InvoiceGen.Domain.DTO;
 using DavidLievrouw.Utils;
 
 namespace DavidLievrouw.InvoiceGen.Api.Handlers {
