@@ -3,7 +3,7 @@ using FluentValidation.Results;
 
 namespace DavidLievrouw.InvoiceGen.Common {
   public abstract class NullAllowableValidator<T> : AbstractValidator<T> {
-    public bool IsNullAllowed { get; set; }
+    protected bool IsNullAllowed { get; set; }
     
     public override ValidationResult Validate(T instance) {
       if (IsNullAllowed) {

@@ -32,7 +32,7 @@ namespace DavidLievrouw.InvoiceGen.Security {
 
     [Test]
     public void GivenContextWithSessionWithNullUser_ReturnsNull() {
-      _session["IC_User"] = null;
+      _session[Constants.SessionKeyForUser] = null;
       var actual = _sut.ResolveUser(_session);
       Assert.That(actual, Is.Null);
     }
@@ -40,7 +40,7 @@ namespace DavidLievrouw.InvoiceGen.Security {
     [Test]
     public void GivenContextWithSessionWithUser_ReturnsUser() {
       var user = new User();
-      _session["IC_User"] = user;
+      _session[Constants.SessionKeyForUser] = user;
       var actual = _sut.ResolveUser(_session);
       Assert.That(actual, Is.EqualTo(user));
     }

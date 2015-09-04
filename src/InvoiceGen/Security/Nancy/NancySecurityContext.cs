@@ -21,8 +21,9 @@ namespace DavidLievrouw.InvoiceGen.Security.Nancy {
     public void SetAuthenticatedUser(User user) {
       var session = _aspNetSessionFromNancyContextResolver.ResolveSession(_nancyContext);
       if (session == null) throw new InvalidOperationException("There is no current session.");
-      session["IC_User"] = user;
+      session[Constants.SessionKeyForUser] = user;
       _nancyContext.CurrentUser = _invoiceGenIdentityFactory.Create(user);
+      if (user == null) session.Abandon();
     }
 
     public User GetAuthenticatedUser() {
