@@ -1,5 +1,4 @@
-﻿using DavidLievrouw.InvoiceGen.Api.Handlers;
-using DavidLievrouw.InvoiceGen.Security;
+﻿using DavidLievrouw.InvoiceGen.Security;
 using FakeItEasy;
 using NUnit.Framework;
 

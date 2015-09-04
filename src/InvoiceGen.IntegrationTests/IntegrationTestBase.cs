@@ -14,6 +14,6 @@ namespace DavidLievrouw.InvoiceGen {
       fileToDelete.Delete();
     }
 
-    public virtual DatabaseConfiguration DbConfig { get; set; }
+    protected virtual DatabaseConfiguration DbConfig { get; set; }
   }
 }

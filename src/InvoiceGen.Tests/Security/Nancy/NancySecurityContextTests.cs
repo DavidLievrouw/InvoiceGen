@@ -51,7 +51,7 @@ namespace DavidLievrouw.InvoiceGen.Security {
         var user = new User();
 
         _sut.SetAuthenticatedUser(user);
-        var actual = session["IC_User"];
+        var actual = session[Constants.SessionKeyForUser];
 
         Assert.That(actual, Is.Not.Null);
         Assert.That(actual, Is.EqualTo(user));
@@ -73,9 +73,19 @@ namespace DavidLievrouw.InvoiceGen.Security {
         ConfigureSessionFromContextResolver_ToReturn(session);
 
         _sut.SetAuthenticatedUser(null);
-        var actual = session["IC_User"];
+        var actual = session[Constants.SessionKeyForUser];
 
         Assert.That(actual, Is.Null);
+      }
+
+      [Test]
+      public void GivenNullUser_AbandonsSession() {
+        var session = new FakeSession();
+        ConfigureSessionFromContextResolver_ToReturn(session);
+
+        _sut.SetAuthenticatedUser(null);
+
+        Assert.That(session.IsAbandoned);
       }
 
       [Test]

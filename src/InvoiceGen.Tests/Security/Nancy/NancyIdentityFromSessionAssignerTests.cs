@@ -33,7 +33,7 @@ namespace DavidLievrouw.InvoiceGen.Security.Nancy {
 
     [Test]
     public void GivenNullContext_Throws() {
-      Assert.Throws<ArgumentNullException>(() => _sut.AssignNancyIdentity(null));
+      Assert.Throws<ArgumentNullException>(() => _sut.AssignNancyIdentityFromContext(null));
     }
 
     [Test]
@@ -45,7 +45,7 @@ namespace DavidLievrouw.InvoiceGen.Security.Nancy {
       ConfigureUserFromSessionResolver_ToReturn(session, user);
       ConfigureInvoiceGenIdentityFactory_ToReturn(user, identity);
 
-      _sut.AssignNancyIdentity(_context);
+      _sut.AssignNancyIdentityFromContext(_context);
 
       Assert.That(_context.CurrentUser, Is.Not.Null);
       Assert.That(_context.CurrentUser, Is.EqualTo(identity));

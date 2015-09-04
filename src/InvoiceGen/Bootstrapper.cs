@@ -1,6 +1,5 @@
 ﻿using System;
 using Autofac;
-using DavidLievrouw.InvoiceGen.Security;
 using DavidLievrouw.InvoiceGen.Security.Nancy;
 using Nancy;
 using Nancy.Bootstrapper;
@@ -23,8 +22,9 @@ namespace DavidLievrouw.InvoiceGen {
       StaticConfiguration.DisableErrorTraces = false;
 
       pipelines.BeforeRequest.AddItemToEndOfPipeline(ctx => {
+        // Load the user from the AspNet session. If one is found, create a Nancy identity and assign it.
         var identityAssigner = container.Resolve<INancyIdentityFromContextAssigner>();
-        identityAssigner.AssignNancyIdentity(ctx);
+        identityAssigner.AssignNancyIdentityFromContext(ctx);
         return null;
       });
 

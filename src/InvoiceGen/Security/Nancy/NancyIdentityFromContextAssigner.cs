@@ -20,7 +20,7 @@ namespace DavidLievrouw.InvoiceGen.Security.Nancy {
       _invoiceGenIdentityFactory = invoiceGenIdentityFactory;
     }
 
-    public void AssignNancyIdentity(NancyContext nancyContext) {
+    public void AssignNancyIdentityFromContext(NancyContext nancyContext) {
       if (nancyContext == null) throw new ArgumentNullException("nancyContext");
 
       var session = _aspNetSessionFromNancyContextResolver.ResolveSession(nancyContext);
