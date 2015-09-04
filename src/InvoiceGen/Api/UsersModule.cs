@@ -2,6 +2,7 @@
 using DavidLievrouw.InvoiceGen.Api.Handlers;
 using DavidLievrouw.InvoiceGen.Api.Models;
 using DavidLievrouw.InvoiceGen.Domain;
+using DavidLievrouw.InvoiceGen.Security;
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;
@@ -11,16 +12,18 @@ namespace DavidLievrouw.InvoiceGen.Api {
     public UsersModule(
       INancyQueryHandler<GetCurrentUserRequest, User> getCurrentUserQueryHandler,
       INancyCommandHandler<LoginCommand> loginCommandHandler,
-      INancyCommandHandler<LogoutCommand> logoutCommandHandler) {
+      INancyCommandHandler<LogoutCommand> logoutCommandHandler,
+      ISecurityContextFactory securityContextFactory) {
       if (getCurrentUserQueryHandler == null) throw new ArgumentNullException("getCurrentUserQueryHandler");
       if (loginCommandHandler == null) throw new ArgumentNullException("loginCommandHandler");
       if (logoutCommandHandler == null) throw new ArgumentNullException("logoutCommandHandler");
+      if (securityContextFactory == null) throw new ArgumentNullException("securityContextFactory");
 
       Get["api/user", true] = async (parameters, cancellationToken) => {
         this.RequiresAuthentication();
         return await getCurrentUserQueryHandler.Handle(this,
           () => new GetCurrentUserRequest {
-            NancyContext = Context
+            SecurityContext = securityContextFactory.Create(Context)
           });
       };
 
@@ -28,7 +31,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
         () => {
           var loginRequest = this.Bind<LoginCommand>();
           return new LoginCommand {
-            NancyContext = Context,
+            SecurityContext = securityContextFactory.Create(Context),
             Login = loginRequest == null
               ? null
               : loginRequest.Login,
@@ -41,7 +44,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
         this.RequiresAuthentication();
         return await logoutCommandHandler.Handle(this,
           () => new LogoutCommand {
-            NancyContext = Context
+            SecurityContext = securityContextFactory.Create(Context)
           });
       };
     }

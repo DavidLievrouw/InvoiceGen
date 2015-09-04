@@ -1,31 +1,24 @@
 ﻿using System;
 using DavidLievrouw.InvoiceGen.Domain;
+using DavidLievrouw.Utils;
 using FakeItEasy;
-using Nancy;
 using NUnit.Framework;
 
 namespace DavidLievrouw.InvoiceGen.Security {
   [TestFixture]
   public class AuthenticatedUserApplyerTests {
-    NancyContext _nancyContext;
-    ISessionFromContextResolver _sessionFromContextResolver;
-    IInvoiceGenIdentityFactory _invoiceGenIdentityFactory;
+    ISecurityContext _securityContext;
     AuthenticatedUserApplyer _sut;
 
     [SetUp]
     public virtual void SetUp() {
-      _sessionFromContextResolver = _sessionFromContextResolver.Fake();
-      _invoiceGenIdentityFactory = _invoiceGenIdentityFactory.Fake();
-      _nancyContext = new NancyContext();
-
-      _sut = new AuthenticatedUserApplyer(_nancyContext, _sessionFromContextResolver, _invoiceGenIdentityFactory);
+      _securityContext = _securityContext.Fake();
+      _sut = new AuthenticatedUserApplyer(_securityContext);
     }
 
     [Test]
     public void ConstructorTests() {
-      Assert.Throws<ArgumentNullException>(() => new AuthenticatedUserApplyer(null, _sessionFromContextResolver, _invoiceGenIdentityFactory));
-      Assert.Throws<ArgumentNullException>(() => new AuthenticatedUserApplyer(_nancyContext, null, _invoiceGenIdentityFactory));
-      Assert.Throws<ArgumentNullException>(() => new AuthenticatedUserApplyer(_nancyContext, _sessionFromContextResolver, null));
+      Assert.Throws<ArgumentNullException>(() => new AuthenticatedUserApplyer(null));
     }
 
     public class ApplyAuthenticatedUser : AuthenticatedUserApplyerTests {
@@ -44,14 +37,14 @@ namespace DavidLievrouw.InvoiceGen.Security {
 
       [Test]
       public void WhenSessionDoesNotExist_Throws() {
-        ConfigureSessionFromContextResolver_ToReturn(null);
+        ConfigureSecurityContext_ToReturnSession(null);
         Assert.Throws<InvalidOperationException>(() => _sut.ApplyAuthenticatedUser(_user));
       }
 
       [Test]
       public void SetsUserInSession() {
         var session = new FakeSession();
-        ConfigureSessionFromContextResolver_ToReturn(session);
+        ConfigureSecurityContext_ToReturnSession(session);
 
         _sut.ApplyAuthenticatedUser(_user);
 
@@ -60,23 +53,24 @@ namespace DavidLievrouw.InvoiceGen.Security {
       }
 
       [Test]
-      public void SetsCreatedNancyIdentity() {
+      public void SetsAuthenticatedUser() {
         var session = new FakeSession();
-        var identity = new InvoiceGenIdentity(_user);
-        ConfigureSessionFromContextResolver_ToReturn(session);
-        ConfigureInvoiceGenIdentityFactory_ToReturn(_user, identity);
+        ConfigureSecurityContext_ToReturnSession(session);
+        ConfigureSecurityContext_ToReturnUser(_user);
 
         _sut.ApplyAuthenticatedUser(_user);
-
-        Assert.That(_nancyContext.CurrentUser, Is.Not.Null);
-        Assert.That(_nancyContext.CurrentUser, Is.EqualTo(identity));
+        
+        Assert.That(_securityContext.AuthenticatedUser, Is.Not.Null);
+        Assert.That(_securityContext.AuthenticatedUser, Is.EqualTo(_user));
+        A.CallTo(_securityContext).Where(x => x.Method.Name == "set_AuthenticatedUser")
+                .Where(x => x.Arguments.Get<User>(0) == _user).MustHaveHappened();
       }
     }
 
     public class ClearAuthenticatedUser : AuthenticatedUserApplyerTests {
       [Test]
       public void WhenSessionDoesNotExist_DoesNotThrow() {
-        ConfigureSessionFromContextResolver_ToReturn(null);
+        ConfigureSecurityContext_ToReturnSession(null);
         Assert.DoesNotThrow(() => _sut.ClearAuthenticatedUser());
       }
 
@@ -84,7 +78,7 @@ namespace DavidLievrouw.InvoiceGen.Security {
       public void WhenSessionExists_AbandonsSession_AndClearsData() {
         var session = new FakeSession();
         session["user"] = new User();
-        ConfigureSessionFromContextResolver_ToReturn(session);
+        ConfigureSecurityContext_ToReturnSession(session);
 
         _sut.ClearAuthenticatedUser();
 
@@ -93,21 +87,24 @@ namespace DavidLievrouw.InvoiceGen.Security {
       }
 
       [Test]
-      public void ClearsNancyIdentity() {
-        _nancyContext.CurrentUser = new InvoiceGenIdentity(new User());
-        _sut.ClearAuthenticatedUser();
-        Assert.That(_nancyContext.CurrentUser, Is.Null);
+      public void ClearsAuthenticatedUser() {
+        ConfigureSecurityContext_ToReturnUser(null);
+
+        _sut.ClearAuthenticatedUser(); 
+        
+        A.CallTo(_securityContext).Where(x => x.Method.Name == "set_AuthenticatedUser")
+         .Where(x => x.Arguments.Get<User>(0).IsNullOrDefault()).MustHaveHappened();
       }
     }
 
-    void ConfigureSessionFromContextResolver_ToReturn(ISession session) {
-      A.CallTo(() => _sessionFromContextResolver.ResolveSession(A<NancyContext>._))
+    void ConfigureSecurityContext_ToReturnSession(ISession session) {
+      A.CallTo(() => _securityContext.Session)
        .Returns(session);
     }
 
-    void ConfigureInvoiceGenIdentityFactory_ToReturn(User user, InvoiceGenIdentity identity) {
-      A.CallTo(() => _invoiceGenIdentityFactory.Create(user))
-       .Returns(identity);
+    void ConfigureSecurityContext_ToReturnUser(User user) {
+      A.CallTo(() => _securityContext.AuthenticatedUser)
+       .Returns(user);
     }
   }
 }

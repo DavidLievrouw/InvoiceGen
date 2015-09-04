@@ -4,9 +4,9 @@ using FluentValidation;
 namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
   public class GetCurrentUserRequestValidator : NullAllowableValidator<GetCurrentUserRequest>, IGetCurrentUserRequestValidator {
     public GetCurrentUserRequestValidator() {
-      RuleFor(req => req.NancyContext)
+      RuleFor(req => req.SecurityContext)
         .NotNull()
-        .WithMessage("A valid Nancy context should be specified.");
+        .WithMessage("A valid security context should be specified.");
     }
   }
 }
