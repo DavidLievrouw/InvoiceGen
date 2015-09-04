@@ -5,6 +5,7 @@ using DavidLievrouw.InvoiceGen.Api.Handlers;
 using DavidLievrouw.InvoiceGen.App;
 using DavidLievrouw.InvoiceGen.Common;
 using DavidLievrouw.InvoiceGen.Security;
+using DavidLievrouw.InvoiceGen.Security.Nancy;
 using DavidLievrouw.Utils;
 using FluentValidation;
 
@@ -65,7 +66,7 @@ namespace DavidLievrouw.InvoiceGen.Composition {
                    });
 
       // Register other stuff
-      builder.RegisterType<NancyIdentityFromSessionAssigner>()
+      builder.RegisterType<NancyIdentityFromContextAssigner>()
              .AsImplementedInterfaces()
              .SingleInstance();
       builder.RegisterType<NancySecurityContextFactory>()

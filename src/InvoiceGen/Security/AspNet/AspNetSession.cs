@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web;
 
-namespace DavidLievrouw.InvoiceGen.Security {
+namespace DavidLievrouw.InvoiceGen.Security.AspNet {
   public class AspNetSession : ISession {
     readonly HttpSessionStateBase _wrappedSession;
 

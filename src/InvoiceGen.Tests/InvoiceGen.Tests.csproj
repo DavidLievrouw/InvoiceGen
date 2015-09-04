@@ -141,15 +141,15 @@
     <Compile Include="Configuration\InvoiceGenRootPathProvider.cs" />
     <Compile Include="CustomBootstrapper.cs" />
     <Compile Include="Configuration\CustomJsonSerializerTests.cs" />
-    <Compile Include="Security\AspNetSessionTests.cs" />
+    <Compile Include="Security\AspNet\AspNetSessionTests.cs" />
     <Compile Include="Security\FakeSession.cs" />
     <Compile Include="Security\HttpContextBuilder.cs" />
-    <Compile Include="Security\InvoiceGenIdentityFactoryTests.cs" />
-    <Compile Include="Security\InvoiceGenIdentityTests.cs" />
-    <Compile Include="Security\AspNetSessionResolverTests.cs" />
-    <Compile Include="Security\NancyIdentityFromSessionAssignerTests.cs" />
-    <Compile Include="Security\NancySecurityContextFactoryTests.cs" />
-    <Compile Include="Security\NancySecurityContextTests.cs" />
+    <Compile Include="Security\Nancy\InvoiceGenIdentityFactoryTests.cs" />
+    <Compile Include="Security\Nancy\InvoiceGenIdentityTests.cs" />
+    <Compile Include="Security\AspNet\AspNetSessionFromNancyContextResolverTests.cs" />
+    <Compile Include="Security\Nancy\NancyIdentityFromSessionAssignerTests.cs" />
+    <Compile Include="Security\Nancy\NancySecurityContextFactoryTests.cs" />
+    <Compile Include="Security\Nancy\NancySecurityContextTests.cs" />
     <Compile Include="Security\UserFromSessionResolverTests.cs" />
     <Compile Include="TestExtensions.cs" />
   </ItemGroup>

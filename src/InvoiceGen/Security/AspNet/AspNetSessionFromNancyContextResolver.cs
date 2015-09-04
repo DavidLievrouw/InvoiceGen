@@ -2,8 +2,8 @@
 using DavidLievrouw.Utils;
 using Nancy;
 
-namespace DavidLievrouw.InvoiceGen.Security {
-  public class AspNetSessionFromContextResolver : ISessionFromContextResolver {
+namespace DavidLievrouw.InvoiceGen.Security.AspNet {
+  public class AspNetSessionFromNancyContextResolver : IAspNetSessionFromNancyContextResolver {
     public ISession ResolveSession(NancyContext nancyContext) {
       if (nancyContext == null) throw new ArgumentNullException("nancyContext");
 

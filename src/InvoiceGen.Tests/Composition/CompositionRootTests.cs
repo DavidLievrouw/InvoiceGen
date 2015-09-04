@@ -7,6 +7,7 @@ using DavidLievrouw.InvoiceGen.Api.Models;
 using DavidLievrouw.InvoiceGen.Configuration;
 using DavidLievrouw.InvoiceGen.Domain;
 using DavidLievrouw.InvoiceGen.Security;
+using DavidLievrouw.InvoiceGen.Security.Nancy;
 using DavidLievrouw.Utils;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -29,7 +30,7 @@ namespace DavidLievrouw.InvoiceGen.Composition {
 
     [TestCase(typeof(IUserFromSessionResolver))]
     [TestCase(typeof(IInvoiceGenIdentityFactory))]
-    [TestCase(typeof(INancyIdentityFromSessionAssigner))]
+    [TestCase(typeof(INancyIdentityFromContextAssigner))]
     public void ShouldBeRegistered(Type serviceType) {
       object actualResult = null;
       Assert.DoesNotThrow(() => actualResult = _sut.Resolve(serviceType));
@@ -50,7 +51,7 @@ namespace DavidLievrouw.InvoiceGen.Composition {
     [TestCase(typeof(IQueryHandler<GetCurrentUserRequest, User>), typeof(ValidationAwareQueryHandler<GetCurrentUserRequest, User>))]
     [TestCase(typeof(INancyCommandHandler<LoginCommand>), typeof(NancyCommandHandler<LoginCommand>))]
     [TestCase(typeof(INancyQueryHandler<GetCurrentUserRequest, User>), typeof(NancyQueryHandler<GetCurrentUserRequest, User>))]
-    [TestCase(typeof(ISecurityContextFactory), typeof(NancySecurityContextFactory))]
+    [TestCase(typeof(INancySecurityContextFactory), typeof(NancySecurityContextFactory))]
     public void RegistersDecoratorsCorrectly(Type requestedType, Type expectedType) {
       object actualResult = null;
       Assert.DoesNotThrow(() => actualResult = _sut.Resolve(requestedType));

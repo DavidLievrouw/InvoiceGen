@@ -4,7 +4,7 @@ using System.Linq;
 using DavidLievrouw.InvoiceGen.Domain;
 using Nancy.Security;
 
-namespace DavidLievrouw.InvoiceGen.Security {
+namespace DavidLievrouw.InvoiceGen.Security.Nancy {
   public class InvoiceGenIdentity : IUserIdentity {
     public InvoiceGenIdentity(User user) {
       if (user == null) throw new ArgumentNullException("user");
