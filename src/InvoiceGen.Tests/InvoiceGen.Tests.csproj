@@ -119,6 +119,7 @@
     <Compile Include="Api\CustomBootstrapper.cs" />
     <Compile Include="Api\FakeNancyCommandHandler.cs" />
     <Compile Include="Api\FakeNancyQueryHandler.cs" />
+    <Compile Include="Api\Handlers\FakeSecurityContext.cs" />
     <Compile Include="Api\Handlers\FakeUserIdentity.cs" />
     <Compile Include="Api\Handlers\GetCurrentUserQueryHandlerTests.cs" />
     <Compile Include="Api\Handlers\LogoutCommandHandlerTests.cs" />

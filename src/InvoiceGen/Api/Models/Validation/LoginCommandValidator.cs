@@ -10,9 +10,9 @@ namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
       RuleFor(req => req.Password)
         .NotNull()
         .WithMessage("A valid password should be specified.");
-      RuleFor(req => req.NancyContext)
+      RuleFor(req => req.SecurityContext)
         .NotNull()
-        .WithMessage("A valid Nancy context should be specified.");
+        .WithMessage("A valid security context should be specified.");
     }
   }
 }

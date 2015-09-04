@@ -1,4 +1,4 @@
-﻿using Nancy;
+﻿using DavidLievrouw.InvoiceGen.Api.Handlers;
 using NUnit.Framework;
 
 namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
@@ -22,18 +22,18 @@ namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
       var input = new LoginCommand {
         Login = null,
         Password = "ThePassword",
-        NancyContext = new NancyContext()
+        SecurityContext = new FakeSecurityContext()
       };
       var actualResult = _sut.Validate(input);
       Assert.That(actualResult.IsValid, Is.False);
     }
 
     [Test]
-    public void NullNancyContext_IsInvalid() {
+    public void NullSecurityContext_IsInvalid() {
       var input = new LoginCommand {
         Login = "TheLogin",
         Password = "ThePassword",
-        NancyContext = null
+        SecurityContext = null
       };
       var actualResult = _sut.Validate(input);
       Assert.That(actualResult.IsValid, Is.False);
@@ -44,7 +44,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
       var input = new LoginCommand {
         Login = "TheLogin",
         Password = null,
-        NancyContext = new NancyContext()
+        SecurityContext = new FakeSecurityContext()
       };
       var actualResult = _sut.Validate(input);
       Assert.That(actualResult.IsValid, Is.False);
@@ -55,7 +55,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
       var input = new LoginCommand {
         Login = string.Empty,
         Password = "ThePassword",
-        NancyContext = new NancyContext()
+        SecurityContext = new FakeSecurityContext()
       };
       var actualResult = _sut.Validate(input);
       Assert.That(actualResult.IsValid, Is.True);
@@ -66,7 +66,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
       var input = new LoginCommand {
         Login = "TheLogin",
         Password = string.Empty,
-        NancyContext = new NancyContext()
+        SecurityContext = new FakeSecurityContext()
       };
       var actualResult = _sut.Validate(input);
       Assert.That(actualResult.IsValid, Is.True);
@@ -77,7 +77,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
       var input = new LoginCommand {
         Login = "TheLogin",
         Password = "ThePassword",
-        NancyContext = new NancyContext()
+        SecurityContext = new FakeSecurityContext()
       };
       var actualResult = _sut.Validate(input);
       Assert.That(actualResult.IsValid, Is.True);

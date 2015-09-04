@@ -15,7 +15,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
     }
 
     public Task Handle(LoginCommand command) {
-      // Authorise user
+      // Authorise user: ToDo
       var user = new User {
         GivenName = "John",
         LastName = "Doe",
@@ -26,7 +26,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
         }
       };
 
-      var applyer = _authenticatedUserApplyerFactory.Create(command.NancyContext);
+      var applyer = _authenticatedUserApplyerFactory.Create(command.SecurityContext);
       if (user == null) {
         applyer.ClearAuthenticatedUser();
       } else {

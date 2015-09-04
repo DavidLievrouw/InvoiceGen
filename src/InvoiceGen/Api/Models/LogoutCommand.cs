@@ -1,7 +1,7 @@
-﻿using Nancy;
+﻿using DavidLievrouw.InvoiceGen.Security;
 
 namespace DavidLievrouw.InvoiceGen.Api.Models {
   public class LogoutCommand {
-    public NancyContext NancyContext { get; set; }
+    public ISecurityContext SecurityContext { get; set; }
   }
 }

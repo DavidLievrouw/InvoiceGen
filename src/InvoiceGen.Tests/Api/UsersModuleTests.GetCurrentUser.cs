@@ -1,5 +1,6 @@
 ﻿using DavidLievrouw.InvoiceGen.Api.Models;
 using DavidLievrouw.InvoiceGen.Domain;
+using DavidLievrouw.InvoiceGen.Security;
 using FakeItEasy;
 using Nancy;
 using Nancy.Testing;
@@ -34,6 +35,12 @@ namespace DavidLievrouw.InvoiceGen.Api {
 
       [Test]
       public void ShouldReturnCurrentLoggedInUser() {
+        var securityContext = A.Fake<ISecurityContext>();
+        ConfigureSecurityContextFactory_ToReturn(securityContext);
+        var expectedRequest = new GetCurrentUserRequest {
+          SecurityContext = securityContext
+        };
+
         _getCurrentUserNancyQueryHandler.Returns(_authenticatedUser);
 
         var actual = Get();
@@ -43,7 +50,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
         Assert.That(actualDeserialized.HasSamePropertyValuesAs(_authenticatedUser));
 
         A.CallTo(() => _getCurrentUserQueryHandler
-                   .Handle(A<GetCurrentUserRequest>._))
+          .Handle(A<GetCurrentUserRequest>.That.Matches(req => req.HasSamePropertyValuesAs(expectedRequest))))
          .MustHaveHappened(Repeated.Exactly.Once);
         Assert.That(_getCurrentUserNancyQueryHandler.GetCallCount(), Is.EqualTo(1));
       }

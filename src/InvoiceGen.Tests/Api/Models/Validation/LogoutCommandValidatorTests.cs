@@ -1,4 +1,4 @@
-﻿using Nancy;
+﻿using DavidLievrouw.InvoiceGen.Api.Handlers;
 using NUnit.Framework;
 
 namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
@@ -18,9 +18,9 @@ namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
     }
 
     [Test]
-    public void NullNancyContext_IsInvalid() {
+    public void NullSecurityContext_IsInvalid() {
       var input = new LogoutCommand {
-        NancyContext = null
+        SecurityContext = null
       };
       var actualResult = _sut.Validate(input);
       Assert.That(actualResult.IsValid, Is.False);
@@ -29,7 +29,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
     [Test]
     public void ValidCommand_IsValid() {
       var input = new LogoutCommand {
-        NancyContext = new NancyContext()
+        SecurityContext = new FakeSecurityContext()
       };
       var actualResult = _sut.Validate(input);
       Assert.That(actualResult.IsValid, Is.True);

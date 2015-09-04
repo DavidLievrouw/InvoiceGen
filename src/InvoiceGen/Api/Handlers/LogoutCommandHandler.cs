@@ -14,7 +14,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
     }
 
     public Task Handle(LogoutCommand command) {
-      var applyer = _authenticatedUserApplyerFactory.Create(command.NancyContext);
+      var applyer = _authenticatedUserApplyerFactory.Create(command.SecurityContext);
       applyer.ClearAuthenticatedUser();
 
       return Task.CompletedTask;

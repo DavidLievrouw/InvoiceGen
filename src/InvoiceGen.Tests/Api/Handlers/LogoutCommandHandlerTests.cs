@@ -1,7 +1,6 @@
 ﻿using DavidLievrouw.InvoiceGen.Api.Models;
 using DavidLievrouw.InvoiceGen.Security;
 using FakeItEasy;
-using Nancy;
 using NUnit.Framework;
 
 namespace DavidLievrouw.InvoiceGen.Api.Handlers {
@@ -23,23 +22,23 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
 
     [Test]
     public void DelegatesControlToAuthenticatedUserApplyer() {
-      var nancyContext = new NancyContext();
+      var securityContext = A.Fake<ISecurityContext>();
       var authenticatedUserApplyer = A.Fake<IAuthenticatedUserApplyer>();
-      ConfigureApplyerFactory_ToReturn(nancyContext, authenticatedUserApplyer);
+      ConfigureApplyerFactory_ToReturn(securityContext, authenticatedUserApplyer);
       var command = new LogoutCommand {
-        NancyContext = nancyContext
+        SecurityContext = securityContext
       };
 
       _sut.Handle(command).Wait();
 
-      A.CallTo(() => _authenticatedUserApplyerFactory.Create(nancyContext))
+      A.CallTo(() => _authenticatedUserApplyerFactory.Create(securityContext))
        .MustHaveHappened();
       A.CallTo(() => authenticatedUserApplyer.ClearAuthenticatedUser())
        .MustHaveHappened();
     }
 
-    void ConfigureApplyerFactory_ToReturn(NancyContext nancyContext, IAuthenticatedUserApplyer authenticatedUserApplyer) {
-      A.CallTo(() => _authenticatedUserApplyerFactory.Create(nancyContext))
+    void ConfigureApplyerFactory_ToReturn(ISecurityContext securityContext, IAuthenticatedUserApplyer authenticatedUserApplyer) {
+      A.CallTo(() => _authenticatedUserApplyerFactory.Create(securityContext))
        .Returns(authenticatedUserApplyer);
     }
   }

@@ -1,7 +1,5 @@
 ﻿using DavidLievrouw.InvoiceGen.Api.Models;
 using DavidLievrouw.InvoiceGen.Domain;
-using DavidLievrouw.InvoiceGen.Security;
-using Nancy;
 using NUnit.Framework;
 
 namespace DavidLievrouw.InvoiceGen.Api.Handlers {
@@ -17,21 +15,8 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
     [Test]
     public void GivenContextWithoutUser_ReturnsNull() {
       var request = new GetCurrentUserRequest {
-        NancyContext = new NancyContext {
-          CurrentUser = null
-        }
-      };
-
-      var actual = _sut.Handle(request).Result;
-
-      Assert.That(actual, Is.Null);
-    }
-
-    [Test]
-    public void GivenContextWithInvalidUser_ReturnsNull() {
-      var request = new GetCurrentUserRequest {
-        NancyContext = new NancyContext {
-          CurrentUser = new FakeUserIdentity("Polleke")
+        SecurityContext = new FakeSecurityContext {
+          AuthenticatedUser = null
         }
       };
 
@@ -44,8 +29,8 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
     public void GivenContextWithValidUser_ReturnsUser() {
       var user = new User {Login = new Login {Value = "JohnD"}};
       var request = new GetCurrentUserRequest {
-        NancyContext = new NancyContext {
-          CurrentUser = new InvoiceGenIdentity(user)
+        SecurityContext = new FakeSecurityContext {
+          AuthenticatedUser = user
         }
       };
 
