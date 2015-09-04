@@ -1,6 +1,6 @@
 ﻿using System;
 using DavidLievrouw.InvoiceGen.Configuration;
-using DavidLievrouw.InvoiceGen.Domain;
+using DavidLievrouw.InvoiceGen.Domain.DTO;
 using DavidLievrouw.InvoiceGen.Security.Nancy;
 using Nancy.Testing;
 

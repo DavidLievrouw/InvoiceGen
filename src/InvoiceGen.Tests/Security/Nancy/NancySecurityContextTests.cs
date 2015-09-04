@@ -1,6 +1,6 @@
 ﻿using System;
 using DavidLievrouw.InvoiceGen.Api.Handlers;
-using DavidLievrouw.InvoiceGen.Domain;
+using DavidLievrouw.InvoiceGen.Domain.DTO;
 using DavidLievrouw.InvoiceGen.Security.AspNet;
 using DavidLievrouw.InvoiceGen.Security.Nancy;
 using FakeItEasy;

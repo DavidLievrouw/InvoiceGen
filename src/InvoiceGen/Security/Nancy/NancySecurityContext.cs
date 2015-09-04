@@ -1,5 +1,5 @@
 ﻿using System;
-using DavidLievrouw.InvoiceGen.Domain;
+using DavidLievrouw.InvoiceGen.Domain.DTO;
 using DavidLievrouw.InvoiceGen.Security.AspNet;
 using Nancy;
 

@@ -1,4 +1,4 @@
-﻿using DavidLievrouw.InvoiceGen.Domain;
+﻿using DavidLievrouw.InvoiceGen.Domain.DTO;
 using NUnit.Framework;
 
 namespace DavidLievrouw.InvoiceGen.Security.Nancy {

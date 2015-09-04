@@ -2,7 +2,7 @@
 using System.Reflection;
 using System.Web;
 using System.Web.SessionState;
-using DavidLievrouw.InvoiceGen.Domain;
+using DavidLievrouw.InvoiceGen.Domain.DTO;
 
 namespace DavidLievrouw.InvoiceGen.Security {
   public class HttpContextBuilder {

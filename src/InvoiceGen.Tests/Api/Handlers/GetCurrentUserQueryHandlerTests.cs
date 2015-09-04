@@ -1,5 +1,5 @@
 ﻿using DavidLievrouw.InvoiceGen.Api.Models;
-using DavidLievrouw.InvoiceGen.Domain;
+using DavidLievrouw.InvoiceGen.Domain.DTO;
 using DavidLievrouw.InvoiceGen.Security;
 using FakeItEasy;
 using NUnit.Framework;

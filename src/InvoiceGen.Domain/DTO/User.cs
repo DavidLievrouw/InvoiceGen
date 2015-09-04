@@ -1,4 +1,4 @@
-﻿namespace DavidLievrouw.InvoiceGen.Domain {
+﻿namespace DavidLievrouw.InvoiceGen.Domain.DTO {
   public class User {
     public Login Login { get; set; }
     public string GivenName { get; set; }

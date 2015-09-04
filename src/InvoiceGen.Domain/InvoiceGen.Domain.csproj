@@ -62,9 +62,9 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Login.cs" />
-    <Compile Include="Password.cs" />
-    <Compile Include="User.cs" />
+    <Compile Include="DTO\Login.cs" />
+    <Compile Include="DTO\Password.cs" />
+    <Compile Include="DTO\User.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\InvoiceGen.Common\InvoiceGen.Common.csproj">
