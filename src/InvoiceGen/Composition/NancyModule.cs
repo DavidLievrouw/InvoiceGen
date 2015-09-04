@@ -68,6 +68,9 @@ namespace DavidLievrouw.InvoiceGen.Composition {
       builder.RegisterType<NancyIdentityFromSessionAssigner>()
              .AsImplementedInterfaces()
              .SingleInstance();
+      builder.RegisterType<NancySecurityContextFactory>()
+             .AsImplementedInterfaces()
+             .SingleInstance();
     }
   }
 }
