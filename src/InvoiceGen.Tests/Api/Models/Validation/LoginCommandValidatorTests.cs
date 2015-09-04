@@ -1,4 +1,6 @@
 ﻿using DavidLievrouw.InvoiceGen.Api.Handlers;
+using DavidLievrouw.InvoiceGen.Security;
+using FakeItEasy;
 using NUnit.Framework;
 
 namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
@@ -22,7 +24,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
       var input = new LoginCommand {
         Login = null,
         Password = "ThePassword",
-        SecurityContext = new FakeSecurityContext()
+        SecurityContext = A.Dummy<ISecurityContext>()
       };
       var actualResult = _sut.Validate(input);
       Assert.That(actualResult.IsValid, Is.False);
@@ -44,7 +46,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
       var input = new LoginCommand {
         Login = "TheLogin",
         Password = null,
-        SecurityContext = new FakeSecurityContext()
+        SecurityContext = A.Dummy<ISecurityContext>()
       };
       var actualResult = _sut.Validate(input);
       Assert.That(actualResult.IsValid, Is.False);
@@ -55,7 +57,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
       var input = new LoginCommand {
         Login = string.Empty,
         Password = "ThePassword",
-        SecurityContext = new FakeSecurityContext()
+        SecurityContext = A.Dummy<ISecurityContext>()
       };
       var actualResult = _sut.Validate(input);
       Assert.That(actualResult.IsValid, Is.True);
@@ -66,7 +68,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
       var input = new LoginCommand {
         Login = "TheLogin",
         Password = string.Empty,
-        SecurityContext = new FakeSecurityContext()
+        SecurityContext = A.Dummy<ISecurityContext>()
       };
       var actualResult = _sut.Validate(input);
       Assert.That(actualResult.IsValid, Is.True);
@@ -77,7 +79,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
       var input = new LoginCommand {
         Login = "TheLogin",
         Password = "ThePassword",
-        SecurityContext = new FakeSecurityContext()
+        SecurityContext = A.Dummy<ISecurityContext>()
       };
       var actualResult = _sut.Validate(input);
       Assert.That(actualResult.IsValid, Is.True);
