@@ -1,7 +1,8 @@
 ﻿using DavidLievrouw.InvoiceGen.Domain.DTO;
+using Nancy.Security;
 
 namespace DavidLievrouw.InvoiceGen.Security.Nancy {
   public interface IInvoiceGenIdentityFactory {
-    InvoiceGenIdentity Create(User user);
+    IUserIdentity Create(User user);
   }
 }

@@ -23,7 +23,8 @@ namespace DavidLievrouw.InvoiceGen.Security.Nancy {
       var actual = _sut.Create(user);
 
       Assert.That(actual, Is.Not.Null);
-      Assert.That(actual.User, Is.EqualTo(user));
+      Assert.That(actual, Is.InstanceOf<InvoiceGenIdentity>());
+      Assert.That(((InvoiceGenIdentity) actual).User, Is.EqualTo(user));
     }
   }
 }
