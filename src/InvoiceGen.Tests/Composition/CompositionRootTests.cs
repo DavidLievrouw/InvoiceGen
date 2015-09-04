@@ -50,6 +50,7 @@ namespace DavidLievrouw.InvoiceGen.Composition {
     [TestCase(typeof(IQueryHandler<GetCurrentUserRequest, User>), typeof(ValidationAwareQueryHandler<GetCurrentUserRequest, User>))]
     [TestCase(typeof(INancyCommandHandler<LoginCommand>), typeof(NancyCommandHandler<LoginCommand>))]
     [TestCase(typeof(INancyQueryHandler<GetCurrentUserRequest, User>), typeof(NancyQueryHandler<GetCurrentUserRequest, User>))]
+    [TestCase(typeof(ISecurityContextFactory), typeof(NancySecurityContextFactory))]
     public void RegistersDecoratorsCorrectly(Type requestedType, Type expectedType) {
       object actualResult = null;
       Assert.DoesNotThrow(() => actualResult = _sut.Resolve(requestedType));
