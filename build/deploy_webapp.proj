@@ -28,7 +28,8 @@
   	<CreateItem Include="
 	              $(WebAppBuildDirectory)\**\*"
 				Exclude="
-				  $(WebAppBuildDirectory)\bin\roslyn\**\*">
+				  $(WebAppBuildDirectory)\bin\roslyn\**\*;
+				  $(WebAppBuildDirectory)\bin\*\**\*">
       <Output ItemName="WebAppFiles" TaskParameter="Include"/>
     </CreateItem>
     <Copy DestinationFolder="$(WebAppTargetDirectory)\%(RecursiveDir)" SourceFiles="@(WebAppFiles)" />
