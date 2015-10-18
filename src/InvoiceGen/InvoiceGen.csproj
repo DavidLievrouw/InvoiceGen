@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\build\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props" Condition="Exists('..\packages\Microsoft.Net.Compilers.1.0.0\build\Microsoft.Net.Compilers.props')" />
@@ -154,6 +154,23 @@
     <Compile Include="Security\Nancy\NancySecurityContextFactory.cs" />
     <Compile Include="Security\Nancy\NancySession.cs" />
     <Compile Include="Security\Nancy\NancySessionFromNancyContextResolver.cs" />
+    <Compile Include="Security\Nancy\SessionHijacking\AntiSessionHijackLogic.cs" />
+    <Compile Include="Security\Nancy\SessionHijacking\SessionAntiHijackHashGenerator.cs" />
+    <Compile Include="Security\Nancy\SessionHijacking\SessionAntiHijackHashInjector.cs" />
+    <Compile Include="Security\Nancy\SessionHijacking\SessionAntiHijackHashStripper.cs" />
+    <Compile Include="Security\Nancy\SessionHijacking\SessionDetector.cs" />
+    <Compile Include="Security\Nancy\SessionHijacking\SessionHijackDetector.cs" />
+    <Compile Include="Security\Nancy\SessionHijacking\IAntiSessionHijackLogic.cs" />
+    <Compile Include="Security\Nancy\SessionHijacking\ISessionAntiHijackHashGenerator.cs" />
+    <Compile Include="Security\Nancy\SessionHijacking\ISessionAntiHijackHashInjector.cs" />
+    <Compile Include="Security\Nancy\SessionHijacking\ISessionAntiHijackHashStripper.cs" />
+    <Compile Include="Security\Nancy\SessionHijacking\ISessionDetector.cs" />
+    <Compile Include="Security\Nancy\SessionHijacking\ISessionHijackDetector.cs" />
+    <Compile Include="Security\Nancy\SessionHijacking\IResponseBuilderWhenSessionIsHijacked.cs" />
+    <Compile Include="Security\Nancy\SessionHijacking\ISecureSessionCookieReader.cs" />
+    <Compile Include="Security\Nancy\SessionHijacking\ResponseBuilderWhenSessionIsHijacked.cs" />
+    <Compile Include="Security\Nancy\SessionHijacking\SecureSessionCookie.cs" />
+    <Compile Include="Security\Nancy\SessionHijacking\SecureSessionCookieReader.cs" />
     <Compile Include="Security\UserFromSessionResolver.cs" />
     <Compile Include="Startup.cs" />
     <Content Include="App\Login\login.html" />

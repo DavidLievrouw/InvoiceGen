@@ -8,6 +8,7 @@ using DavidLievrouw.InvoiceGen.Configuration;
 using DavidLievrouw.InvoiceGen.Domain.DTO;
 using DavidLievrouw.InvoiceGen.Security;
 using DavidLievrouw.InvoiceGen.Security.Nancy;
+using DavidLievrouw.InvoiceGen.Security.Nancy.SessionHijacking;
 using DavidLievrouw.Utils;
 using Newtonsoft.Json;
 using NUnit.Framework;
@@ -31,6 +32,7 @@ namespace DavidLievrouw.InvoiceGen.Composition {
     [TestCase(typeof(IUserFromSessionResolver))]
     [TestCase(typeof(IInvoiceGenIdentityFactory))]
     [TestCase(typeof(INancyIdentityFromContextAssigner))]
+    [TestCase(typeof(IAntiSessionHijackLogic))]
     public void ShouldBeRegistered(Type serviceType) {
       object actualResult = null;
       Assert.DoesNotThrow(() => actualResult = _sut.Resolve(serviceType));

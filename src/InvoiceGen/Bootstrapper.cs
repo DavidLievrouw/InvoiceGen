@@ -2,6 +2,7 @@ using System;
 using Autofac;
 using DavidLievrouw.InvoiceGen.Security;
 using DavidLievrouw.InvoiceGen.Security.Nancy;
+using DavidLievrouw.InvoiceGen.Security.Nancy.SessionHijacking;
 using Nancy;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.Autofac;
@@ -24,6 +25,14 @@ namespace DavidLievrouw.InvoiceGen {
 
       // Enable memory sessions, and secure them against session hijacking
       MemoryCacheBasedSessions.Enable(pipelines);
+      pipelines.BeforeRequest.AddItemToStartOfPipeline(ctx => {
+        var antiSessionHijackLogic = container.Resolve<IAntiSessionHijackLogic>();
+        return antiSessionHijackLogic.InterceptHijackedSession(ctx.Request);
+      });
+      pipelines.AfterRequest.AddItemToEndOfPipeline(ctx => {
+        var antiSessionHijackLogic = container.Resolve<IAntiSessionHijackLogic>();
+        antiSessionHijackLogic.ProtectResponseFromSessionHijacking(ctx);
+      });
 
       // Load the user from the AspNet session. If one is found, create a Nancy identity and assign it.
       pipelines.BeforeRequest.AddItemToEndOfPipeline(ctx => {

@@ -11,6 +11,7 @@ using Nancy.Session;
 namespace DavidLievrouw.InvoiceGen.Security {
   public class MemoryCacheBasedSessions {
     const string SessionIdKey = "_ncs";
+    const int SessionExpirationBufferSeconds = 30;
 
     public static void Enable(IPipelines pipelines) {
       var store = new MemoryCacheBasedSessions(MemoryCache.Default);
@@ -29,7 +30,7 @@ namespace DavidLievrouw.InvoiceGen.Security {
     ///   Gets the cookie name in which the session Id is stored
     /// </summary>
     /// <value>Cookie name</value>
-    public string CookieName => SessionIdKey;
+    public static string CookieName => SessionIdKey;
 
     static int GetSessionTimeout() {
       return ConfigurationManager.AppSettings["Nancy:MemoryCacheBasedSessions:SessionTimeoutMinutes"] != null
@@ -47,18 +48,25 @@ namespace DavidLievrouw.InvoiceGen.Security {
     public void Save(string sessionId, global::Nancy.Session.ISession session, Response response) {
       if (session == null) return;
 
-      var dict = new Dictionary<string, object>();
-      foreach (var kvp in session) {
-        dict[kvp.Key] = kvp.Value;
+      var sessionItemsDictionary = new Dictionary<string, object>();
+      if (!(session is NullSessionProvider)) {
+        foreach (var kvp in session) {
+          sessionItemsDictionary[kvp.Key] = kvp.Value;
+        }
       }
 
-      var timeout = GetSessionTimeout();
-      var cookie = new NancyCookie(SessionIdKey, sessionId) {
-        Expires = DateTime.UtcNow.AddMinutes(timeout)
-      };
-      response.WithCookie(cookie);
-
-      _cache.Set(sessionId, dict, DateTime.Now + TimeSpan.FromMinutes(timeout + 1));
+      if (string.IsNullOrWhiteSpace(sessionId) || sessionItemsDictionary.Count < 1) {
+        var cookie = new NancyCookie(SessionIdKey, sessionId) {
+          Expires = DateTime.UtcNow.AddDays(-1)
+        };
+        response.WithCookie(cookie);
+        _cache.Remove(SessionIdKey);
+      } else {
+        var sessionTimeoutMinutes = GetSessionTimeout();
+        var cookie = new NancyCookie(SessionIdKey, sessionId); // Do not set cookie expiration, in order to abandon the session when the browser is closed
+        response.WithCookie(cookie);
+        _cache.Set(sessionId, sessionItemsDictionary, DateTime.Now.AddSeconds(sessionTimeoutMinutes * 60 + SessionExpirationBufferSeconds));
+      }
     }
 
     /// <summary>
