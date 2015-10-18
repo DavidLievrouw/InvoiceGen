@@ -1,4 +1,4 @@
-﻿using DavidLievrouw.InvoiceGen;
+using DavidLievrouw.InvoiceGen;
 using DavidLievrouw.InvoiceGen.Composition;
 using Microsoft.Owin;
 using Microsoft.Owin.Extensions;
@@ -13,7 +13,6 @@ namespace DavidLievrouw.InvoiceGen {
       var container = CompositionRoot.Compose();
 
       app
-        .RequireAspNetSession()
         .UseNancy(
           options => {
             options.Bootstrapper = new Bootstrapper(container);

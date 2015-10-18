@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -141,12 +141,12 @@
     <Compile Include="Configuration\InvoiceGenRootPathProvider.cs" />
     <Compile Include="CustomBootstrapper.cs" />
     <Compile Include="Configuration\CustomJsonSerializerTests.cs" />
-    <Compile Include="Security\AspNet\AspNetSessionTests.cs" />
+    <Compile Include="Security\Nancy\NancySessionTests.cs" />
     <Compile Include="Security\FakeSession.cs" />
     <Compile Include="Security\HttpContextBuilder.cs" />
     <Compile Include="Security\Nancy\InvoiceGenIdentityFactoryTests.cs" />
     <Compile Include="Security\Nancy\InvoiceGenIdentityTests.cs" />
-    <Compile Include="Security\AspNet\AspNetSessionFromNancyContextResolverTests.cs" />
+    <Compile Include="Security\Nancy\NancySessionFromNancyContextResolverTests.cs" />
     <Compile Include="Security\Nancy\NancyIdentityFromSessionAssignerTests.cs" />
     <Compile Include="Security\Nancy\NancySecurityContextFactoryTests.cs" />
     <Compile Include="Security\Nancy\NancySecurityContextTests.cs" />

@@ -1,33 +1,32 @@
 ﻿using System;
+using System.Security;
 using DavidLievrouw.InvoiceGen.Api.Handlers;
 using DavidLievrouw.InvoiceGen.Domain.DTO;
-using DavidLievrouw.InvoiceGen.Security.AspNet;
-using DavidLievrouw.InvoiceGen.Security.Nancy;
 using FakeItEasy;
 using Nancy;
 using NUnit.Framework;
 
-namespace DavidLievrouw.InvoiceGen.Security {
+namespace DavidLievrouw.InvoiceGen.Security.Nancy {
   [TestFixture]
   public class NancySecurityContextTests {
-    IAspNetSessionFromNancyContextResolver _aspNetSessionFromNancyContextResolver;
+    INancySessionFromNancyContextResolver _nancySessionFromNancyContextResolver;
     IInvoiceGenIdentityFactory _invoiceGenIdentityFactory;
     NancyContext _nancyContext;
     NancySecurityContext _sut;
 
     [SetUp]
     public void SetUp() {
-      _aspNetSessionFromNancyContextResolver = _aspNetSessionFromNancyContextResolver.Fake();
+      _nancySessionFromNancyContextResolver = _nancySessionFromNancyContextResolver.Fake();
       _invoiceGenIdentityFactory = _invoiceGenIdentityFactory.Fake();
       _nancyContext = new NancyContext();
-      _sut = new NancySecurityContext(_nancyContext, _aspNetSessionFromNancyContextResolver, _invoiceGenIdentityFactory);
+      _sut = new NancySecurityContext(_nancyContext, _nancySessionFromNancyContextResolver, _invoiceGenIdentityFactory);
     }
 
     [Test]
     public void ConstructorTests() {
-      Assert.Throws<ArgumentNullException>(() => new NancySecurityContext(null, _aspNetSessionFromNancyContextResolver, _invoiceGenIdentityFactory));
+      Assert.Throws<ArgumentNullException>(() => new NancySecurityContext(null, _nancySessionFromNancyContextResolver, _invoiceGenIdentityFactory));
       Assert.Throws<ArgumentNullException>(() => new NancySecurityContext(_nancyContext, null, _invoiceGenIdentityFactory));
-      Assert.Throws<ArgumentNullException>(() => new NancySecurityContext(_nancyContext, _aspNetSessionFromNancyContextResolver, null));
+      Assert.Throws<ArgumentNullException>(() => new NancySecurityContext(_nancyContext, _nancySessionFromNancyContextResolver, null));
     }
 
     public class SetAuthenticatedUser : NancySecurityContextTests {
@@ -91,7 +90,7 @@ namespace DavidLievrouw.InvoiceGen.Security {
       [Test]
       public void WhenNoSessionExists_Throws() {
         ConfigureSessionFromContextResolver_ToReturn(null);
-        Assert.Throws<InvalidOperationException>(() => _sut.SetAuthenticatedUser(new User()));
+        Assert.Throws<SecurityException>(() => _sut.SetAuthenticatedUser(new User()));
       }
     }
 
@@ -123,7 +122,7 @@ namespace DavidLievrouw.InvoiceGen.Security {
     }
 
     void ConfigureSessionFromContextResolver_ToReturn(ISession session) {
-      A.CallTo(() => _aspNetSessionFromNancyContextResolver.ResolveSession(A<NancyContext>._))
+      A.CallTo(() => _nancySessionFromNancyContextResolver.ResolveSession(A<NancyContext>._))
        .Returns(session);
     }
 

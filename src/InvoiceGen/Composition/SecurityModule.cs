@@ -1,6 +1,5 @@
-﻿using Autofac;
+using Autofac;
 using DavidLievrouw.InvoiceGen.Security;
-using DavidLievrouw.InvoiceGen.Security.AspNet;
 using DavidLievrouw.InvoiceGen.Security.Nancy;
 
 namespace DavidLievrouw.InvoiceGen.Composition {
@@ -8,7 +7,7 @@ namespace DavidLievrouw.InvoiceGen.Composition {
     protected override void Load(ContainerBuilder builder) {
       base.Load(builder);
 
-      builder.RegisterType<AspNetSessionFromNancyContextResolver>()
+      builder.RegisterType<NancySessionFromNancyContextResolver>()
              .AsImplementedInterfaces()
              .SingleInstance();
 

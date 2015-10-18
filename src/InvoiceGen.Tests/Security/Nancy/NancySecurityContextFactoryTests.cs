@@ -1,20 +1,19 @@
 ﻿using System;
-using DavidLievrouw.InvoiceGen.Security.AspNet;
 using Nancy;
 using NUnit.Framework;
 
 namespace DavidLievrouw.InvoiceGen.Security.Nancy {
   [TestFixture]
   public class NancySecurityContextFactoryTests {
-    IAspNetSessionFromNancyContextResolver _aspNetSessionFromNancyContextResolver;
+    INancySessionFromNancyContextResolver _nancySessionFromNancyContextResolver;
     IInvoiceGenIdentityFactory _invoiceGenIdentityFactory;
     NancySecurityContextFactory _sut;
 
     [SetUp]
     public void SetUp() {
-      _aspNetSessionFromNancyContextResolver = _aspNetSessionFromNancyContextResolver.Fake();
+      _nancySessionFromNancyContextResolver = _nancySessionFromNancyContextResolver.Fake();
       _invoiceGenIdentityFactory = _invoiceGenIdentityFactory.Fake();
-      _sut = new NancySecurityContextFactory(_aspNetSessionFromNancyContextResolver, _invoiceGenIdentityFactory);
+      _sut = new NancySecurityContextFactory(_nancySessionFromNancyContextResolver, _invoiceGenIdentityFactory);
     }
 
     [Test]
