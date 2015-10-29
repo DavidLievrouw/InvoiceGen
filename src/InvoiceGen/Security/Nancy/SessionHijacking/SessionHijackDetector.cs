@@ -21,7 +21,8 @@ namespace DavidLievrouw.InvoiceGen.Security.Nancy.SessionHijacking {
 
     public bool IsSessionHijacked(Request request) {
       if (!_sessionDetector.IsInSession(request)) return false;
-      var secureCookie = _cookieReader.Read(request);
+      // ToDo: use real cookie name
+      var secureCookie = _cookieReader.Read(request, "_nsid");
 
       return (secureCookie == null || !secureCookie.IsSecured || secureCookie.Hash != _hashGenerator.GenerateHash(request));
     }

@@ -16,10 +16,12 @@ namespace DavidLievrouw.InvoiceGen.Security.Nancy.SessionHijacking {
     public void StripHashFromCookie(Request request) {
       if (!_sessionDetector.IsInSession(request)) return;
 
-      var secureCookie = _secureSessionCookieReader.Read(request);
+      // ToDo: use real cookie name
+      var secureCookie = _secureSessionCookieReader.Read(request, "_nsid");
       if (secureCookie == null) return;
 
-      request.Cookies[MemoryCacheBasedSessions.CookieName] = secureCookie.SessionId;
+      // ToDo: use real cookie name
+      request.Cookies["_nsid"] = secureCookie.SessionId;
     }
   }
 }

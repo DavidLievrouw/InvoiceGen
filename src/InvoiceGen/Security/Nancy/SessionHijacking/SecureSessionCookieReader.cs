@@ -1,13 +1,16 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using Nancy;
 
 namespace DavidLievrouw.InvoiceGen.Security.Nancy.SessionHijacking {
   public class SecureSessionCookieReader : ISecureSessionCookieReader {
-    const int RealSessionIdLength = 36;
+    const int RealSessionIdLength = 45;
 
-    public SecureSessionCookie Read(Request request) {
+    public SecureSessionCookie Read(Request request, string cookieName) {
+      if (string.IsNullOrEmpty(cookieName)) throw new ArgumentNullException(nameof(cookieName));
+
       string combinedCookieValue;
-      if (!request.Cookies.TryGetValue(MemoryCacheBasedSessions.CookieName, out combinedCookieValue)) return null;
+      if (!request.Cookies.TryGetValue(cookieName, out combinedCookieValue)) return null;
 
       return combinedCookieValue.Length <= RealSessionIdLength
         ? new SecureSessionCookie {
