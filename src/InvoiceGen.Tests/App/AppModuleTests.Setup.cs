@@ -8,12 +8,12 @@ namespace DavidLievrouw.InvoiceGen.App {
   public partial class AppModuleTests {
     AppModule _sut;
     Browser _browser;
-    CustomBootstrapper _bootstrapper;
+    AppBootstrapper _bootstrapper;
 
     [SetUp]
     public virtual void SetUp() {
       _sut = new AppModule();
-      _bootstrapper = new CustomBootstrapper(
+      _bootstrapper = new AppBootstrapper(
         with => {
           with.Module(_sut);
           with.RootPathProvider(new InvoiceGenRootPathProvider());

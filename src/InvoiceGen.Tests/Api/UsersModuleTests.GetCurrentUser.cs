@@ -1,6 +1,7 @@
 ﻿using DavidLievrouw.InvoiceGen.Api.Models;
 using DavidLievrouw.InvoiceGen.Domain.DTO;
 using DavidLievrouw.InvoiceGen.Security;
+using DavidLievrouw.Utils.ForTesting.FakeItEasy;
 using FakeItEasy;
 using Nancy;
 using Nancy.Testing;
@@ -26,14 +27,6 @@ namespace DavidLievrouw.InvoiceGen.Api {
       }
 
       [Test]
-      public void WhenHandlerReturnsErrorCode_ReturnsErrorCode() {
-        _getCurrentUserNancyHandler.Returns(
-          new Response().WithStatusCode(HttpStatusCode.InternalServerError));
-        var response = Get();
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
-      }
-
-      [Test]
       public void ShouldReturnCurrentLoggedInUser() {
         var securityContext = A.Fake<ISecurityContext>();
         ConfigureSecurityContextFactory_ToReturn(securityContext);
@@ -41,7 +34,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
           SecurityContext = securityContext
         };
 
-        _getCurrentUserNancyHandler.Returns(_authenticatedUser);
+        A.CallTo(() => _getCurrentUserQueryHandler.Handle(A<GetCurrentUserRequest>.That.HasSamePropertyValuesAs(expectedRequest))).Returns(_authenticatedUser);
 
         var actual = Get();
 
@@ -52,7 +45,6 @@ namespace DavidLievrouw.InvoiceGen.Api {
         A.CallTo(() => _getCurrentUserQueryHandler
           .Handle(A<GetCurrentUserRequest>.That.Matches(req => req.HasSamePropertyValuesAs(expectedRequest))))
          .MustHaveHappened(Repeated.Exactly.Once);
-        Assert.That(_getCurrentUserNancyHandler.GetCallCount(), Is.EqualTo(1));
       }
 
       BrowserResponse Get() {

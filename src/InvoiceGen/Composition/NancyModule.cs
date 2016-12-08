@@ -28,25 +28,6 @@ namespace DavidLievrouw.InvoiceGen.Composition {
              .As(t => new KeyedService("queryHandler", t.GetInterfaces().Single(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IHandler<,>))));
       builder.RegisterGenericDecorator(typeof(RequestValidationAwareHandler<,>), typeof(IHandler<,>), "queryHandler");
 
-      // wrap all query handlers in INancyQueryHandler
-      nancyAssembly.GetTypes()
-                   .Where(t => t.IsClosedTypeOf(typeof(IHandler<>)))
-                   .ForEach(handlerType => {
-                     var implType = handlerType.GetInterfaces().Single(itf => itf.GetGenericTypeDefinition() == typeof(IHandler<>));
-                     var genArg = implType.GetGenericArguments()[0];
-                     builder.RegisterType(typeof(NancyQueryHandler<>).MakeGenericType(genArg))
-                            .AsImplementedInterfaces();
-                   });
-      nancyAssembly.GetTypes()
-                   .Where(t => t.IsClosedTypeOf(typeof(IHandler<,>)))
-                   .ForEach(handlerType => {
-                     var implType = handlerType.GetInterfaces().Single(itf => itf.GetGenericTypeDefinition() == typeof(IHandler<,>));
-                     var genArg1 = implType.GetGenericArguments()[0];
-                     var genArg2 = implType.GetGenericArguments()[1];
-                     builder.RegisterType(typeof(NancyQueryHandler<,>).MakeGenericType(genArg1, genArg2))
-                            .AsImplementedInterfaces();
-                   });
-
       // Register other stuff
       builder.RegisterType<NancyIdentityFromContextAssigner>()
              .AsImplementedInterfaces()

@@ -51,7 +51,6 @@ namespace DavidLievrouw.InvoiceGen.Composition {
 
     [TestCase(typeof(IHandler<LoginCommand, bool>), typeof(RequestValidationAwareHandler<LoginCommand, bool>))]
     [TestCase(typeof(IHandler<GetCurrentUserRequest, User>), typeof(RequestValidationAwareHandler<GetCurrentUserRequest, User>))]
-    [TestCase(typeof(INancyQueryHandler<GetCurrentUserRequest, User>), typeof(NancyQueryHandler<GetCurrentUserRequest, User>))]
     [TestCase(typeof(INancySecurityContextFactory), typeof(NancySecurityContextFactory))]
     public void RegistersDecoratorsCorrectly(Type requestedType, Type expectedType) {
       object actualResult = null;

@@ -2,11 +2,10 @@
 using DavidLievrouw.InvoiceGen.Configuration;
 using DavidLievrouw.InvoiceGen.Domain.DTO;
 using DavidLievrouw.InvoiceGen.Security.Nancy;
-using Nancy.Testing;
 
 namespace DavidLievrouw.InvoiceGen.Api {
-  public class CustomBootstrapper : ConfigurableBootstrapper {
-    public CustomBootstrapper(Action<ConfigurableBootstrapperConfigurator> configuration) : base(configuration) {
+  public class ApiBootstrapper : LightweightBootstrapper {
+    public ApiBootstrapper(Action<ConfigurableBootstrapperConfigurator> configuration) : base(configuration) {
       InternalConfiguration.Serializers.Clear();
       InternalConfiguration.Serializers.Add(typeof(CustomJsonSerializer));
       BeforeRequest.AddItemToEndOfPipeline(context => {
@@ -17,6 +16,11 @@ namespace DavidLievrouw.InvoiceGen.Api {
         }
         return null;
       });
+
+      OnError = OnError
+        + ErrorPipelines.HandleModelBindingException()
+        + ErrorPipelines.HandleRequestValidationException()
+        + ErrorPipelines.HandleSecurityException();
     }
 
     public User AuthenticatedUser { get; set; }

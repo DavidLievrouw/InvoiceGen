@@ -13,13 +13,10 @@ using NUnit.Framework;
 namespace DavidLievrouw.InvoiceGen.Api {
   [TestFixture]
   public partial class UsersModuleTests {
-    CustomBootstrapper _bootstrapper;
+    ApiBootstrapper _bootstrapper;
     IHandler<GetCurrentUserRequest, User> _getCurrentUserQueryHandler;
     IHandler<LoginCommand, bool> _loginCommandHandler;
     IHandler<LogoutCommand, bool> _logoutCommandHandler;
-    FakeNancyHandler<GetCurrentUserRequest, User> _getCurrentUserNancyHandler;
-    FakeNancyHandler<LoginCommand, bool> _loginNancyCommandHandler;
-    FakeNancyHandler<LogoutCommand, bool> _logoutNancyCommandHandler;
     INancySecurityContextFactory _nancySecurityContextFactory;
     Browser _browser;
     UsersModule _sut;
@@ -28,14 +25,11 @@ namespace DavidLievrouw.InvoiceGen.Api {
     [SetUp]
     public virtual void SetUp() {
       _getCurrentUserQueryHandler = _getCurrentUserQueryHandler.Fake();
-      _getCurrentUserNancyHandler = new FakeNancyHandler<GetCurrentUserRequest, User>(_getCurrentUserQueryHandler);
       _loginCommandHandler = _loginCommandHandler.Fake();
-      _loginNancyCommandHandler = new FakeNancyHandler<LoginCommand, bool>(_loginCommandHandler);
       _logoutCommandHandler = _logoutCommandHandler.Fake();
-      _logoutNancyCommandHandler = new FakeNancyHandler<LogoutCommand, bool>(_logoutCommandHandler);
       _nancySecurityContextFactory = _nancySecurityContextFactory.Fake();
-      _sut = new UsersModule(_getCurrentUserNancyHandler, _loginNancyCommandHandler, _logoutNancyCommandHandler, _nancySecurityContextFactory);
-      _bootstrapper = new CustomBootstrapper(with => {
+      _sut = new UsersModule(_getCurrentUserQueryHandler, _loginCommandHandler, _logoutCommandHandler, _nancySecurityContextFactory);
+      _bootstrapper = new ApiBootstrapper(with => {
         with.Module(_sut);
         with.RootPathProvider(new InvoiceGenRootPathProvider());
       });

@@ -1,6 +1,5 @@
 using System;
 using Autofac;
-using DavidLievrouw.InvoiceGen.Security;
 using DavidLievrouw.InvoiceGen.Security.Nancy;
 using DavidLievrouw.InvoiceGen.Security.Nancy.SessionHijacking;
 using Nancy;
@@ -41,6 +40,11 @@ namespace DavidLievrouw.InvoiceGen {
         identityAssigner.AssignNancyIdentityFromContext(ctx);
         return null;
       });
+
+      pipelines.OnError = pipelines.OnError
+        + ErrorPipelines.HandleModelBindingException()
+        + ErrorPipelines.HandleRequestValidationException()
+        + ErrorPipelines.HandleSecurityException();
 
       base.ApplicationStartup(container, pipelines);
     }

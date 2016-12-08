@@ -25,14 +25,6 @@ namespace DavidLievrouw.InvoiceGen.Api {
       }
 
       [Test]
-      public void WhenHandlerReturnsErrorCode_ReturnsErrorCode() {
-        _logoutNancyCommandHandler.Returns(
-          new Response().WithStatusCode(HttpStatusCode.InternalServerError));
-        var response = Post();
-        Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
-      }
-
-      [Test]
       public void ShouldDelegateControlToInnerHandler() {
         var securityContext = A.Fake<ISecurityContext>();
         ConfigureSecurityContextFactory_ToReturn(securityContext);
@@ -46,7 +38,6 @@ namespace DavidLievrouw.InvoiceGen.Api {
         A.CallTo(() => _logoutCommandHandler
           .Handle(A<LogoutCommand>.That.Matches(command => command.HasSamePropertyValuesAs(expectedCommand))))
          .MustHaveHappened(Repeated.Exactly.Once);
-        Assert.That(_logoutNancyCommandHandler.GetCallCount(), Is.EqualTo(1));
       }
 
       BrowserResponse Post() {
