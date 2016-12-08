@@ -7,9 +7,9 @@ using Nancy.ModelBinding;
 
 namespace DavidLievrouw.InvoiceGen.Api.Handlers {
   public class NancyQueryHandler<TResponse> : INancyQueryHandler<TResponse> {
-    readonly IQueryHandler<TResponse> _handler;
+    readonly IHandler<TResponse> _handler;
 
-    public NancyQueryHandler(IQueryHandler<TResponse> handler) {
+    public NancyQueryHandler(IHandler<TResponse> handler) {
       if (handler == null) throw new ArgumentNullException("handler");
       _handler = handler;
     }
@@ -26,10 +26,10 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
   }
 
   public class NancyQueryHandler<TRequest, TResponse> : INancyQueryHandler<TRequest, TResponse> {
-    readonly IQueryHandler<TRequest, TResponse> _handler;
+    readonly IHandler<TRequest, TResponse> _handler;
 
     public NancyQueryHandler(
-      IQueryHandler<TRequest, TResponse> handler) {
+      IHandler<TRequest, TResponse> handler) {
       if (handler == null) throw new ArgumentNullException("handler");
       _handler = handler;
     }

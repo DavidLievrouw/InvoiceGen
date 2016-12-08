@@ -1,7 +1,8 @@
 ﻿using System;
-using AssertExLib;
+using System.Threading.Tasks;
 using DavidLievrouw.Utils;
 using FakeItEasy;
+using FluentAssertions;
 using FluentValidation;
 using Nancy;
 using Nancy.ModelBinding;
@@ -13,7 +14,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
   public class NancyQueryHandlerTests {
     public class NancyQueryHandlerWithoutRequestTests : NancyQueryHandlerTests {
       INancyModule _module;
-      IQueryHandler<string> _innerHandler;
+      IHandler<string> _innerHandler;
       NancyQueryHandler<string> _sut;
 
       [SetUp]
@@ -30,7 +31,8 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
 
       [Test]
       public void GivenNullModule_Throws() {
-        AssertEx.TaskThrows<ArgumentNullException>(() => _sut.Handle(null));
+        Func<Task> act = () => _sut.Handle(null);
+        act.ShouldThrow<ArgumentNullException>();
       }
 
       [Test]
@@ -65,7 +67,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
 
     public class NancyQueryHandlerWithRequestTests : NancyQueryHandlerTests {
       INancyModule _module;
-      IQueryHandler<int, string> _innerHandler;
+      IHandler<int, string> _innerHandler;
       IBinder _defaultBinder;
       Func<int> _bindingFunc;
       NancyQueryHandler<int, string> _sut;
@@ -92,7 +94,8 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
       public class Handle : NancyQueryHandlerWithRequestTests {
         [Test]
         public void GivenNullModule_Throws() {
-          AssertEx.TaskThrows<ArgumentNullException>(() => _sut.Handle(null));
+          Func<Task> act = () => _sut.Handle(null);
+          act.ShouldThrow<ArgumentNullException>();
         }
 
         [Test]
@@ -164,12 +167,14 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
       public class HandleWithBindingFunc : NancyQueryHandlerWithRequestTests {
         [Test]
         public void GivenNullModule_Throws() {
-          AssertEx.TaskThrows<ArgumentNullException>(() => _sut.Handle(null, _bindingFunc));
+          Func<Task> act = () => _sut.Handle(null, _bindingFunc);
+          act.ShouldThrow<ArgumentNullException>();
         }
 
         [Test]
         public void GivenNullBindingFuncModule_Throws() {
-          AssertEx.TaskThrows<ArgumentNullException>(() => _sut.Handle(_module, null));
+          Func<Task> act = () => _sut.Handle(_module, null);
+          act.ShouldThrow<ArgumentNullException>();
         }
 
         [Test]

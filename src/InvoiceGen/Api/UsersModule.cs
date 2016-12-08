@@ -11,8 +11,8 @@ namespace DavidLievrouw.InvoiceGen.Api {
   public class UsersModule : NancyModule {
     public UsersModule(
       INancyQueryHandler<GetCurrentUserRequest, User> getCurrentUserQueryHandler,
-      INancyCommandHandler<LoginCommand> loginCommandHandler,
-      INancyCommandHandler<LogoutCommand> logoutCommandHandler,
+      INancyQueryHandler<LoginCommand, bool> loginCommandHandler,
+      INancyQueryHandler<LogoutCommand, bool> logoutCommandHandler,
       INancySecurityContextFactory nancySecurityContextFactory) {
       if (getCurrentUserQueryHandler == null) throw new ArgumentNullException("getCurrentUserQueryHandler");
       if (loginCommandHandler == null) throw new ArgumentNullException("loginCommandHandler");

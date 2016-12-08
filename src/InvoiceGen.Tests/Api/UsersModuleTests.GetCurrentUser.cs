@@ -27,7 +27,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
 
       [Test]
       public void WhenHandlerReturnsErrorCode_ReturnsErrorCode() {
-        _getCurrentUserNancyQueryHandler.Returns(
+        _getCurrentUserNancyHandler.Returns(
           new Response().WithStatusCode(HttpStatusCode.InternalServerError));
         var response = Get();
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.InternalServerError));
@@ -41,7 +41,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
           SecurityContext = securityContext
         };
 
-        _getCurrentUserNancyQueryHandler.Returns(_authenticatedUser);
+        _getCurrentUserNancyHandler.Returns(_authenticatedUser);
 
         var actual = Get();
 
@@ -52,7 +52,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
         A.CallTo(() => _getCurrentUserQueryHandler
           .Handle(A<GetCurrentUserRequest>.That.Matches(req => req.HasSamePropertyValuesAs(expectedRequest))))
          .MustHaveHappened(Repeated.Exactly.Once);
-        Assert.That(_getCurrentUserNancyQueryHandler.GetCallCount(), Is.EqualTo(1));
+        Assert.That(_getCurrentUserNancyHandler.GetCallCount(), Is.EqualTo(1));
       }
 
       BrowserResponse Get() {

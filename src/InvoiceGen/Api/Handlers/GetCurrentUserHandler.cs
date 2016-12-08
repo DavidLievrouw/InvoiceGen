@@ -4,7 +4,7 @@ using DavidLievrouw.InvoiceGen.Domain.DTO;
 using DavidLievrouw.Utils;
 
 namespace DavidLievrouw.InvoiceGen.Api.Handlers {
-  public class GetCurrentUserQueryHandler : IQueryHandler<GetCurrentUserRequest, User> {
+  public class GetCurrentUserHandler : IHandler<GetCurrentUserRequest, User> {
     public Task<User> Handle(GetCurrentUserRequest request) {
       return Task.FromResult(request.SecurityContext.GetAuthenticatedUser());
     }

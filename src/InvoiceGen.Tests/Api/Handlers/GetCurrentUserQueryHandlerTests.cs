@@ -7,12 +7,12 @@ using NUnit.Framework;
 namespace DavidLievrouw.InvoiceGen.Api.Handlers {
   [TestFixture]
   public class GetCurrentUserQueryHandlerTests {
-    GetCurrentUserQueryHandler _sut;
+    GetCurrentUserHandler _sut;
     ISecurityContext _securityContext;
 
     [SetUp]
     public void SetUp() {
-      _sut = new GetCurrentUserQueryHandler();
+      _sut = new GetCurrentUserHandler();
       _securityContext = _securityContext.Fake();
     }
 

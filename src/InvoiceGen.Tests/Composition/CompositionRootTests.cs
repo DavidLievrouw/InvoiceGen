@@ -49,9 +49,8 @@ namespace DavidLievrouw.InvoiceGen.Composition {
       Assert.That(actualResult, Is.InstanceOf(instanceType));
     }
 
-    [TestCase(typeof(ICommandHandler<LoginCommand>), typeof(ValidationAwareCommandHandler<LoginCommand>))]
-    [TestCase(typeof(IQueryHandler<GetCurrentUserRequest, User>), typeof(ValidationAwareQueryHandler<GetCurrentUserRequest, User>))]
-    [TestCase(typeof(INancyCommandHandler<LoginCommand>), typeof(NancyCommandHandler<LoginCommand>))]
+    [TestCase(typeof(IHandler<LoginCommand, bool>), typeof(RequestValidationAwareHandler<LoginCommand, bool>))]
+    [TestCase(typeof(IHandler<GetCurrentUserRequest, User>), typeof(RequestValidationAwareHandler<GetCurrentUserRequest, User>))]
     [TestCase(typeof(INancyQueryHandler<GetCurrentUserRequest, User>), typeof(NancyQueryHandler<GetCurrentUserRequest, User>))]
     [TestCase(typeof(INancySecurityContextFactory), typeof(NancySecurityContextFactory))]
     public void RegistersDecoratorsCorrectly(Type requestedType, Type expectedType) {

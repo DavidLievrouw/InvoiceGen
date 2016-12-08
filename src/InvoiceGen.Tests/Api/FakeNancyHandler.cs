@@ -6,12 +6,12 @@ using Nancy;
 using Nancy.ModelBinding;
 
 namespace DavidLievrouw.InvoiceGen.Api {
-  public class FakeNancyQueryHandler<TRequest, TResponse> : INancyQueryHandler<TRequest, TResponse> {
-    readonly IQueryHandler<TRequest, TResponse> _innerHandler;
+  public class FakeNancyHandler<TRequest, TResponse> : INancyQueryHandler<TRequest, TResponse> {
+    readonly IHandler<TRequest, TResponse> _innerHandler;
     dynamic _result;
     int _callCount;
 
-    public FakeNancyQueryHandler(IQueryHandler<TRequest, TResponse> innerHandler) {
+    public FakeNancyHandler(IHandler<TRequest, TResponse> innerHandler) {
       if (innerHandler == null) throw new ArgumentNullException("innerHandler");
       _innerHandler = innerHandler;
       _callCount = 0;
@@ -48,12 +48,12 @@ namespace DavidLievrouw.InvoiceGen.Api {
     }
   }
 
-  public class FakeNancyQueryHandler<TResponse> : INancyQueryHandler<TResponse> {
-    readonly IQueryHandler<TResponse> _innerHandler;
+  public class FakeNancyHandler<TResponse> : INancyQueryHandler<TResponse> {
+    readonly IHandler<TResponse> _innerHandler;
     dynamic _result;
     int _callCount;
 
-    public FakeNancyQueryHandler(IQueryHandler<TResponse> innerHandler) {
+    public FakeNancyHandler(IHandler<TResponse> innerHandler) {
       if (innerHandler == null) throw new ArgumentNullException("innerHandler");
       _innerHandler = innerHandler;
       _callCount = 0;

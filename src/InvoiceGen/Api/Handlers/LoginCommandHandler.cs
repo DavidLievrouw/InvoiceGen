@@ -4,8 +4,8 @@ using DavidLievrouw.InvoiceGen.Domain.DTO;
 using DavidLievrouw.Utils;
 
 namespace DavidLievrouw.InvoiceGen.Api.Handlers {
-  public class LoginCommandHandler : ICommandHandler<LoginCommand> {
-    public Task Handle(LoginCommand command) {
+  public class LoginCommandHandler : IHandler<LoginCommand, bool> {
+    public Task<bool> Handle(LoginCommand command) {
       // Authorise user: ToDo
       var user = new User {
         GivenName = "John",
@@ -19,7 +19,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
 
       command.SecurityContext.SetAuthenticatedUser(user);
 
-      return Task.CompletedTask;
+      return Task.FromResult(true);
     }
   }
 }

@@ -3,10 +3,10 @@ using DavidLievrouw.InvoiceGen.Api.Models;
 using DavidLievrouw.Utils;
 
 namespace DavidLievrouw.InvoiceGen.Api.Handlers {
-  public class LogoutCommandHandler : ICommandHandler<LogoutCommand> {
-    public Task Handle(LogoutCommand command) {
+  public class LogoutCommandHandler : IHandler<LogoutCommand, bool> {
+    public Task<bool> Handle(LogoutCommand command) {
       command.SecurityContext.SetAuthenticatedUser(null);
-      return Task.CompletedTask;
+      return Task.FromResult(true);
     }
   }
 }

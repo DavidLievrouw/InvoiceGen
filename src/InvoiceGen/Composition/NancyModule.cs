@@ -3,7 +3,6 @@ using Autofac;
 using Autofac.Core;
 using DavidLievrouw.InvoiceGen.Api.Handlers;
 using DavidLievrouw.InvoiceGen.App;
-using DavidLievrouw.InvoiceGen.Common;
 using DavidLievrouw.InvoiceGen.Security.Nancy;
 using DavidLievrouw.Utils;
 using FluentValidation;
@@ -20,44 +19,28 @@ namespace DavidLievrouw.InvoiceGen.Composition {
              .AsClosedTypesOf(typeof(IValidator<>))
              .SingleInstance();
 
-      // register all command handlers
-      builder.RegisterAssemblyTypes(nancyAssembly)
-             .Where(t => t.IsClosedTypeOf(typeof(ICommandHandler<>)))
-             .As(t => new KeyedService("commandHandler", t.GetInterfaces().Single(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICommandHandler<>))));
-      builder.RegisterGenericDecorator(typeof(ValidationAwareCommandHandler<>), typeof(ICommandHandler<>), "commandHandler");
-
-      // wrap all command handlers in INancyCommandHandler
-      nancyAssembly.GetTypes()
-                   .Where(t => t.IsClosedTypeOf(typeof(ICommandHandler<>)))
-                   .ForEach(handlerType => {
-                     var implType = handlerType.GetInterfaces().Single(itf => itf.GetGenericTypeDefinition() == typeof(ICommandHandler<>));
-                     var genArg = implType.GetGenericArguments()[0];
-                     builder.RegisterType(typeof(NancyCommandHandler<>).MakeGenericType(genArg))
-                            .AsImplementedInterfaces();
-                   });
-
       // register all query handlers
       builder.RegisterAssemblyTypes(nancyAssembly)
-             .Where(t => t.IsClosedTypeOf(typeof(IQueryHandler<>)))
+             .Where(t => t.IsClosedTypeOf(typeof(IHandler<>)))
              .AsImplementedInterfaces();
       builder.RegisterAssemblyTypes(nancyAssembly)
-             .Where(t => t.IsClosedTypeOf(typeof(IQueryHandler<,>)))
-             .As(t => new KeyedService("queryHandler", t.GetInterfaces().Single(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IQueryHandler<,>))));
-      builder.RegisterGenericDecorator(typeof(ValidationAwareQueryHandler<,>), typeof(IQueryHandler<,>), "queryHandler");
+             .Where(t => t.IsClosedTypeOf(typeof(IHandler<,>)))
+             .As(t => new KeyedService("queryHandler", t.GetInterfaces().Single(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IHandler<,>))));
+      builder.RegisterGenericDecorator(typeof(RequestValidationAwareHandler<,>), typeof(IHandler<,>), "queryHandler");
 
       // wrap all query handlers in INancyQueryHandler
       nancyAssembly.GetTypes()
-                   .Where(t => t.IsClosedTypeOf(typeof(IQueryHandler<>)))
+                   .Where(t => t.IsClosedTypeOf(typeof(IHandler<>)))
                    .ForEach(handlerType => {
-                     var implType = handlerType.GetInterfaces().Single(itf => itf.GetGenericTypeDefinition() == typeof(IQueryHandler<>));
+                     var implType = handlerType.GetInterfaces().Single(itf => itf.GetGenericTypeDefinition() == typeof(IHandler<>));
                      var genArg = implType.GetGenericArguments()[0];
                      builder.RegisterType(typeof(NancyQueryHandler<>).MakeGenericType(genArg))
                             .AsImplementedInterfaces();
                    });
       nancyAssembly.GetTypes()
-                   .Where(t => t.IsClosedTypeOf(typeof(IQueryHandler<,>)))
+                   .Where(t => t.IsClosedTypeOf(typeof(IHandler<,>)))
                    .ForEach(handlerType => {
-                     var implType = handlerType.GetInterfaces().Single(itf => itf.GetGenericTypeDefinition() == typeof(IQueryHandler<,>));
+                     var implType = handlerType.GetInterfaces().Single(itf => itf.GetGenericTypeDefinition() == typeof(IHandler<,>));
                      var genArg1 = implType.GetGenericArguments()[0];
                      var genArg2 = implType.GetGenericArguments()[1];
                      builder.RegisterType(typeof(NancyQueryHandler<,>).MakeGenericType(genArg1, genArg2))
