@@ -1,5 +1,5 @@
-using System;
 using Autofac;
+using DavidLievrouw.InvoiceGen.Composition;
 using DavidLievrouw.InvoiceGen.Security.Nancy;
 using DavidLievrouw.InvoiceGen.Security.Nancy.SessionHijacking;
 using Nancy;
@@ -11,9 +11,8 @@ namespace DavidLievrouw.InvoiceGen {
   public class Bootstrapper : AutofacNancyBootstrapper {
     readonly IContainer _container;
 
-    public Bootstrapper(IContainer container) {
-      if (container == null) throw new ArgumentNullException("container");
-      _container = container;
+    public Bootstrapper() {
+      _container = CompositionRoot.Compose();
     }
 
     protected override ILifetimeScope GetApplicationContainer() {

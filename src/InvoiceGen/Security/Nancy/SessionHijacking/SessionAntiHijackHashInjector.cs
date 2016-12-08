@@ -14,21 +14,25 @@ namespace DavidLievrouw.InvoiceGen.Security.Nancy.SessionHijacking {
 
     public void InjectHashInCookie(NancyContext context) {
       // ToDo: Get real cookie name
-      var unsecureCookie = context.Response.Cookies.Single(c => c.Name == "_nsid");
-      context.Response.Cookies.Remove(unsecureCookie);
+      // ToDo: Should not use SingleOrDefault
+      var unsecureCookie = context.Response.Cookies.SingleOrDefault(c => c.Name == "_nsid");
 
-      var secureCookie = new SecureSessionCookie {
-        SessionId = unsecureCookie.Value,
-        Hash = _hashGenerator.GenerateHash(context.Request)
-      };
+      if (unsecureCookie != null) {
+        context.Response.Cookies.Remove(unsecureCookie);
 
-      var replacementCookie = new NancyCookie(
-        unsecureCookie.Name,
-        secureCookie.ToString(),
-        unsecureCookie.HttpOnly,
-        unsecureCookie.Secure,
-        unsecureCookie.Expires);
-      context.Response.Cookies.Add(replacementCookie);
+        var secureCookie = new SecureSessionCookie {
+          SessionId = unsecureCookie.Value,
+          Hash = _hashGenerator.GenerateHash(context.Request)
+        };
+
+        var replacementCookie = new NancyCookie(
+          unsecureCookie.Name,
+          secureCookie.ToString(),
+          unsecureCookie.HttpOnly,
+          unsecureCookie.Secure,
+          unsecureCookie.Expires);
+        context.Response.Cookies.Add(replacementCookie);
+      }
     }
   }
 }
