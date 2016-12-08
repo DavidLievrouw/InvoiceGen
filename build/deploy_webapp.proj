@@ -3,7 +3,7 @@
   <PropertyGroup>
     <RootPath>$(MSBuildProjectDirectory)\..</RootPath>
 	<PackagesPath>$(MSBuildProjectDirectory)\packages</PackagesPath>
-    <ExtensionTasksPath>$(PackagesPath)\MSBuild.Extension.Pack.1.6.0\build\net40</ExtensionTasksPath>
+    <ExtensionTasksPath>$(PackagesPath)\MSBuild.Extension.Pack.1.8.0\build\net40</ExtensionTasksPath>
     <BuildDirectory>$(RootPath)\build</BuildDirectory>
     <TargetDirectory>$(BuildDirectory)\target</TargetDirectory>
 	<SourceDirectory>$(RootPath)\src</SourceDirectory>

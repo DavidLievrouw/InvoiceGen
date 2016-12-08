@@ -6,8 +6,8 @@
     <TargetDirectory>$(BuildDirectory)\target</TargetDirectory>
     <DeploymentDirectory>$(TargetDirectory)\WebApp</DeploymentDirectory>
     <PackagesPath>$(MSBuildProjectDirectory)\packages</PackagesPath>
-    <ExtensionTasksPath>$(PackagesPath)\MSBuild.Extension.Pack.1.6.0\build\net40</ExtensionTasksPath>
-    <CommunityTasksPath>$(PackagesPath)\MSBuildTasks.1.4.0.88\tools</CommunityTasksPath>
+    <ExtensionTasksPath>$(PackagesPath)\MSBuild.Extension.Pack.1.8.0\build\net40</ExtensionTasksPath>
+    <CommunityTasksPath>$(PackagesPath)\MSBuildTasks.1.5.0.214\tools</CommunityTasksPath>
     <InvoiceGenAppPoolName>InvoiceGenPool</InvoiceGenAppPoolName>
   </PropertyGroup>
   <Import Project="$(ExtensionTasksPath)\MSBuild.Extension.Pack.targets"/>

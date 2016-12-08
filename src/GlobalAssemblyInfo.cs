@@ -9,7 +9,7 @@
 //------------------------------------------------------------------------------
 
 [assembly: System.Reflection.AssemblyDescription("This .NET assembly is part of InvoiceGen.")]
-[assembly: System.Reflection.AssemblyCopyright("© 2015 David Lievrouw. All rights reserved.")]
+[assembly: System.Reflection.AssemblyCopyright("© 2016 David Lievrouw. All rights reserved.")]
 [assembly: System.Reflection.AssemblyConfiguration("Release")]
 [assembly: System.Reflection.AssemblyVersion("0.9.0.0")]
 [assembly: System.Reflection.AssemblyFileVersion("0.9.0.0")]

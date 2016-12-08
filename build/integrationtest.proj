@@ -7,8 +7,8 @@
 	<ResultsOutputPath>$(BuildDirectory)\log</ResultsOutputPath>
     <PackagesPath>$(BuildDirectory)\packages</PackagesPath>
 	<Configuration Condition="'$(Configuration)'==''">Release</Configuration>
-    <MSBuildCommunityTasksPath>$(PackagesPath)\MSBuildTasks.1.4.0.88\tools</MSBuildCommunityTasksPath>
-	<NUnitPath>$(PackagesPath)\NUnit.Runners.2.6.4\tools</NUnitPath>
+    <MSBuildCommunityTasksPath>$(PackagesPath)\MSBuildTasks.1.5.0.214\tools</MSBuildCommunityTasksPath>
+	<NUnitPath>$(PackagesPath)\NUnit.ConsoleRunner.3.5.0\tools</NUnitPath>
 	<VisualStudioVersion Condition="'$(VisualStudioVersion)'==''">14.0</VisualStudioVersion>
   </PropertyGroup>
   <Import Project="$(MSBuildCommunityTasksPath)\MSBuild.Community.Tasks.Targets"/>
@@ -37,13 +37,12 @@
       <Output TaskParameter="Include" ItemName="NUnitTestAssemblies" />
     </CreateItem>
     
-	<NUnit
+	<NUnit3
       Assemblies="@(NUnitTestAssemblies)"
       ToolPath="$(NUnitPath)"
       Framework="net-4.5"
       ContinueOnError="true"
       OutputXmlFile="$(ResultsOutputPath)\nunit-integrationtests.xml" />
-    <Message Text="##teamcity[importData type='nunit' path='$(ResultsOutputPath)\nunit-integrationtests.xml']"/>
   </Target>
 
   <Target Name="IntegrationTest" DependsOnTargets="IntegrationTestNET" />

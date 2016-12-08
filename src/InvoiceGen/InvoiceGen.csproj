@@ -88,7 +88,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Nancy.Session.InProc, Version=1.4.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Nancy.Session.InProc.1.4.0-beta\lib\net40\Nancy.Session.InProc.dll</HintPath>
+      <HintPath>..\packages\Nancy.Session.InProc.1.4.0\lib\net40\Nancy.Session.InProc.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
