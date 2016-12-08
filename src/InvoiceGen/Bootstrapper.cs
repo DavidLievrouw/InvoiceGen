@@ -23,7 +23,7 @@ namespace DavidLievrouw.InvoiceGen {
       StaticConfiguration.DisableErrorTraces = false;
 
       // Enable memory sessions, and secure them against session hijacking
-      InProcSessions.Enable(pipelines);
+      pipelines.EnableInProcSessions();
       pipelines.BeforeRequest.AddItemToStartOfPipeline(ctx => {
         var antiSessionHijackLogic = container.Resolve<IAntiSessionHijackLogic>();
         return antiSessionHijackLogic.InterceptHijackedSession(ctx.Request);
