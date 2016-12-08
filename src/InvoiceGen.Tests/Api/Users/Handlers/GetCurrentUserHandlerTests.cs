@@ -1,10 +1,11 @@
-﻿using DavidLievrouw.InvoiceGen.Api.Models;
+﻿using DavidLievrouw.InvoiceGen.Api.Users.Models;
 using DavidLievrouw.InvoiceGen.Domain.DTO;
 using DavidLievrouw.InvoiceGen.Security;
+using DavidLievrouw.Utils.ForTesting.FakeItEasy;
 using FakeItEasy;
 using NUnit.Framework;
 
-namespace DavidLievrouw.InvoiceGen.Api.Handlers {
+namespace DavidLievrouw.InvoiceGen.Api.Users.Handlers {
   [TestFixture]
   public class GetCurrentUserHandlerTests {
     GetCurrentUserHandler _sut;

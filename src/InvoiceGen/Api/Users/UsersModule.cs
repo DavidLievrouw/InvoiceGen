@@ -1,17 +1,17 @@
-﻿using System;
-using DavidLievrouw.InvoiceGen.Api.Models;
+using System;
+using DavidLievrouw.InvoiceGen.Api.Users.Models;
 using DavidLievrouw.InvoiceGen.Domain.DTO;
 using DavidLievrouw.InvoiceGen.Security.Nancy;
 using DavidLievrouw.Utils;
 using Nancy;
 using Nancy.Security;
 
-namespace DavidLievrouw.InvoiceGen.Api {
+namespace DavidLievrouw.InvoiceGen.Api.Users {
   public class UsersModule : NancyModule {
     public UsersModule(
       IHandler<GetCurrentUserRequest, User> getCurrentUserHandler,
-      IHandler<LoginCommand, bool> loginHandler,
-      IHandler<LogoutCommand, bool> logoutHandler,
+      IHandler<LoginRequest, bool> loginHandler,
+      IHandler<LogoutRequest, bool> logoutHandler,
       INancySecurityContextFactory nancySecurityContextFactory) {
       if (getCurrentUserHandler == null) throw new ArgumentNullException("getCurrentUserHandler");
       if (loginHandler == null) throw new ArgumentNullException("loginHandler");
@@ -27,8 +27,8 @@ namespace DavidLievrouw.InvoiceGen.Api {
       };
 
       Post["api/user/login", true] = async (parameters, cancellationToken) => await loginHandler.Handle(this.Bind(() => {
-        var loginRequest = this.Bind<LoginCommand>();
-        return new LoginCommand {
+        var loginRequest = this.Bind<LoginRequest>();
+        return new LoginRequest {
           SecurityContext = nancySecurityContextFactory.Create(Context),
           Login = loginRequest?.Login,
           Password = loginRequest?.Password
@@ -38,7 +38,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
       Post["api/user/logout", true] = async (parameters, cancellationToken) => {
         this.RequiresAuthentication();
         return await logoutHandler.Handle(this.Bind(() =>
-          new LogoutCommand {
+          new LogoutRequest {
             SecurityContext = nancySecurityContextFactory.Create(Context)
           }));
       };

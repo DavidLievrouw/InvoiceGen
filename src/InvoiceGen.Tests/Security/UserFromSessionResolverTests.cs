@@ -1,4 +1,6 @@
-﻿using DavidLievrouw.InvoiceGen.Domain.DTO;
+﻿using DavidLievrouw.InvoiceGen.Common;
+using DavidLievrouw.InvoiceGen.Domain.DTO;
+using DavidLievrouw.Utils.ForTesting.DotNet;
 using NUnit.Framework;
 
 namespace DavidLievrouw.InvoiceGen.Security {

@@ -2,6 +2,7 @@
 using System.Reflection;
 using System.Web;
 using System.Web.SessionState;
+using DavidLievrouw.InvoiceGen.Common;
 using DavidLievrouw.InvoiceGen.Domain.DTO;
 
 namespace DavidLievrouw.InvoiceGen.Security {

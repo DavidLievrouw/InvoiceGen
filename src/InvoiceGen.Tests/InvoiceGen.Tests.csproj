@@ -125,22 +125,21 @@
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Api\ApiBootstrapper.cs" />
-    <Compile Include="Api\Handlers\FakeUserIdentity.cs" />
-    <Compile Include="Api\Handlers\GetCurrentUserHandlerTests.cs" />
-    <Compile Include="Api\Handlers\LogoutHandlerTests.cs" />
-    <Compile Include="Api\Handlers\Models.cs" />
+    <Compile Include="FakeUserIdentity.cs" />
+    <Compile Include="Api\Users\Handlers\GetCurrentUserHandlerTests.cs" />
+    <Compile Include="Api\Users\Handlers\LogoutHandlerTests.cs" />
+    <Compile Include="Models.cs" />
     <Compile Include="Api\Handlers\RequestValidationAwareHandlerTests.cs" />
     <Compile Include="Api\LightweightBootstrapper.cs" />
-    <Compile Include="Api\Model.cs" />
-    <Compile Include="Api\Models\Validation\GetCurrentUserRequestValidatorTests.cs" />
-    <Compile Include="Api\Models\Validation\LogoutCommandValidatorTests.cs" />
-    <Compile Include="Api\UsersModuleTests.LogoutUser.cs" />
-    <Compile Include="Api\UsersModuleTests.LoginUser.cs" />
-    <Compile Include="Api\UsersModuleTests.GetCurrentUser.cs" />
-    <Compile Include="Api\UsersModuleTests.SetUp.cs" />
+    <Compile Include="Api\Users\Validation\GetCurrentUserRequestValidatorTests.cs" />
+    <Compile Include="Api\Users\Validation\LogoutRequestValidatorTests.cs" />
+    <Compile Include="Api\Users\UsersModuleTests.LogoutUser.cs" />
+    <Compile Include="Api\Users\UsersModuleTests.LoginUser.cs" />
+    <Compile Include="Api\Users\UsersModuleTests.GetCurrentUser.cs" />
+    <Compile Include="Api\Users\UsersModuleTests.SetUp.cs" />
     <Compile Include="App\AppModuleTests.GetLoginView.cs" />
     <Compile Include="App\AppModuleTests.Setup.cs" />
-    <Compile Include="Api\Models\Validation\LoginCommandValidatorTests.cs" />
+    <Compile Include="Api\Users\Validation\LoginRequestValidatorTests.cs" />
     <Compile Include="Common\NullAllowableValidatorTests.cs" />
     <Compile Include="Composition\CompositionRootTests.cs" />
     <Compile Include="Configuration\InvoiceGenRootPathProvider.cs" />
@@ -157,7 +156,6 @@
     <Compile Include="Security\Nancy\NancySecurityContextFactoryTests.cs" />
     <Compile Include="Security\Nancy\NancySecurityContextTests.cs" />
     <Compile Include="Security\UserFromSessionResolverTests.cs" />
-    <Compile Include="TestExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\InvoiceGen.Common\InvoiceGen.Common.csproj">

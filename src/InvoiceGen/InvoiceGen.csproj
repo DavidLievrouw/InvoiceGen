@@ -114,21 +114,18 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Api\Handlers\GetCurrentUserHandler.cs" />
-    <Compile Include="Api\Handlers\LoginHandler.cs" />
-    <Compile Include="Api\Handlers\LogoutHandler.cs" />
+    <Compile Include="Api\Users\Handlers\GetCurrentUserHandler.cs" />
+    <Compile Include="Api\Users\Handlers\LoginHandler.cs" />
+    <Compile Include="Api\Users\Handlers\LogoutHandler.cs" />
     <Compile Include="Api\Handlers\RequestValidationAwareHandler.cs" />
     <Compile Include="Api\Handlers\RequestValidationException.cs" />
-    <Compile Include="Api\Models\LogoutCommand.cs" />
-    <Compile Include="Api\Models\LoginCommand.cs" />
-    <Compile Include="Api\Models\GetCurrentUserRequest.cs" />
-    <Compile Include="Api\Models\Validation\IGetCurrentUserRequestValidator.cs" />
-    <Compile Include="Api\Models\Validation\ILogoutCommandValidator.cs" />
-    <Compile Include="Api\Models\Validation\ILoginCommandValidator.cs" />
-    <Compile Include="Api\Models\Validation\GetCurrentUserRequestValidator.cs" />
-    <Compile Include="Api\Models\Validation\LoginCommandValidator.cs" />
-    <Compile Include="Api\Models\Validation\LogoutCommandValidator.cs" />
-    <Compile Include="Api\UsersModule.cs" />
+    <Compile Include="Api\Users\Models\LogoutRequest.cs" />
+    <Compile Include="Api\Users\Models\LoginRequest.cs" />
+    <Compile Include="Api\Users\Models\GetCurrentUserRequest.cs" />
+    <Compile Include="Api\Users\Validation\GetCurrentUserRequestValidator.cs" />
+    <Compile Include="Api\Users\Validation\LoginRequestValidator.cs" />
+    <Compile Include="Api\Users\Validation\LogoutRequestValidator.cs" />
+    <Compile Include="Api\Users\UsersModule.cs" />
     <Compile Include="App\AppModule.cs" />
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="Composition\CompositionRoot.cs" />

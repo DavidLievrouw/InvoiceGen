@@ -1,22 +1,24 @@
-﻿using DavidLievrouw.InvoiceGen.Api.Models;
+﻿using DavidLievrouw.InvoiceGen.Api.Users.Models;
 using DavidLievrouw.InvoiceGen.Configuration;
 using DavidLievrouw.InvoiceGen.Domain.DTO;
 using DavidLievrouw.InvoiceGen.Security;
 using DavidLievrouw.InvoiceGen.Security.Nancy;
 using DavidLievrouw.Utils;
+using DavidLievrouw.Utils.ForTesting.DotNet;
+using DavidLievrouw.Utils.ForTesting.FakeItEasy;
 using FakeItEasy;
 using Nancy;
 using Nancy.Responses.Negotiation;
 using Nancy.Testing;
 using NUnit.Framework;
 
-namespace DavidLievrouw.InvoiceGen.Api {
+namespace DavidLievrouw.InvoiceGen.Api.Users {
   [TestFixture]
   public partial class UsersModuleTests {
     ApiBootstrapper _bootstrapper;
     IHandler<GetCurrentUserRequest, User> _getCurrentUserHandler;
-    IHandler<LoginCommand, bool> _loginHandler;
-    IHandler<LogoutCommand, bool> _logoutHandler;
+    IHandler<LoginRequest, bool> _loginHandler;
+    IHandler<LogoutRequest, bool> _logoutHandler;
     INancySecurityContextFactory _nancySecurityContextFactory;
     Browser _browser;
     UsersModule _sut;

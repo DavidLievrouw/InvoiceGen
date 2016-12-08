@@ -2,7 +2,7 @@
 using System.Linq;
 using Nancy.Security;
 
-namespace DavidLievrouw.InvoiceGen.Api.Handlers {
+namespace DavidLievrouw.InvoiceGen {
   public class FakeUserIdentity : IUserIdentity {
     public FakeUserIdentity(string userName) {
       UserName = userName;

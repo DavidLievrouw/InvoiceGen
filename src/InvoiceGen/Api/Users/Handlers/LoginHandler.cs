@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
-using DavidLievrouw.InvoiceGen.Api.Models;
+using DavidLievrouw.InvoiceGen.Api.Users.Models;
 using DavidLievrouw.InvoiceGen.Domain.DTO;
 using DavidLievrouw.Utils;
 
-namespace DavidLievrouw.InvoiceGen.Api.Handlers {
-  public class LoginHandler : IHandler<LoginCommand, bool> {
-    public Task<bool> Handle(LoginCommand command) {
+namespace DavidLievrouw.InvoiceGen.Api.Users.Handlers {
+  public class LoginHandler : IHandler<LoginRequest, bool> {
+    public Task<bool> Handle(LoginRequest request) {
       // Authorise user: ToDo
       var user = new User {
         GivenName = "John",
@@ -17,7 +17,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
         }
       };
 
-      command.SecurityContext.SetAuthenticatedUser(user);
+      request.SecurityContext.SetAuthenticatedUser(user);
 
       return Task.FromResult(true);
     }

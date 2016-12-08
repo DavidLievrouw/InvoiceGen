@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Security;
-using DavidLievrouw.InvoiceGen.Api.Handlers;
+using DavidLievrouw.InvoiceGen.Common;
 using DavidLievrouw.InvoiceGen.Domain.DTO;
+using DavidLievrouw.Utils.ForTesting.FakeItEasy;
 using FakeItEasy;
 using Nancy;
 using NUnit.Framework;

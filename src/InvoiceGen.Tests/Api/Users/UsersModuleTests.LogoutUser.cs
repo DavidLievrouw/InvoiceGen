@@ -1,11 +1,12 @@
-﻿using DavidLievrouw.InvoiceGen.Api.Models;
+﻿using DavidLievrouw.InvoiceGen.Api.Users.Models;
 using DavidLievrouw.InvoiceGen.Security;
+using DavidLievrouw.Utils.ForTesting.CompareNetObjects;
 using FakeItEasy;
 using Nancy;
 using Nancy.Testing;
 using NUnit.Framework;
 
-namespace DavidLievrouw.InvoiceGen.Api {
+namespace DavidLievrouw.InvoiceGen.Api.Users {
   public partial class UsersModuleTests {
     public class LogoutUser : UsersModuleTests {
       string _validPath;
@@ -28,7 +29,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
       public void ShouldDelegateControlToInnerHandler() {
         var securityContext = A.Fake<ISecurityContext>();
         ConfigureSecurityContextFactory_ToReturn(securityContext);
-        var expectedCommand = new LogoutCommand {
+        var expectedCommand = new LogoutRequest {
           SecurityContext = securityContext
         };
 
@@ -36,7 +37,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         A.CallTo(() => _logoutHandler
-          .Handle(A<LogoutCommand>.That.Matches(command => command.HasSamePropertyValuesAs(expectedCommand))))
+          .Handle(A<LogoutRequest>.That.Matches(command => command.HasSamePropertyValuesAs(expectedCommand))))
          .MustHaveHappened(Repeated.Exactly.Once);
       }
 

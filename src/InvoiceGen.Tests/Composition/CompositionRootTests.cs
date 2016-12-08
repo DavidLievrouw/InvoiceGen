@@ -3,7 +3,7 @@ using System.IO;
 using System.Web.Configuration;
 using Autofac;
 using DavidLievrouw.InvoiceGen.Api.Handlers;
-using DavidLievrouw.InvoiceGen.Api.Models;
+using DavidLievrouw.InvoiceGen.Api.Users.Models;
 using DavidLievrouw.InvoiceGen.Configuration;
 using DavidLievrouw.InvoiceGen.Domain.DTO;
 using DavidLievrouw.InvoiceGen.Security;
@@ -49,7 +49,7 @@ namespace DavidLievrouw.InvoiceGen.Composition {
       Assert.That(actualResult, Is.InstanceOf(instanceType));
     }
 
-    [TestCase(typeof(IHandler<LoginCommand, bool>), typeof(RequestValidationAwareHandler<LoginCommand, bool>))]
+    [TestCase(typeof(IHandler<LoginRequest, bool>), typeof(RequestValidationAwareHandler<LoginRequest, bool>))]
     [TestCase(typeof(IHandler<GetCurrentUserRequest, User>), typeof(RequestValidationAwareHandler<GetCurrentUserRequest, User>))]
     [TestCase(typeof(INancySecurityContextFactory), typeof(NancySecurityContextFactory))]
     public void RegistersDecoratorsCorrectly(Type requestedType, Type expectedType) {

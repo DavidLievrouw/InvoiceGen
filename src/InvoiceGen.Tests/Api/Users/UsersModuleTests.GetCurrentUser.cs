@@ -1,13 +1,14 @@
-﻿using DavidLievrouw.InvoiceGen.Api.Models;
+﻿using DavidLievrouw.InvoiceGen.Api.Users.Models;
 using DavidLievrouw.InvoiceGen.Domain.DTO;
 using DavidLievrouw.InvoiceGen.Security;
+using DavidLievrouw.Utils.ForTesting.CompareNetObjects;
 using DavidLievrouw.Utils.ForTesting.FakeItEasy;
 using FakeItEasy;
 using Nancy;
 using Nancy.Testing;
 using NUnit.Framework;
 
-namespace DavidLievrouw.InvoiceGen.Api {
+namespace DavidLievrouw.InvoiceGen.Api.Users {
   public partial class UsersModuleTests {
     public class GetCurrentUser : UsersModuleTests {
       string _validPath;

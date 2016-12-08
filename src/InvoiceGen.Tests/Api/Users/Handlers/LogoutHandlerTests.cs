@@ -1,9 +1,10 @@
-﻿using DavidLievrouw.InvoiceGen.Api.Models;
+﻿using DavidLievrouw.InvoiceGen.Api.Users.Models;
 using DavidLievrouw.InvoiceGen.Security;
+using DavidLievrouw.Utils.ForTesting.DotNet;
 using FakeItEasy;
 using NUnit.Framework;
 
-namespace DavidLievrouw.InvoiceGen.Api.Handlers {
+namespace DavidLievrouw.InvoiceGen.Api.Users.Handlers {
   [TestFixture]
   public class LogoutHandlerTests {
     LogoutHandler _sut;
@@ -21,7 +22,7 @@ namespace DavidLievrouw.InvoiceGen.Api.Handlers {
     [Test]
     public void DelegatesControlToAuthenticatedUserApplyer() {
       var securityContext = A.Fake<ISecurityContext>();
-      var command = new LogoutCommand {
+      var command = new LogoutRequest {
         SecurityContext = securityContext
       };
 

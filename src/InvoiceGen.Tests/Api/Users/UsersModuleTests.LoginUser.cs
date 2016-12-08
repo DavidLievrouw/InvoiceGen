@@ -1,11 +1,12 @@
-﻿using DavidLievrouw.InvoiceGen.Api.Models;
+﻿using DavidLievrouw.InvoiceGen.Api.Users.Models;
 using DavidLievrouw.InvoiceGen.Security;
+using DavidLievrouw.Utils.ForTesting.CompareNetObjects;
 using FakeItEasy;
 using Nancy;
 using Nancy.Testing;
 using NUnit.Framework;
 
-namespace DavidLievrouw.InvoiceGen.Api {
+namespace DavidLievrouw.InvoiceGen.Api.Users {
   public partial class UsersModuleTests {
     public class LoginUser : UsersModuleTests {
       string _validPath;
@@ -29,7 +30,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
         var securityContext = A.Fake<ISecurityContext>();
         ConfigureSecurityContextFactory_ToReturn(securityContext);
 
-        var expectedCommand = new LoginCommand {
+        var expectedCommand = new LoginRequest {
           Login = "JDoe",
           Password = "ThePassword",
           SecurityContext = securityContext
@@ -38,7 +39,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
         Post();
 
         A.CallTo(() => _loginHandler
-          .Handle(A<LoginCommand>.That.Matches(req => req.HasSamePropertyValuesAs(expectedCommand))))
+          .Handle(A<LoginRequest>.That.Matches(req => req.HasSamePropertyValuesAs(expectedCommand))))
          .MustHaveHappened(Repeated.Exactly.Once);
       }
 
@@ -48,7 +49,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
         A.CallTo(() => _loginHandler
-          .Handle(A<LoginCommand>._))
+          .Handle(A<LoginRequest>._))
          .MustNotHaveHappened();
       }
 
@@ -56,7 +57,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
       public void GivenMissingBodyInRequest_CallsInnerHandlerWithEmptyRequest() {
         var securityContext = A.Fake<ISecurityContext>();
         ConfigureSecurityContextFactory_ToReturn(securityContext);
-        var expectedCommand = new LoginCommand {
+        var expectedCommand = new LoginRequest {
           Login = null,
           Password = null,
           SecurityContext = securityContext
@@ -66,7 +67,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         A.CallTo(() => _loginHandler
-          .Handle(A<LoginCommand>.That.Matches(req => req.HasSamePropertyValuesAs(expectedCommand))))
+          .Handle(A<LoginRequest>.That.Matches(req => req.HasSamePropertyValuesAs(expectedCommand))))
          .MustHaveHappened(Repeated.Exactly.Once);
       }
 
@@ -74,7 +75,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
       public void WithValidJson_ShouldDelegateControlToInnerHandler() {
         var securityContext = A.Fake<ISecurityContext>();
         ConfigureSecurityContextFactory_ToReturn(securityContext);
-        var expectedCommand = new LoginCommand {
+        var expectedCommand = new LoginRequest {
           Login = "JDoe",
           Password = "ThePassword",
           SecurityContext = securityContext
@@ -84,7 +85,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
         A.CallTo(() => _loginHandler
-          .Handle(A<LoginCommand>.That.Matches(req => req.HasSamePropertyValuesAs(expectedCommand))))
+          .Handle(A<LoginRequest>.That.Matches(req => req.HasSamePropertyValuesAs(expectedCommand))))
          .MustHaveHappened(Repeated.Exactly.Once);
       }
 

@@ -1,26 +1,27 @@
-﻿using DavidLievrouw.InvoiceGen.Security;
+﻿using DavidLievrouw.InvoiceGen.Api.Users.Models;
+using DavidLievrouw.InvoiceGen.Security;
 using FakeItEasy;
 using NUnit.Framework;
 
-namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
+namespace DavidLievrouw.InvoiceGen.Api.Users.Validation {
   [TestFixture]
-  public class GetCurrentUserRequestValidatorTests {
-    GetCurrentUserRequestValidator _sut;
+  public class LogoutRequestValidatorTests {
+    LogoutRequestValidator _sut;
 
     [SetUp]
     public void SetUp() {
-      _sut = new GetCurrentUserRequestValidator();
+      _sut = new LogoutRequestValidator();
     }
 
     [Test]
     public void NullValue_IsInvalid() {
-      var actualResult = _sut.Validate((GetCurrentUserRequest) null);
+      var actualResult = _sut.Validate((LogoutRequest) null);
       Assert.That(actualResult.IsValid, Is.False);
     }
 
     [Test]
-    public void NullContext_IsInvalid() {
-      var input = new GetCurrentUserRequest {
+    public void NullSecurityContext_IsInvalid() {
+      var input = new LogoutRequest {
         SecurityContext = null
       };
       var actualResult = _sut.Validate(input);
@@ -28,8 +29,8 @@ namespace DavidLievrouw.InvoiceGen.Api.Models.Validation {
     }
 
     [Test]
-    public void ValidRequest_IsValid() {
-      var input = new GetCurrentUserRequest {
+    public void ValidCommand_IsValid() {
+      var input = new LogoutRequest {
         SecurityContext = A.Dummy<ISecurityContext>()
       };
       var actualResult = _sut.Validate(input);
