@@ -126,8 +126,8 @@
     </Compile>
     <Compile Include="Api\ApiBootstrapper.cs" />
     <Compile Include="Api\Handlers\FakeUserIdentity.cs" />
-    <Compile Include="Api\Handlers\GetCurrentUserQueryHandlerTests.cs" />
-    <Compile Include="Api\Handlers\LogoutCommandHandlerTests.cs" />
+    <Compile Include="Api\Handlers\GetCurrentUserHandlerTests.cs" />
+    <Compile Include="Api\Handlers\LogoutHandlerTests.cs" />
     <Compile Include="Api\Handlers\Models.cs" />
     <Compile Include="Api\Handlers\RequestValidationAwareHandlerTests.cs" />
     <Compile Include="Api\LightweightBootstrapper.cs" />

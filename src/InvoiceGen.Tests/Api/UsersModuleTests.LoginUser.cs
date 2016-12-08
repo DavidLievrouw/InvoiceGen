@@ -37,7 +37,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
 
         Post();
 
-        A.CallTo(() => _loginCommandHandler
+        A.CallTo(() => _loginHandler
           .Handle(A<LoginCommand>.That.Matches(req => req.HasSamePropertyValuesAs(expectedCommand))))
          .MustHaveHappened(Repeated.Exactly.Once);
       }
@@ -47,7 +47,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
         var response = Post("SomeInvalidJsonString");
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.BadRequest));
-        A.CallTo(() => _loginCommandHandler
+        A.CallTo(() => _loginHandler
           .Handle(A<LoginCommand>._))
          .MustNotHaveHappened();
       }
@@ -65,7 +65,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
         var response = Post(null);
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        A.CallTo(() => _loginCommandHandler
+        A.CallTo(() => _loginHandler
           .Handle(A<LoginCommand>.That.Matches(req => req.HasSamePropertyValuesAs(expectedCommand))))
          .MustHaveHappened(Repeated.Exactly.Once);
       }
@@ -83,7 +83,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
         var response = Post();
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        A.CallTo(() => _loginCommandHandler
+        A.CallTo(() => _loginHandler
           .Handle(A<LoginCommand>.That.Matches(req => req.HasSamePropertyValuesAs(expectedCommand))))
          .MustHaveHappened(Repeated.Exactly.Once);
       }

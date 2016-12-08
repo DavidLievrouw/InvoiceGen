@@ -4,7 +4,7 @@ using DavidLievrouw.InvoiceGen.Domain.DTO;
 using DavidLievrouw.Utils;
 
 namespace DavidLievrouw.InvoiceGen.Api.Handlers {
-  public class LoginCommandHandler : IHandler<LoginCommand, bool> {
+  public class LoginHandler : IHandler<LoginCommand, bool> {
     public Task<bool> Handle(LoginCommand command) {
       // Authorise user: ToDo
       var user = new User {

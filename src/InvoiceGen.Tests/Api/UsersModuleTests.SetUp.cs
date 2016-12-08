@@ -14,9 +14,9 @@ namespace DavidLievrouw.InvoiceGen.Api {
   [TestFixture]
   public partial class UsersModuleTests {
     ApiBootstrapper _bootstrapper;
-    IHandler<GetCurrentUserRequest, User> _getCurrentUserQueryHandler;
-    IHandler<LoginCommand, bool> _loginCommandHandler;
-    IHandler<LogoutCommand, bool> _logoutCommandHandler;
+    IHandler<GetCurrentUserRequest, User> _getCurrentUserHandler;
+    IHandler<LoginCommand, bool> _loginHandler;
+    IHandler<LogoutCommand, bool> _logoutHandler;
     INancySecurityContextFactory _nancySecurityContextFactory;
     Browser _browser;
     UsersModule _sut;
@@ -24,11 +24,11 @@ namespace DavidLievrouw.InvoiceGen.Api {
 
     [SetUp]
     public virtual void SetUp() {
-      _getCurrentUserQueryHandler = _getCurrentUserQueryHandler.Fake();
-      _loginCommandHandler = _loginCommandHandler.Fake();
-      _logoutCommandHandler = _logoutCommandHandler.Fake();
+      _getCurrentUserHandler = _getCurrentUserHandler.Fake();
+      _loginHandler = _loginHandler.Fake();
+      _logoutHandler = _logoutHandler.Fake();
       _nancySecurityContextFactory = _nancySecurityContextFactory.Fake();
-      _sut = new UsersModule(_getCurrentUserQueryHandler, _loginCommandHandler, _logoutCommandHandler, _nancySecurityContextFactory);
+      _sut = new UsersModule(_getCurrentUserHandler, _loginHandler, _logoutHandler, _nancySecurityContextFactory);
       _bootstrapper = new ApiBootstrapper(with => {
         with.Module(_sut);
         with.RootPathProvider(new InvoiceGenRootPathProvider());

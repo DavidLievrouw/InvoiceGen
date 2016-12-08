@@ -34,7 +34,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
           SecurityContext = securityContext
         };
 
-        A.CallTo(() => _getCurrentUserQueryHandler.Handle(A<GetCurrentUserRequest>.That.HasSamePropertyValuesAs(expectedRequest))).Returns(_authenticatedUser);
+        A.CallTo(() => _getCurrentUserHandler.Handle(A<GetCurrentUserRequest>.That.HasSamePropertyValuesAs(expectedRequest))).Returns(_authenticatedUser);
 
         var actual = Get();
 
@@ -42,7 +42,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
         var actualDeserialized = actual.Body.DeserializeJson<User>();
         Assert.That(actualDeserialized.HasSamePropertyValuesAs(_authenticatedUser));
 
-        A.CallTo(() => _getCurrentUserQueryHandler
+        A.CallTo(() => _getCurrentUserHandler
           .Handle(A<GetCurrentUserRequest>.That.Matches(req => req.HasSamePropertyValuesAs(expectedRequest))))
          .MustHaveHappened(Repeated.Exactly.Once);
       }

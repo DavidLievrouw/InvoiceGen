@@ -35,7 +35,7 @@ namespace DavidLievrouw.InvoiceGen.Api {
         var response = Post();
 
         Assert.That(response.StatusCode, Is.EqualTo(HttpStatusCode.OK));
-        A.CallTo(() => _logoutCommandHandler
+        A.CallTo(() => _logoutHandler
           .Handle(A<LogoutCommand>.That.Matches(command => command.HasSamePropertyValuesAs(expectedCommand))))
          .MustHaveHappened(Repeated.Exactly.Once);
       }

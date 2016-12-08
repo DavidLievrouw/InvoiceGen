@@ -9,39 +9,35 @@ using Nancy.Security;
 namespace DavidLievrouw.InvoiceGen.Api {
   public class UsersModule : NancyModule {
     public UsersModule(
-      IHandler<GetCurrentUserRequest, User> getCurrentUserQueryHandler,
-      IHandler<LoginCommand, bool> loginCommandHandler,
-      IHandler<LogoutCommand, bool> logoutCommandHandler,
+      IHandler<GetCurrentUserRequest, User> getCurrentUserHandler,
+      IHandler<LoginCommand, bool> loginHandler,
+      IHandler<LogoutCommand, bool> logoutHandler,
       INancySecurityContextFactory nancySecurityContextFactory) {
-      if (getCurrentUserQueryHandler == null) throw new ArgumentNullException("getCurrentUserQueryHandler");
-      if (loginCommandHandler == null) throw new ArgumentNullException("loginCommandHandler");
-      if (logoutCommandHandler == null) throw new ArgumentNullException("logoutCommandHandler");
+      if (getCurrentUserHandler == null) throw new ArgumentNullException("getCurrentUserHandler");
+      if (loginHandler == null) throw new ArgumentNullException("loginHandler");
+      if (logoutHandler == null) throw new ArgumentNullException("logoutHandler");
       if (nancySecurityContextFactory == null) throw new ArgumentNullException("nancySecurityContextFactory");
 
       Get["api/user", true] = async (parameters, cancellationToken) => {
         this.RequiresAuthentication();
-        return await getCurrentUserQueryHandler.Handle(this.Bind(() =>
+        return await getCurrentUserHandler.Handle(this.Bind(() =>
           new GetCurrentUserRequest {
             SecurityContext = nancySecurityContextFactory.Create(Context)
           }));
       };
 
-      Post["api/user/login", true] = async (parameters, cancellationToken) => await loginCommandHandler.Handle(this.Bind(() => {
+      Post["api/user/login", true] = async (parameters, cancellationToken) => await loginHandler.Handle(this.Bind(() => {
         var loginRequest = this.Bind<LoginCommand>();
         return new LoginCommand {
           SecurityContext = nancySecurityContextFactory.Create(Context),
-          Login = loginRequest == null
-            ? null
-            : loginRequest.Login,
-          Password = loginRequest == null
-            ? null
-            : loginRequest.Password
+          Login = loginRequest?.Login,
+          Password = loginRequest?.Password
         };
       }));
 
       Post["api/user/logout", true] = async (parameters, cancellationToken) => {
         this.RequiresAuthentication();
-        return await logoutCommandHandler.Handle(this.Bind(() =>
+        return await logoutHandler.Handle(this.Bind(() =>
           new LogoutCommand {
             SecurityContext = nancySecurityContextFactory.Create(Context)
           }));

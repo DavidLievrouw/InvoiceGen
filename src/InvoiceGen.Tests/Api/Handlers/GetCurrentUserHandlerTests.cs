@@ -6,7 +6,7 @@ using NUnit.Framework;
 
 namespace DavidLievrouw.InvoiceGen.Api.Handlers {
   [TestFixture]
-  public class GetCurrentUserQueryHandlerTests {
+  public class GetCurrentUserHandlerTests {
     GetCurrentUserHandler _sut;
     ISecurityContext _securityContext;
 

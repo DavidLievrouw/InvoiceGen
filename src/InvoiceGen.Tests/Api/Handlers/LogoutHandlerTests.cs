@@ -5,12 +5,12 @@ using NUnit.Framework;
 
 namespace DavidLievrouw.InvoiceGen.Api.Handlers {
   [TestFixture]
-  public class LogoutCommandHandlerTests {
-    LogoutCommandHandler _sut;
+  public class LogoutHandlerTests {
+    LogoutHandler _sut;
 
     [SetUp]
     public void SetUp() {
-      _sut = new LogoutCommandHandler();
+      _sut = new LogoutHandler();
     }
 
     [Test]
