@@ -13,7 +13,8 @@ namespace DavidLievrouw.InvoiceGen.Security.Nancy.SessionHijacking {
     }
 
     public void InjectHashInCookie(NancyContext context) {
-      var unsecureCookie = context.Response.Cookies.Single(c => c.Name == MemoryCacheBasedSessions.CookieName);
+      // ToDo: Get real cookie name
+      var unsecureCookie = context.Response.Cookies.Single(c => c.Name == "_nsid");
       context.Response.Cookies.Remove(unsecureCookie);
 
       var secureCookie = new SecureSessionCookie {

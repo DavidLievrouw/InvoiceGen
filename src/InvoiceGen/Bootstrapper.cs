@@ -6,6 +6,7 @@ using DavidLievrouw.InvoiceGen.Security.Nancy.SessionHijacking;
 using Nancy;
 using Nancy.Bootstrapper;
 using Nancy.Bootstrappers.Autofac;
+using Nancy.Session.InProc;
 
 namespace DavidLievrouw.InvoiceGen {
   public class Bootstrapper : AutofacNancyBootstrapper {
@@ -24,7 +25,7 @@ namespace DavidLievrouw.InvoiceGen {
       StaticConfiguration.DisableErrorTraces = false;
 
       // Enable memory sessions, and secure them against session hijacking
-      MemoryCacheBasedSessions.Enable(pipelines);
+      InProcSessions.Enable(pipelines);
       pipelines.BeforeRequest.AddItemToStartOfPipeline(ctx => {
         var antiSessionHijackLogic = container.Resolve<IAntiSessionHijackLogic>();
         return antiSessionHijackLogic.InterceptHijackedSession(ctx.Request);
